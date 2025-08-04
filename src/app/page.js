@@ -503,7 +503,7 @@ const MellPlusNiger = () => {
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d &apos; un devis personnalisé ?</h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d'un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
             Un conseiller Mell Plus Niger vous répond dans les 48h !
           </p>

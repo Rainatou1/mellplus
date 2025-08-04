@@ -15,7 +15,7 @@ export default function Footer() {
             </div>
             <p className="text-gray-300 mb-4">
               Votre partenaire de confiance pour le matériel informatique professionnel 
-              et le développement d &apos; applications mobiles et web.
+              et le développement d&rsquo;applications mobiles et web.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white">
