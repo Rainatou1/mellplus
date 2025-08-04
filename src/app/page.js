@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from "next/image";
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const MellPlusNiger = () => {
@@ -364,7 +365,7 @@ const MellPlusNiger = () => {
                       </div>
                     </div>
                     <div className="text-center order-1 lg:order-2">
-                      <img 
+                      <image 
                         src={slide.image}
                         alt={slide.title}
                         className="w-full max-w-md lg:max-w-full mx-auto rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300"
@@ -448,7 +449,7 @@ const MellPlusNiger = () => {
             {featuredProducts.map((product) => (
               <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
-                  <img 
+                  <image 
                     src={product.image} 
                     alt={product.name}
                     className="w-full h-40 md:h-48 object-cover"
@@ -488,7 +489,7 @@ const MellPlusNiger = () => {
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center">
             {partners.map((partner, index) => (
               <div key={index} className="flex justify-center">
-                <img 
+                <image 
                   src={partner.logo} 
                   alt={partner.name}
                   className="h-10 md:h-16 object-contain grayscale hover:grayscale-0 transition-all"
@@ -502,7 +503,7 @@ const MellPlusNiger = () => {
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d'un devis personnalisé ?</h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d &apos; un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
             Un conseiller Mell Plus Niger vous répond dans les 48h !
           </p>
