@@ -1,6 +1,5 @@
 "use client";
 import Link from 'next/link'
-
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -18,7 +17,7 @@ const MellPlusNiger = () => {
       title: "Votre expert IT basé au Niger",
       subtitle: "Une offre évolutive avec plus de 15 000 références",
       description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
-      Image: "/images/hp-removebg.png",
+      image: "/images/hp-removebg.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Nos services",
       bgGradient: "from-blue-600 to-blue-800"
@@ -28,7 +27,7 @@ const MellPlusNiger = () => {
       title: "Dernières technologies HP",
       subtitle: "iPhone 15, MacBook Pro, HP Pavilion",
       description: "Découvrez la nouvelle gamme HP avec des offres exclusives et un service après-vente premium",
-      Image: "/images/carroussel.PNG",
+      image: "/images/carroussel.PNG",
       ctaPrimary: "Voir les produits",
       ctaSecondary: "En savoir plus",
       bgGradient: "from-gray-800 to-gray-900"
@@ -38,7 +37,7 @@ const MellPlusNiger = () => {
       title: "Camera Surveillance",
       subtitle: "Arldo",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      Image: "/images/carroussel.PNG",
+      image: "/images/carroussel.PNG",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Voir catalogue",
       bgGradient: "from-green-600 to-teal-700"
@@ -48,7 +47,7 @@ const MellPlusNiger = () => {
       title: "Promotions exceptionnelles",
       subtitle: "Jusqu'à -30% sur une sélection",
       description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      Image: "/images/carroussel.PNG",
+      image: "/images/carroussel.PNG",
       ctaPrimary: "Voir les promos",
       ctaSecondary: "Tous les produits",
       bgGradient: "from-red-600 to-pink-700"
@@ -59,7 +58,7 @@ const MellPlusNiger = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000); // Change toutes les 5 secondes
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [slides.length]);
@@ -83,7 +82,6 @@ const MellPlusNiger = () => {
     { name: 'Peripheriques', subcategories: ['Imprimantes', 'Scanners', 'Composants'] },
     { name: 'Connectiques', subcategories: ['Cables', 'Multiprise', 'Fournitures'] },
     { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
-
   ];
 
   const partners = [
@@ -124,28 +122,28 @@ const MellPlusNiger = () => {
       name: "PC Portable HP ProBook 450",
       price: "450 000",
       originalPrice: "520 000",
-      Image: "/images/ordi.jpg",
+      image: "/images/ordi.jpg",
       badge: "Promo"
     },
     {
       id: 2,
       name: "iPhone 15 Pro 128GB",
       price: "980 000",
-      Image: "/images/ordi.jpg",
+      image: "/images/ordi.jpg",
       badge: "Nouveau"
     },
     {
       id: 3,
       name: "Climatiseur Samsung 12000 BTU",
       price: "380 000",
-      Image: "/images/ordi.jpg",
+      image: "/images/ordi.jpg",
       badge: "Best Seller"
     },
     {
       id: 4,
       name: "Imprimante HP LaserJet Pro",
       price: "220 000",
-      Image: "/images/ordi.jpg",
+      image: "/images/ordi.jpg",
       badge: ""
     }
   ];
@@ -178,7 +176,7 @@ const MellPlusNiger = () => {
       </div>
 
       {/* Main Header */}
-      <header className="bg-white shadow-lg relative z-[100]">
+      <header className="bg-white shadow-lg relative z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-3 md:py-4">
             {/* Logo */}
@@ -268,7 +266,7 @@ const MellPlusNiger = () => {
                   
                   {/* Dropdown */}
                   {activeCategory === index && (
-                    <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-[9999] transform translate-y-1">
+                    <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1">
                       {category.subcategories.map((sub, subIndex) => (
                         <a
                           key={subIndex}
@@ -333,7 +331,7 @@ const MellPlusNiger = () => {
       </header>
 
       {/* Hero Carousel */}
-      <section className="relative h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+      <section className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
         {/* Slides */}
         <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -370,9 +368,10 @@ const MellPlusNiger = () => {
                       <Image 
                         width={600}
                         height={450}
-                        src={slide.Image}
+                        src={slide.image}
                         alt={slide.title}
                         className="w-full max-w-md lg:max-w-full mx-auto rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300"
+                        priority={index === 0}
                       />
                     </div>
                   </div>
@@ -385,19 +384,21 @@ const MellPlusNiger = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 md:p-3 rounded-full transition-all z-10 backdrop-blur-sm"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
+          aria-label="Slide précédent"
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 md:p-3 rounded-full transition-all z-10 backdrop-blur-sm"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
+          aria-label="Slide suivant"
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
         </button>
 
         {/* Dots Indicator */}
-        <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+        <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -407,6 +408,7 @@ const MellPlusNiger = () => {
                   ? 'bg-white scale-110' 
                   : 'bg-white bg-opacity-50 hover:bg-opacity-75'
               }`}
+              aria-label={`Aller au slide ${index + 1}`}
             />
           ))}
         </div>
@@ -456,7 +458,7 @@ const MellPlusNiger = () => {
                   <Image
                     width={500}
                     height={500} 
-                    src={product.Image} 
+                    src={product.image} 
                     alt={product.name}
                     className="w-full h-40 md:h-48 object-cover"
                   />
@@ -467,7 +469,11 @@ const MellPlusNiger = () => {
                   )}
                 </div>
                 <div className="p-3 md:p-4">
-                  <h4 className="font-semibold mb-2 text-sm md:text-base line-clamp-2">{product.name}</h4>
+                  <h4 className="font-semibold mb-2 text-sm md:text-base overflow-hidden" style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical'
+                  }}>{product.name}</h4>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                     <div>
                       <span className="text-lg md:text-xl font-bold text-blue-600">{product.price} FCFA</span>
@@ -487,6 +493,7 @@ const MellPlusNiger = () => {
           </div>
         </div>
       </section>
+
       {/* À Découvrir Section */}
       <section className="py-8 md:py-12 bg-white">
         <div className="container mx-auto px-4">
@@ -496,17 +503,16 @@ const MellPlusNiger = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {/* Seconde vie - Large card */}
+            {/* Seconde vie */}
             <div className="md:col-span-1 lg:col-span-1 relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] bg-gradient-to-br from-gray-400 to-gray-600 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-gray-400 to-gray-600 relative">
                 <Image
                   width={600}
                   height={600} 
                   src="/images/large1.jpg" 
                   alt="Seconde vie - Reconditionnement"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Seconde vie</h4>
@@ -521,15 +527,14 @@ const MellPlusNiger = () => {
 
             {/* Gaming */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] bg-gradient-to-br from-blue-500 to-cyan-600 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
                   width={600}
                   height={600} 
                   src="/images/ordi.jpg" 
                   alt="Gaming - Équipements gaming"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Gaming</h4>
@@ -544,13 +549,13 @@ const MellPlusNiger = () => {
 
             {/* Nos créateurs */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] bg-gradient-to-br from-purple-600 to-pink-600 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
                   width={600}
                   height={600} 
                   src="/images/large1.jpg" 
                   alt="Nos créateurs - Solutions créatives"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
@@ -567,13 +572,13 @@ const MellPlusNiger = () => {
 
             {/* S'équiper IA - Large card bottom */}
             <div className="md:col-span-1 lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[2/1] md:aspect-[3/1] lg:aspect-[5/2] bg-gradient-to-br from-teal-600 to-blue-800 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
                   width={900}
                   height={600} 
                   src="/images/large2.jpg" 
                   alt="S'équiper IA - Intelligence Artificielle"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
@@ -590,13 +595,13 @@ const MellPlusNiger = () => {
 
             {/* Solutions Business */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-[4/3] bg-gradient-to-br from-purple-600 to-pink-700 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
                   width={600}
                   height={600} 
                   src="/images/sony.png" 
                   alt="Solutions Business - Entreprises"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
@@ -614,7 +619,7 @@ const MellPlusNiger = () => {
         </div>
       </section>
       {/* Partners Section */}
-      <section className="py-8 md:py-12 bg-white">
+      {/*<section className="py-8 md:py-12 bg-white">
         <div className="container mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Nos partenaires</h3>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center">
@@ -631,10 +636,10 @@ const MellPlusNiger = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+      {/*<section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
@@ -646,7 +651,7 @@ const MellPlusNiger = () => {
           </button>
           </Link>
         </div>
-      </section>
+      </section>*/}
 
       {/* Footer */}{/*
       <footer className="bg-gray-800 text-white py-8 md:py-12">
