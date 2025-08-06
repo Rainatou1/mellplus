@@ -28,7 +28,7 @@ const ProductsPage = () => {
       originalPrice: 999,
       rating: 4.8,
       reviews: 245,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop',
       badge: 'Bestseller',
       inStock: true
     },
@@ -39,7 +39,7 @@ const ProductsPage = () => {
       price: 299,
       rating: 4.6,
       reviews: 189,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
       badge: 'Nouveau',
       inStock: true
     },
@@ -51,7 +51,7 @@ const ProductsPage = () => {
       originalPrice: 349,
       rating: 4.7,
       reviews: 156,
-      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop',
       badge: 'Promo',
       inStock: true
     },
@@ -62,7 +62,7 @@ const ProductsPage = () => {
       price: 199,
       rating: 4.5,
       reviews: 302,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
       inStock: true
     },
     {
@@ -72,7 +72,7 @@ const ProductsPage = () => {
       price: 159,
       rating: 4.9,
       reviews: 87,
-      image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop',
       badge: 'Top Rated',
       inStock: false
     },
@@ -83,7 +83,7 @@ const ProductsPage = () => {
       price: 179,
       rating: 4.4,
       reviews: 234,
-      image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop',
       inStock: true
     },
     {
@@ -93,7 +93,7 @@ const ProductsPage = () => {
       price: 399,
       rating: 4.7,
       reviews: 123,
-      image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=400&fit=crop',
       badge: 'Pro',
       inStock: true
     },
@@ -105,7 +105,7 @@ const ProductsPage = () => {
       originalPrice: 399,
       rating: 4.6,
       reviews: 167,
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop',
       inStock: true
     }
   ];
@@ -241,7 +241,7 @@ const ProductsPage = () => {
                 <Image
                   width={600}
                   height={600}
-                  src={product.image}
+                  src={product.Image}
                   alt={product.name}
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                 />

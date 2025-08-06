@@ -39,7 +39,7 @@ const ProductDetailPage = () => {
     inStock: true,
     stockCount: 12,
     badge: 'Bestseller',
-    images: [
+    Images: [
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=600&fit=crop',
       'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&h=600&fit=crop',
       'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=600&h=600&fit=crop',
@@ -113,21 +113,21 @@ const ProductDetailPage = () => {
       id: 2,
       name: 'Coque Protection Premium',
       price: 29,
-      image: 'https://images.unsplash.com/photo-1601593346740-925612772716?w=300&h=300&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1601593346740-925612772716?w=300&h=300&fit=crop',
       rating: 4.6
     },
     {
       id: 3,
       name: 'Chargeur Sans Fil Rapide',
       price: 49,
-      image: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=300&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=300&fit=crop',
       rating: 4.7
     },
     {
       id: 4,
       name: 'Écouteurs Bluetooth Pro',
       price: 159,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
+      Image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
       rating: 4.8
     }
   ];
@@ -167,7 +167,7 @@ const ProductDetailPage = () => {
               <Image
                 width={600}
                 height={600}
-                src={product.images[selectedImage]}
+                src={product.Images[selectedImage]}
                 alt={product.name}
                 className="w-full h-96 lg:h-[500px] object-cover"
               />
@@ -185,7 +185,7 @@ const ProductDetailPage = () => {
 
             {/* Thumbnail Images */}
             <div className="grid grid-cols-4 gap-4">
-              {product.images.map((image, index) => (
+              {product.Images.map((Image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -196,7 +196,7 @@ const ProductDetailPage = () => {
                   <Image
                     width={600}
                     height={600}
-                    src={image}
+                    src={Image}
                     alt={`${product.name} ${index + 1}`}
                     className="w-full h-20 object-cover"
                   />
@@ -565,7 +565,7 @@ const ProductDetailPage = () => {
                 <Image
                   width={600}
                   height={600}
-                  src={relatedProduct.image}
+                  src={relatedProduct.Image}
                   alt={relatedProduct.name}
                   className="w-full h-48 object-cover"
                 />
