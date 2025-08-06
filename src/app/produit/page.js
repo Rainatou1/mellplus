@@ -237,7 +237,9 @@ const ProductsPage = () => {
             <div key={product.id} className="group relative bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
               {/* Product Image */}
               <div className="relative overflow-hidden">
-                <img
+                <Image
+                  width={600}
+                  height={600}
                   src={product.image}
                   alt={product.name}
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
