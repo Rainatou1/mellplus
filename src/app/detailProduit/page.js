@@ -163,7 +163,9 @@ const ProductDetailPage = () => {
           <div className="space-y-4">
             {/* Main Image */}
             <div className="relative bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20">
-              <img
+              <Image
+                width={600}
+                height={600}
                 src={product.images[selectedImage]}
                 alt={product.name}
                 className="w-full h-96 lg:h-[500px] object-cover"
@@ -190,7 +192,9 @@ const ProductDetailPage = () => {
                     selectedImage === index ? 'border-purple-500' : 'border-white/20'
                   }`}
                 >
-                  <img
+                  <Image
+                    width={600}
+                    height={600}
                     src={image}
                     alt={`${product.name} ${index + 1}`}
                     className="w-full h-20 object-cover"
@@ -368,7 +372,7 @@ const ProductDetailPage = () => {
                 <Truck className="w-8 h-8 text-purple-400" />
                 <div>
                   <p className="text-white font-semibold text-sm">Livraison gratuite</p>
-                  <p className="text-gray-400 text-xs">Dès 50€ d'achat</p>
+                  <p className="text-gray-400 text-xs">Dès 50€ d&apos;achat</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 p-4 bg-white/10 backdrop-blur-lg rounded-lg border border-white/20">
@@ -436,7 +440,7 @@ const ProductDetailPage = () => {
                         <li>• Smartphone {product.name}</li>
                         <li>• Câble USB-C vers Lightning</li>
                         <li>• Documentation</li>
-                        <li>• Outil d'éjection SIM</li>
+                        <li>• Outil d&apos;éjection SIM</li>
                       </ul>
                     </div>
                   </div>
@@ -557,7 +561,9 @@ const ProductDetailPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedProducts.map((relatedProduct) => (
               <div key={relatedProduct.id} className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
-                <img
+                <Image
+                  width={600}
+                  height={600}
                   src={relatedProduct.image}
                   alt={relatedProduct.name}
                   className="w-full h-48 object-cover"

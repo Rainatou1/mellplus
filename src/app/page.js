@@ -491,7 +491,7 @@ const MellPlusNiger = () => {
       <section className="py-8 md:py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="mb-6 md:mb-8">
-            <h3 className="text-xl md:text-2xl font-bold mb-2">À DÉCOUVRIR</h3>
+            <h3 className="text-xl md:text-2xl font-bold mb-2">DÉCOUVRIR</h3>
             <p className="text-gray-600 text-sm md:text-base">Conseils, inspirations, innovations</p>
           </div>
           
@@ -499,7 +499,9 @@ const MellPlusNiger = () => {
             {/* Seconde vie - Large card */}
             <div className="md:col-span-1 lg:col-span-1 relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] bg-gradient-to-br from-gray-400 to-gray-600 relative">
-                <img 
+                <Image
+                  width={600}
+                  height={600} 
                   src="/images/large1.jpg" 
                   alt="Seconde vie - Reconditionnement"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -520,7 +522,9 @@ const MellPlusNiger = () => {
             {/* Gaming */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] bg-gradient-to-br from-blue-500 to-cyan-600 relative">
-                <img 
+                <Image
+                  width={600}
+                  height={600} 
                   src="/images/ordi.jpg" 
                   alt="Gaming - Équipements gaming"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -541,7 +545,9 @@ const MellPlusNiger = () => {
             {/* Nos créateurs */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] bg-gradient-to-br from-purple-600 to-pink-600 relative">
-                <img 
+                <Image
+                  width={600}
+                  height={600} 
                   src="/images/large1.jpg" 
                   alt="Nos créateurs - Solutions créatives"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -562,7 +568,9 @@ const MellPlusNiger = () => {
             {/* S'équiper IA - Large card bottom */}
             <div className="md:col-span-1 lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-[2/1] md:aspect-[3/1] lg:aspect-[5/2] bg-gradient-to-br from-teal-600 to-blue-800 relative">
-                <img 
+                <Image
+                  width={900}
+                  height={600} 
                   src="/images/large2.jpg" 
                   alt="S'équiper IA - Intelligence Artificielle"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -570,8 +578,8 @@ const MellPlusNiger = () => {
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
-                    <h4 className="text-2xl md:text-3xl font-bold mb-2">S'équiper IA</h4>
-                    <p className="text-sm md:text-base opacity-90">Solutions d'Intelligence Artificielle pour entreprises</p>
+                    <h4 className="text-2xl md:text-3xl font-bold mb-2">S&apos;équiper IA</h4>
+                    <p className="text-sm md:text-base opacity-90">Solutions d&apos;Intelligence Artificielle pour entreprises</p>
                   </div>
                   <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
                     VOIR ›
@@ -583,7 +591,9 @@ const MellPlusNiger = () => {
             {/* Solutions Business */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-[4/3] bg-gradient-to-br from-purple-600 to-pink-700 relative">
-                <img 
+                <Image
+                  width={600}
+                  height={600} 
                   src="/images/sony.png" 
                   alt="Solutions Business - Entreprises"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

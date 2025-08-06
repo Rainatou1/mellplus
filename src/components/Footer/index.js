@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 export default function Footer() {
   return (

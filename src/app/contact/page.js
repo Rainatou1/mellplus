@@ -264,7 +264,7 @@ const ContactDevisPage = () => {
             Contactez-nous
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Notre équipe d'experts est à votre disposition pour répondre à toutes vos questions et établir un devis personnalisé
+            Notre équipe d&apos;experts est à votre disposition pour répondre à toutes vos questions et établir un devis personnalisé
           </p>
         </div>
       </section>
@@ -297,7 +297,7 @@ const ContactDevisPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Adresse</h3>
               <p className="text-gray-600 mb-2">Showroom & Bureau</p>
-              <p className="text-lg font-semibold text-orange-600">Avenue de l'Uranium, Niamey</p>
+              <p className="text-lg font-semibold text-orange-600">Avenue de l&apos;Uranium, Niamey</p>
             </div>
           </div>
         </div>
@@ -554,7 +554,7 @@ const ContactDevisPage = () => {
 
               {/* Horaires */}
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">Horaires d'ouverture</h3>
+                <h3 className="text-xl font-semibold mb-4 text-gray-800">Horaires d&apos;ouverture</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span>Lundi - Vendredi:</span>
@@ -575,7 +575,7 @@ const ContactDevisPage = () => {
               <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-4">Contact rapide</h3>
                 <p className="text-blue-100 text-sm mb-4">
-                  Besoin d'une réponse immédiate ? Appelez-nous directement !
+                  Besoin d&apos;une réponse immédiate ? Appelez-nous directement !
                 </p>
                 <a 
                   href="tel:+22796123456"

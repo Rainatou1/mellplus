@@ -216,7 +216,7 @@ const ProductsPage = () => {
                 <option value="price-low" className="bg-slate-800">Prix croissant</option>
                 <option value="price-high" className="bg-slate-800">Prix décroissant</option>
                 <option value="rating" className="bg-slate-800">Meilleures notes</option>
-                <option value="reviews" className="bg-slate-800">Plus d'avis</option>
+                <option value="reviews" className="bg-slate-800">Plus d&apos;avis</option>
               </select>
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
@@ -351,7 +351,7 @@ const ProductsPage = () => {
               className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <button className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-r-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300">
-              S'inscrire
+              S&apos;inscrire
             </button>
           </div>
         </div>
