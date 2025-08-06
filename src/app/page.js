@@ -18,7 +18,7 @@ const MellPlusNiger = () => {
       title: "Votre expert IT basé au Niger",
       subtitle: "Une offre évolutive avec plus de 15 000 références",
       description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
-      image: "/images/hp-removebg.png",
+      Image: "/images/hp-removebg.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Nos services",
       bgGradient: "from-blue-600 to-blue-800"
@@ -28,7 +28,7 @@ const MellPlusNiger = () => {
       title: "Dernières technologies HP",
       subtitle: "iPhone 15, MacBook Pro, HP Pavilion",
       description: "Découvrez la nouvelle gamme HP avec des offres exclusives et un service après-vente premium",
-      image: "/images/carroussel.PNG",
+      Image: "/images/carroussel.PNG",
       ctaPrimary: "Voir les produits",
       ctaSecondary: "En savoir plus",
       bgGradient: "from-gray-800 to-gray-900"
@@ -38,7 +38,7 @@ const MellPlusNiger = () => {
       title: "Camera Surveillance",
       subtitle: "Arldo",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      image: "/images/carroussel.PNG",
+      Image: "/images/carroussel.PNG",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Voir catalogue",
       bgGradient: "from-green-600 to-teal-700"
@@ -48,7 +48,7 @@ const MellPlusNiger = () => {
       title: "Promotions exceptionnelles",
       subtitle: "Jusqu'à -30% sur une sélection",
       description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      image: "/images/carroussel.PNG",
+      Image: "/images/carroussel.PNG",
       ctaPrimary: "Voir les promos",
       ctaSecondary: "Tous les produits",
       bgGradient: "from-red-600 to-pink-700"
@@ -78,7 +78,7 @@ const MellPlusNiger = () => {
 
   const categories = [
     { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
-    { name: 'Image&Son', subcategories: ['Cameras', 'Casques', 'Tablettes'] },
+    { name: 'Image & Son', subcategories: ['Cameras', 'Casques', 'Tablettes'] },
     { name: 'Reseau&Serveur', subcategories: ['Switch', 'Telephone IP', 'Videosurveillance'] },
     { name: 'Peripheriques', subcategories: ['Imprimantes', 'Scanners', 'Composants'] },
     { name: 'Connectiques', subcategories: ['Cables', 'Multiprise', 'Fournitures'] },
@@ -124,28 +124,28 @@ const MellPlusNiger = () => {
       name: "PC Portable HP ProBook 450",
       price: "450 000",
       originalPrice: "520 000",
-      image: "/images/ordi.jpg",
+      Image: "/images/ordi.jpg",
       badge: "Promo"
     },
     {
       id: 2,
       name: "iPhone 15 Pro 128GB",
       price: "980 000",
-      image: "/images/ordi.jpg",
+      Image: "/images/ordi.jpg",
       badge: "Nouveau"
     },
     {
       id: 3,
       name: "Climatiseur Samsung 12000 BTU",
       price: "380 000",
-      image: "/images/ordi.jpg",
+      Image: "/images/ordi.jpg",
       badge: "Best Seller"
     },
     {
       id: 4,
       name: "Imprimante HP LaserJet Pro",
       price: "220 000",
-      image: "/images/ordi.jpg",
+      Image: "/images/ordi.jpg",
       badge: ""
     }
   ];
@@ -370,7 +370,7 @@ const MellPlusNiger = () => {
                       <Image 
                         width={600}
                         height={450}
-                        src={slide.image}
+                        src={slide.Image}
                         alt={slide.title}
                         className="w-full max-w-md lg:max-w-full mx-auto rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300"
                       />
@@ -456,7 +456,7 @@ const MellPlusNiger = () => {
                   <Image
                     width={500}
                     height={500} 
-                    src={product.image} 
+                    src={product.Image} 
                     alt={product.name}
                     className="w-full h-40 md:h-48 object-cover"
                   />
@@ -648,7 +648,7 @@ const MellPlusNiger = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer */}{/*
       <footer className="bg-gray-800 text-white py-8 md:py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -709,7 +709,7 @@ const MellPlusNiger = () => {
             <p>&copy; 2025 Mell Plus Niger. Tous droits réservés.</p>
           </div>
         </div>
-      </footer>
+      </footer>*/}
     </div>
   );
 };
