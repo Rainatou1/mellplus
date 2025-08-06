@@ -42,7 +42,7 @@ const ProductDetailPage = () => {
     images: [
       '/images/ordi.jpg',
       '/images/ordi.jpg',
-      '/images/ordi.jpg ',
+      '/images/ordi.jpg',
       '/images/ordi.jpg'
     ],
     colors: [
