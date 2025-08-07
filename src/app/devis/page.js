@@ -14,6 +14,9 @@ const ContactDevisPage = () => {
     telephone: '',
     entreprise: '',
     message: '',
+    typeDevis: 'informatique',
+    budget: '',
+    urgence: 'normale'
   });
 
   const handleInputChange = (e) => {
@@ -45,7 +48,7 @@ const ContactDevisPage = () => {
     const result = await response.json();
 
     if (response.ok) {
-      alert('Votre message a été envoyé av ! Nous vous répondrons dans les plus brefs délais.');
+      alert('Votre demande a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.');
     } else {
       alert('Une erreur est survenue. Veuillez réessayer.');
       console.error(result);
@@ -66,8 +69,8 @@ const ContactDevisPage = () => {
           <nav className="text-sm">
             <ol className="flex items-center space-x-2">
               <li><a href="#" className="text-blue-600 hover:text-blue-700">Accueil</a></li>
-              <li className="text-gray-500"></li>
-              <li className="text-gray-700">Contact</li>
+              <li className="text-gray-500">›</li>
+              <li className="text-gray-700">Demande de devis</li>
             </ol>
           </nav>
         </div>
@@ -77,10 +80,10 @@ const ContactDevisPage = () => {
       <section className="bg-gradient-to-r from-gray-600 to-gray-800 text-white py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Contactez-nous
+            Demandez un devis
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Notre équipe d&apos;experts est à votre disposition pour répondre à toutes vos questions et établir un devis personnalisé
+            Notre équipe d&apos;experts est à votre disposition pour établir un devis personnalisé
           </p>
         </div>
       </section>
@@ -128,12 +131,10 @@ const ContactDevisPage = () => {
               <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
                 {/* Tabs */}
                 <div className="flex border-b mb-6">
-                  <button
-                    className="px-6 py-3 font-semibold border-b-2 border-blue-600 text-blue-600 text-gray-600 hover:text-blue-600"
-                    
-                  >
-                    <MessageSquare className="w-5 h-5 inline mr-2" />
-                    Contact
+                  
+                  <button className="px-6 py-3 font-semibold border-b-2 border-blue-600 text-blue-600">
+                    <Send className="w-5 h-5 inline mr-2" />
+                    Demande de devis
                   </button>
                 </div>
 
@@ -208,12 +209,82 @@ const ContactDevisPage = () => {
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
-                  </div>
+                  </div>                  
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4 text-gray-800">Détails du devis</h3>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Type de produit *
+                          </label>
+                          <select
+                            name="typeDevis"
+                            value={formData.typeDevis}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="informatique">Matériel informatique</option>
+                            <option value="telephonie">Téléphonie</option>
+                            <option value="electromenager">Électroménager</option>
+                            <option value="bureautique">Bureautique</option>
+                            <option value="mixte">Plusieurs catégories</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Budget approximatif
+                          </label>
+                          <select
+                            name="budget"
+                            value={formData.budget}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="">Sélectionner un budget</option>
+                            <option value="moins-100k">Moins de 100 000 FCFA</option>
+                            <option value="100k-500k">100 000 - 500 000 FCFA</option>
+                            <option value="500k-1m">500 000 - 1 000 000 FCFA</option>
+                            <option value="1m-5m">1 000 000 - 5 000 000 FCFA</option>
+                            <option value="plus-5m">Plus de 5 000 000 FCFA</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Urgence
+                        </label>
+                        <div className="flex space-x-4">
+                          <label className="flex items-center">
+                            <input
+                              type="radio"
+                              name="urgence"
+                              value="normale"
+                              checked={formData.urgence === 'normale'}
+                              onChange={handleInputChange}
+                              className="mr-2"
+                            />
+                            Normale (7-10 jours)
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="radio"
+                              name="urgence"
+                              value="urgente"
+                              checked={formData.urgence === 'urgente'}
+                              onChange={handleInputChange}
+                              className="mr-2"
+                            />
+                            Urgente (2-3 jours)
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  
 
                   {/* Message */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Votre message *
+                      Description détaillée de vos besoins *
                     </label>
                     <textarea
                       name="message"
@@ -221,7 +292,7 @@ const ContactDevisPage = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      placeholder="Décrivez votre demande..."
+                      placeholder="Décrivez précisément vos besoins : quantités, spécifications, contraintes, délais..."
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
@@ -233,7 +304,7 @@ const ContactDevisPage = () => {
                       className="w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
                     >
                       <Send className="w-5 h-5" />
-                      <span>Envoyer le message</span>
+                      <span>Demander un devis</span>
                     </button>
                   </div>
                 </form>
@@ -297,7 +368,7 @@ const ContactDevisPage = () => {
               </div>
 
               {/* Contact rapide */}
-              <div className="bg-gradient-to-br from-purple-600 to-pink-800 text-white rounded-lg p-6">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-4">Contact rapide</h3>
                 <p className="text-blue-100 text-sm mb-4">
                   Besoin d&apos;une réponse immédiate ? Appelez-nous directement !

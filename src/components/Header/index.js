@@ -9,7 +9,7 @@ export default function Header() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState(null);
- const categories = [
+ const categoriy = [
     { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
     { name: 'Image & Son', subcategories: ['Cameras', 'Casques', 'Tablettes'] },
     { name: 'Reseau&Serveur', subcategories: ['Switch', 'Telephone IP', 'Videosurveillance'] },
@@ -17,6 +17,58 @@ export default function Header() {
     { name: 'Connectiques', subcategories: ['Cables', 'Multiprise', 'Fournitures'] },
     { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
   ];  
+  const categories = [
+  {
+    name: 'Informatique',
+    subcategories: [
+      { name: 'Ordinateurs Portables', link: '/produit' },
+      { name: 'Ordinateurs de Bureau', link: '/produit' },
+      { name: 'Accéssoires', link: '/produit' },
+      { name: 'Logiciels', link: '/produit' }
+    ]
+  },
+  {
+    name: 'Image & Son',
+    subcategories: [
+      { name: 'Cameras', link: '/produit' },
+      { name: 'Casques', link: '/produit' },
+      { name: 'Tablettes', link: '/produit' }
+    ]
+  },
+  {
+    name: 'Reseau&Serveur',
+    subcategories: [
+      { name: 'Switch', link: '/produit' },
+      { name: 'Telephone IP', link: '/produit' },
+      { name: 'Videosurveillance', link: '/produit' }
+    ]
+  },
+  {
+    name: 'Peripheriques',
+    subcategories: [
+      { name: 'Imprimantes', link: '/produit' },
+      { name: 'Scanners', link: '/produit' },
+      { name: 'Composants', link: '/produit' }
+    ]
+  },
+  {
+    name: 'Connectiques',
+    subcategories: [
+      { name: 'Cables', link: '/category' },
+      { name: 'Multiprise', link: '/produit' },
+      { name: 'Fournitures', link: '/produit' }
+    ]
+  },
+  {
+    name: 'Services',
+    subcategories: [
+      { name: 'Développement Web et mobile', link: '/produit' },
+      { name: 'Maintenance informatique', link: '/produit' },
+      { name: 'Conseils expert', link: '/produit' }
+    ]
+  }
+];
+
   return (
     <div>
             {/* Header Top - Hidden on mobile */}
@@ -126,7 +178,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:block border-t border-gray-200 relative">
-            <div className="flex items-center space-x-4 lg:space-x-8 py-3 overflow-x-auto">
+            <div className="flex items-center space-x-4 lg:space-x-8 py-3 ">
               {categories.map((category, index) => (
                 <div
                   key={index}
@@ -145,10 +197,10 @@ export default function Header() {
                       {category.subcategories.map((sub, subIndex) => (
                         <a
                           key={subIndex}
-                          href="#"
+                          href={sub.link}
                           className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
                         >
-                          {sub}
+                          {sub.name}
                         </a>
                       ))}
                     </div>
@@ -156,7 +208,7 @@ export default function Header() {
                 </div>
               ))}
               <Link href="/contact" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Contact</Link>
-              <a href="/produit" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap">Promotions</a>
+              <a href="/about" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap">A propos</a>
             </div>
           </nav>
 
@@ -179,10 +231,10 @@ export default function Header() {
                         {category.subcategories.map((sub, subIndex) => (
                           <a
                             key={subIndex}
-                            href="#"
+                            href={sub.link}
                             className="block py-2 text-gray-600 hover:text-blue-600"
                           >
-                            {sub}
+                            {sub.name}
                           </a>
                         ))}
                       </div>

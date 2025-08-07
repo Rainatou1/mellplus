@@ -169,9 +169,11 @@ const MellPlusNiger = () => {
                         {slide.description}
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <Link href="/contact">
                         <button className="bg-white text-gray-800 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
                           {slide.ctaPrimary}
                         </button>
+                        </Link>
                         <button className="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-colors">
                           {slide.ctaSecondary}
                         </button>
@@ -458,7 +460,7 @@ const MellPlusNiger = () => {
           <p className="text-lg md:text-xl mb-6 md:mb-8">
             Un conseiller Mell Plus Niger vous répond dans les 48h !
           </p>
-          <Link href= "/contact">
+          <Link href= "/devis">
           <button className="bg-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-blue-700">
             JE DEMANDE UN DEVIS
           </button>
