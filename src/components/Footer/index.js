@@ -7,8 +7,9 @@ import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, 
 export default function Footer() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   return (
-    <footer className="bg-gray-800 text-white py-8 md:py-12">
-        <div className="container mx-auto px-4">
+     
+      <footer className="bg-gray-800 text-white py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             <div className="lg:col-span-1">
               <div className="flex items-center mb-4">
@@ -26,9 +27,11 @@ export default function Footer() {
               <h5 className="font-semibold mb-4 text-base md:text-lg">Produits</h5>
               <ul className="space-y-2 text-gray-400 text-sm md:text-base">
                 <li><a href="#" className="hover:text-white">Informatique</a></li>
-                <li><a href="#" className="hover:text-white">Téléphonie</a></li>
-                <li><a href="#" className="hover:text-white">Électroménager</a></li>
-                <li><a href="#" className="hover:text-white">Bureautique</a></li>
+                <li><a href="#" className="hover:text-white">Image & Son</a></li>
+                <li><a href="#" className="hover:text-white">Réseau & Serveur</a></li>
+                <li><a href="#" className="hover:text-white">Peripheriques</a></li>
+                <li><a href="#" className="hover:text-white">Connectiques</a></li>
+
               </ul>
             </div>
             
@@ -38,7 +41,7 @@ export default function Footer() {
                 <li><a href="#" className="hover:text-white">Support technique</a></li>
                 <li><a href="#" className="hover:text-white">Develeoppement web & mobile</a></li>
                 <li><a href="#" className="hover:text-white">Maintenance</a></li>
-                <li><a href="#" className="hover:text-white">Formation</a></li>
+                <li><a href="#" className="hover:text-white">Conseil expert</a></li>
               </ul>
             </div>
             
@@ -62,7 +65,7 @@ export default function Footer() {
           </div>
           
           <div className="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400 text-sm md:text-base">
-            <p>&copy; 2024 Mell Plus Niger. Tous droits réservés.</p>
+            <p>&copy; 2025 Mell Plus Niger. Tous droits réservés.</p>
           </div>
         </div>
       </footer>

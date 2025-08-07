@@ -1,203 +1,6 @@
 "use client";
-
 import React, { useState } from 'react';
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Award, Send, MessageSquare, Clock, Users, CheckCircle } from 'lucide-react';
-
-// Composant Header réutilisable
-const Header = ({ isMenuOpen, setIsMenuOpen, activeCategory, setActiveCategory, isMobileSearchOpen, setIsMobileSearchOpen }) => {
-  const categories = [
-    { name: 'Informatique', subcategories: ['Ordinateurs', 'Composants', 'Périphériques', 'Réseaux'] },
-    { name: 'Téléphonie', subcategories: ['Smartphones', 'Accessoires', 'Tablettes'] },
-    { name: 'Électroménager', subcategories: ['Cuisine', 'Climatisation', 'Lavage'] },
-    { name: 'Bureautique', subcategories: ['Imprimantes', 'Scanners', 'Fournitures'] }
-  ];
-
-  return (
-    <>
-      {/* Header Top - Hidden on mobile */}
-      <div className="hidden lg:block bg-gray-800 text-white text-sm py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4 xl:space-x-6">
-            <div className="flex items-center space-x-2">
-              <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">+227 96 12 34 56</span>
-              <span className="xl:hidden">96 12 34 56</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Mail className="w-4 h-4" />
-              <span className="hidden xl:inline">contact@mellplusniger.com</span>
-              <span className="xl:hidden">contact@mell...</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4" />
-              <span>Niamey, Niger</span>
-            </div>
-          </div>
-          <div className="hidden xl:flex items-center space-x-4">
-            <span>Lun-Ven: 8h-18h | Sam: 8h-16h</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Header */}
-      <header className="bg-white shadow-lg relative z-[100]">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-3 md:py-4">
-            {/* Logo */}
-            <div className="flex items-center flex-shrink-0">
-              <div className="bg-blue-600 text-white p-2 md:p-3 rounded-lg mr-2 md:mr-3">
-                <Award className="w-6 h-6 md:w-8 md:h-8" />
-              </div>
-              <div>
-                <h1 className="text-lg md:text-2xl font-bold text-gray-800">Mell Plus Niger</h1>
-                <p className="text-xs md:text-sm text-gray-600 hidden sm:block">Votre partenaire IT au Niger</p>
-              </div>
-            </div>
-
-            {/* Desktop Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-xl lg:max-w-2xl mx-4 lg:mx-8">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Rechercher un produit..."
-                  className="w-full px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="absolute right-3 top-2 lg:top-3 w-5 h-5 lg:w-6 lg:h-6 text-gray-400" />
-              </div>
-            </div>
-
-            {/* Header Actions */}
-            <div className="flex items-center space-x-2 md:space-x-4">
-              {/* Mobile Search Button */}
-              <button 
-                onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-                className="md:hidden p-2 text-gray-700 hover:text-blue-600"
-              >
-                <Search className="w-5 h-5" />
-              </button>
-
-              {/* User Account - Hidden on mobile */}
-              <button className="hidden lg:flex items-center space-x-2 text-gray-700 hover:text-blue-600">
-                <User className="w-5 h-5 lg:w-6 lg:h-6" />
-                <span className="hidden xl:inline">Mon Compte</span>
-              </button>
-
-              {/* Cart */}
-              <button className="flex items-center space-x-1 md:space-x-2 bg-blue-600 text-white px-2 md:px-4 py-2 rounded-lg hover:bg-blue-700">
-                <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="text-sm md:text-base">Panier</span>
-                <span className="hidden sm:inline">(0)</span>
-              </button>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Search Bar */}
-          {isMobileSearchOpen && (
-            <div className="md:hidden pb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Rechercher un produit..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="absolute right-3 top-3 w-6 h-6 text-gray-400" />
-              </div>
-            </div>
-          )}
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:block border-t border-gray-200 relative">
-            <div className="flex items-center space-x-4 lg:space-x-8 py-4 overflow-x-auto">
-              {categories.map((category, index) => (
-                <div
-                  key={index}
-                  className="relative flex-shrink-0"
-                  onMouseEnter={() => setActiveCategory(index)}
-                  onMouseLeave={() => setActiveCategory(null)}
-                >
-                  <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">
-                    <span>{category.name}</span>
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                  
-                  {/* Dropdown */}
-                  {activeCategory === index && (
-                    <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-[9999] transform translate-y-1">
-                      {category.subcategories.map((sub, subIndex) => (
-                        <a
-                          key={subIndex}
-                          href="#"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
-                        >
-                          {sub}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <a href="#" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Services</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Support</a>
-              <a href="#" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap">Promotions</a>
-            </div>
-          </nav>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <nav className="md:hidden border-t border-gray-200 py-4">
-              <div className="space-y-4">
-                {categories.map((category, index) => (
-                  <div key={index}>
-                    <button 
-                      onClick={() => setActiveCategory(activeCategory === index ? null : index)}
-                      className="flex items-center justify-between w-full text-left text-gray-700 hover:text-blue-600 py-2"
-                    >
-                      <span>{category.name}</span>
-                      <ChevronDown className={`w-4 h-4 transition-transform ${activeCategory === index ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    {activeCategory === index && (
-                      <div className="pl-4 space-y-2 mt-2">
-                        {category.subcategories.map((sub, subIndex) => (
-                          <a
-                            key={subIndex}
-                            href="#"
-                            className="block py-2 text-gray-600 hover:text-blue-600"
-                          >
-                            {sub}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2">Support</a>
-                <a href="#" className="block text-red-600 hover:text-red-700 py-2 font-semibold">Promotions</a>
-                
-                {/* Mobile Account Link */}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-4">
-                  <div className="flex items-center space-x-2">
-                    <User className="w-5 h-5" />
-                    <span>Mon Compte</span>
-                  </div>
-                </a>
-              </div>
-            </nav>
-          )}
-        </div>
-      </header>
-    </>
-  );
-};
 
 const ContactDevisPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -234,19 +37,9 @@ const ContactDevisPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header réutilisable */}
-      <Header 
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-        isMobileSearchOpen={isMobileSearchOpen}
-        setIsMobileSearchOpen={setIsMobileSearchOpen}
-      />
-
       {/* Breadcrumb */}
       <div className="bg-gray-100 py-4">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <nav className="text-sm">
             <ol className="flex items-center space-x-2">
               <li><a href="#" className="text-blue-600 hover:text-blue-700">Accueil</a></li>
@@ -259,7 +52,7 @@ const ContactDevisPage = () => {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12 md:py-16">
-        <div className="container mx-auto px-4 text-center">
+        <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Contactez-nous
           </h1>
@@ -271,7 +64,7 @@ const ContactDevisPage = () => {
 
       {/* Contact Info Cards */}
       <section className="py-12 bg-white relative -mt-8">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-blue-600">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -305,7 +98,7 @@ const ContactDevisPage = () => {
 
       {/* Main Content */}
       <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Form Section */}
             <div className="lg:col-span-2">

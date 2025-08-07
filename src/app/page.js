@@ -75,14 +75,7 @@ const MellPlusNiger = () => {
     setCurrentSlide(index);
   };
 
-  const categories = [
-    { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
-    { name: 'Image & Son', subcategories: ['Cameras', 'Casques', 'Tablettes'] },
-    { name: 'Reseau&Serveur', subcategories: ['Switch', 'Telephone IP', 'Videosurveillance'] },
-    { name: 'Peripheriques', subcategories: ['Imprimantes', 'Scanners', 'Composants'] },
-    { name: 'Connectiques', subcategories: ['Cables', 'Multiprise', 'Fournitures'] },
-    { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
-  ];
+ 
 
   const partners = [
     { name: 'Microsoft', logo: '/images/logiciel.jpg' },
@@ -149,187 +142,7 @@ const MellPlusNiger = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header Top - Hidden on mobile */}
-      <div className="hidden lg:block bg-gray-800 text-white text-sm py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4 xl:space-x-6">
-            <div className="flex items-center space-x-2">
-              <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">+227 96 12 34 56</span>
-              <span className="xl:hidden">96 12 34 56</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Mail className="w-4 h-4" />
-              <span className="hidden xl:inline">contact@mellplusniger.com</span>
-              <span className="xl:hidden">contact@mell...</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4" />
-              <span>Niamey, Niger</span>
-            </div>
-          </div>
-          <div className="hidden xl:flex items-center space-x-4">
-            <span>Lun-Ven: 8h-18h | Sam: 8h-16h</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Header */}
-      <header className="bg-white shadow-lg relative z-50">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-3 md:py-4">
-            {/* Logo */}
-            <div className="flex items-center flex-shrink-0">
-              <div className="bg-blue-600 text-white p-2 md:p-3 rounded-lg mr-2 md:mr-3">
-                <Award className="w-6 h-6 md:w-8 md:h-8" />
-              </div>
-              <div>
-                <h1 className="text-lg md:text-2xl font-bold text-gray-800">Mell Plus Niger</h1>
-                <p className="text-xs md:text-sm text-gray-600 hidden sm:block">Votre partenaire IT au Niger</p>
-              </div>
-            </div>
-
-            {/* Desktop Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-xl lg:max-w-2xl mx-4 lg:mx-8">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Rechercher un produit..."
-                  className="w-full px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="absolute right-3 top-2 lg:top-3 w-5 h-5 lg:w-6 lg:h-6 text-gray-400" />
-              </div>
-            </div>
-
-            {/* Header Actions */}
-            <div className="flex items-center space-x-2 md:space-x-4">
-              {/* Mobile Search Button */}
-              <button 
-                onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-                className="md:hidden p-2 text-gray-700 hover:text-blue-600"
-              >
-                <Search className="w-5 h-5" />
-              </button>
-
-              {/* User Account - Hidden on mobile */}
-              <button className="hidden lg:flex items-center space-x-2 text-gray-700 hover:text-blue-600">
-                <User className="w-5 h-5 lg:w-6 lg:h-6" />
-                <span className="hidden xl:inline">Mon Compte</span>
-              </button>
-
-              {/* Cart */}
-              <button className="flex items-center space-x-1 md:space-x-2 bg-blue-600 text-white px-2 md:px-4 py-2 rounded-lg hover:bg-blue-700">
-                <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="text-sm md:text-base">Panier</span>
-                <span className="hidden sm:inline">(0)</span>
-              </button>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Search Bar */}
-          {isMobileSearchOpen && (
-            <div className="md:hidden pb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Rechercher un produit..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="absolute right-3 top-3 w-6 h-6 text-gray-400" />
-              </div>
-            </div>
-          )}
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:block border-t border-gray-200 relative">
-            <div className="flex items-center space-x-4 lg:space-x-8 py-4 overflow-x-auto">
-              {categories.map((category, index) => (
-                <div
-                  key={index}
-                  className="relative flex-shrink-0"
-                  onMouseEnter={() => setActiveCategory(index)}
-                  onMouseLeave={() => setActiveCategory(null)}
-                >
-                  <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">
-                    <span>{category.name}</span>
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                  
-                  {/* Dropdown */}
-                  {activeCategory === index && (
-                    <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1">
-                      {category.subcategories.map((sub, subIndex) => (
-                        <a
-                          key={subIndex}
-                          href="#"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
-                        >
-                          {sub}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <Link href="/contact" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Contact</Link>
-              <a href="/produit" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap">Promotions</a>
-            </div>
-          </nav>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <nav className="md:hidden border-t border-gray-200 py-4">
-              <div className="space-y-4">
-                {categories.map((category, index) => (
-                  <div key={index}>
-                    <button 
-                      onClick={() => setActiveCategory(activeCategory === index ? null : index)}
-                      className="flex items-center justify-between w-full text-left text-gray-700 hover:text-blue-600 py-2"
-                    >
-                      <span>{category.name}</span>
-                      <ChevronDown className={`w-4 h-4 transition-transform ${activeCategory === index ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    {activeCategory === index && (
-                      <div className="pl-4 space-y-2 mt-2">
-                        {category.subcategories.map((sub, subIndex) => (
-                          <a
-                            key={subIndex}
-                            href="#"
-                            className="block py-2 text-gray-600 hover:text-blue-600"
-                          >
-                            {sub}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2">Contact</a>
-                <a href="#" className="block text-red-600 hover:text-red-700 py-2 font-semibold">Promotions</a>
-                
-                {/* Mobile Account Link */}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-4">
-                  <div className="flex items-center space-x-2">
-                    <User className="w-5 h-5" />
-                    <span>Mon Compte</span>
-                  </div>
-                </a>
-              </div>
-            </nav>
-          )}
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gray-50">      
       {/* Hero Carousel */}
       <section className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
         {/* Slides */}
@@ -343,7 +156,7 @@ const MellPlusNiger = () => {
               }`}
             >
               <div className={`h-full bg-gradient-to-r ${slide.bgGradient} text-white`}>
-                <div className="container mx-auto px-4 h-full">
+                <div className="max-w-7xl mx-auto px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1">
                       <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
@@ -384,14 +197,14 @@ const MellPlusNiger = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
           aria-label="Slide précédent"
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
           aria-label="Slide suivant"
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -426,7 +239,7 @@ const MellPlusNiger = () => {
 
       {/* Advantages Section */}
       <section className="py-8 md:py-12 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Les avantages Mell Plus Niger</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {advantages.map((advantage, index) => (
@@ -444,7 +257,7 @@ const MellPlusNiger = () => {
 
       {/* Featured Products */}
       <section className="py-8 md:py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
             <h3 className="text-xl md:text-2xl font-bold mb-4 sm:mb-0">Produits en vedette</h3>
             <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">
@@ -496,7 +309,7 @@ const MellPlusNiger = () => {
 
       {/* À Découvrir Section */}
       <section className="py-8 md:py-12 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="mb-6 md:mb-8">
             <h3 className="text-xl md:text-2xl font-bold mb-2">DÉCOUVRIR</h3>
             <p className="text-gray-600 text-sm md:text-base">Conseils, inspirations, innovations</p>
@@ -619,8 +432,8 @@ const MellPlusNiger = () => {
         </div>
       </section>
       {/* Partners Section */}
-      {/*<section className="py-8 md:py-12 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-8 md:py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Nos partenaires</h3>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center">
             {partners.map((partner, index) => (
@@ -636,11 +449,11 @@ const MellPlusNiger = () => {
             ))}
           </div>
         </div>
-      </section>*/}
+      </section>
 
       {/* CTA Section */}
-      {/*<section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 text-center">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
             Un conseiller Mell Plus Niger vous répond dans les 48h !
@@ -651,70 +464,7 @@ const MellPlusNiger = () => {
           </button>
           </Link>
         </div>
-      </section>*/}
-
-      {/* Footer */}{/*
-      <footer className="bg-gray-800 text-white py-8 md:py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            <div className="lg:col-span-1">
-              <div className="flex items-center mb-4">
-                <div className="bg-blue-600 text-white p-2 rounded mr-3">
-                  <Award className="w-5 h-5 md:w-6 md:h-6" />
-                </div>
-                <h4 className="text-lg md:text-xl font-bold">Mell Plus Niger</h4>
-              </div>
-              <p className="text-gray-400 mb-4 text-sm md:text-base">
-                Votre partenaire de confiance pour tous vos besoins en matériel informatique et électronique au Niger.
-              </p>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Produits</h5>
-              <ul className="space-y-2 text-gray-400 text-sm md:text-base">
-                <li><a href="#" className="hover:text-white">Informatique</a></li>
-                <li><a href="#" className="hover:text-white">Image & Son</a></li>
-                <li><a href="#" className="hover:text-white">Réseau & Serveur</a></li>
-                <li><a href="#" className="hover:text-white">Peripheriques</a></li>
-                <li><a href="#" className="hover:text-white">Connectiques</a></li>
-
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Services</h5>
-              <ul className="space-y-2 text-gray-400 text-sm md:text-base">
-                <li><a href="#" className="hover:text-white">Support technique</a></li>
-                <li><a href="#" className="hover:text-white">Develeoppement web & mobile</a></li>
-                <li><a href="#" className="hover:text-white">Maintenance</a></li>
-                <li><a href="#" className="hover:text-white">Conseil expert</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Contact</h5>
-              <div className="space-y-2 text-gray-400 text-sm md:text-base">
-                <div className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4 flex-shrink-0" />
-                  <span>+227 96 12 34 56</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Mail className="w-4 h-4 flex-shrink-0" />
-                  <span className="break-all">contact@mellplusniger.com</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 flex-shrink-0" />
-                  <span>Niamey, Niger</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400 text-sm md:text-base">
-            <p>&copy; 2025 Mell Plus Niger. Tous droits réservés.</p>
-          </div>
-        </div>
-      </footer>*/}
+      </section>
     </div>
   );
 };
