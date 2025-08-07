@@ -1,8 +1,10 @@
 import Link from 'next/link'
+import { useState } from 'react'
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 
 export default function Footer() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   return (
     <footer className="bg-gray-800 text-white py-8 md:py-12">
         <div className="container mx-auto px-4">
