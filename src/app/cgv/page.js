@@ -7,7 +7,7 @@ export default function MentionsLegales() {
         <section>
           <h2 className="text-2xl font-semibold text-blue-600 mb-2">Éditeur du site</h2>
           <p>
-            Nom de l'entreprise : <strong>TonNomEntreprise</strong><br />
+            Nom de l&apos;entreprise : <strong>TonNomEntreprise</strong><br />
             Responsable de la publication : <strong>Ton Nom complet</strong><br />
             Email : <a href="mailto:contact@tonentreprise.com" className="text-blue-600">contact@tonentreprise.com</a><br />
             Adresse : 123 Rue Exemple, Ville, Pays<br />

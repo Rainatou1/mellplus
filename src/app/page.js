@@ -352,8 +352,8 @@ const MellPlusNiger = () => {
                 />
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
-                    <h4 className="text-xl md:text-2xl font-bold mb-2">Gaming</h4>
-                    <p className="text-sm opacity-90">PC Gaming et accessoires</p>
+                    <h4 className="text-xl md:text-2xl font-bold mb-2">Best sellers</h4>
+                    <p className="text-sm opacity-90">PC et accessoires</p>
                   </div>
                   <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
                     VOIR ›
