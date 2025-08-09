@@ -235,7 +235,7 @@ const AllServicesPage = () => {
               Tous nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Services</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8">
-              De la conception digitale à l'installation électrique, nous couvrons tous vos besoins technologiques avec expertise et professionnalisme
+              De la conception digitale à l&apos;installation électrique, nous couvrons tous vos besoins technologiques avec expertise et professionnalisme
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {Object.entries(serviceCategories).map(([key, category]) => (
@@ -406,7 +406,7 @@ const AllServicesPage = () => {
               </div>
               
               <blockquote className="text-gray-300 italic mb-6">
-                "{testimonial.text}"
+                &quot;{testimonial.text}&quot;
               </blockquote>
               
               <div className="border-t border-white/10 pt-4">
@@ -426,7 +426,7 @@ const AllServicesPage = () => {
             Un projet ? Parlons-en !
           </h2>
           <p className="text-xl text-gray-300 mb-8">
-            Quel que soit votre besoin, notre équipe d'experts est là pour vous accompagner de A à Z
+            Quel que soit votre besoin, notre équipe d&apos;experts est là pour vous accompagner de A à Z
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link href="/devis">

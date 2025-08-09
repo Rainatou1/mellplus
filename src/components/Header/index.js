@@ -70,13 +70,13 @@ export default function Header() {
           <div className="flex items-center space-x-4 xl:space-x-6">
             <div className="flex items-center space-x-2">
               <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">+227 96 12 34 56</span>
-              <span className="xl:hidden">96 12 34 56</span>
+              <span className="hidden xl:inline">+227 20 35 23 23/+227 20 35 24 24</span>
+              <span className="xl:hidden">+227 20 35 23 23/+227 20 35 24 24</span>
             </div>
             <div className="flex items-center space-x-2">
               <Mail className="w-4 h-4" />
-              <span className="hidden xl:inline">contact@mellplusniger.com</span>
-              <span className="xl:hidden">contact@mell...</span>
+              <span className="hidden xl:inline">mellplus@mellplusniger.com</span>
+              <span className="xl:hidden">mell@mell...</span>
             </div>
             <div className="flex items-center space-x-2">
               <MapPin className="w-4 h-4" />

@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link'
+import Image from "next/image";
 
 import React, { useState } from 'react';
 import { 
@@ -236,7 +237,7 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold text-white">Notre Vision</h2>
             </div>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              Devenir le partenaire de référence pour les entreprises qui souhaitent se démarquer dans l&apos;univers technologique grâce à l'innovation et l'excellence.
+              Devenir le partenaire de référence pour les entreprises qui souhaitent se démarquer dans l&apos;univers technologique grâce à l&apos;innovation et l&apos;excellence.
             </p>
             <p className="text-gray-300 leading-relaxed">
               Nous visons à créer des expériences qui marquent les esprits et génèrent des résultats tangibles.
@@ -362,7 +363,9 @@ const AboutPage = () => {
             <div key={index} className="group">
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
                 <div className="relative overflow-hidden">
-                  <img
+                  <Image
+                    width={500}
+                    height={600}
                     src={member.avatar}
                     alt={member.name}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
