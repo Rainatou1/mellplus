@@ -14,9 +14,9 @@ const ProductsPage = () => {
   const categories = [
     { id: 'all', name: 'Tous les produits', count: 24 },
     { id: 'electronics', name: 'Électronique', count: 8 },
-    { id: 'fashion', name: 'Mode', count: 6 },
-    { id: 'home', name: 'Maison', count: 5 },
-    { id: 'sports', name: 'Sport', count: 5 }
+    { id: 'fashion', name: 'Resau', count: 6 },
+    { id: 'home', name: 'Accessoire', count: 5 },
+    { id: 'sports', name: 'Informatique', count: 5 }
   ];
 
   const products = [
@@ -24,8 +24,8 @@ const ProductsPage = () => {
       id: 1,
       name: 'Smartphone Pro Max',
       category: 'electronics',
-      price: 899,
-      originalPrice: 999,
+      price: 899000,
+      originalPrice: 999000,
       rating: 4.8,
       reviews: 245,
       Image: "/images/carroussel.PNG",
@@ -36,7 +36,7 @@ const ProductsPage = () => {
       id: 2,
       name: 'Casque Audio Premium',
       category: 'electronics',
-      price: 299,
+      price: 299000,
       rating: 4.6,
       reviews: 189,
       Image: "/images/carroussel.PNG",
@@ -45,9 +45,9 @@ const ProductsPage = () => {
     },
     {
       id: 3,
-      name: 'Veste en Cuir Élégante',
-      category: 'fashion',
-      price: 249,
+      name: 'Multiprise',
+      category: 'Reseau',
+      price: 24900,
       originalPrice: 349,
       rating: 4.7,
       reviews: 156,
@@ -57,9 +57,9 @@ const ProductsPage = () => {
     },
     {
       id: 4,
-      name: 'Montre Connectée Sport',
-      category: 'sports',
-      price: 199,
+      name: 'clavier',
+      category: 'Accessoire',
+      price: 19900,
       rating: 4.5,
       reviews: 302,
       Image: "/images/carroussel.PNG",
@@ -67,9 +67,9 @@ const ProductsPage = () => {
     },
     {
       id: 5,
-      name: 'Lampe Design Moderne',
-      category: 'home',
-      price: 159,
+      name: 'Dell',
+      category: 'Informatique',
+      price: 159000,
       rating: 4.9,
       reviews: 87,
       Image: "/images/carroussel.PNG",
@@ -78,9 +78,9 @@ const ProductsPage = () => {
     },
     {
       id: 6,
-      name: 'Sneakers Premium',
-      category: 'fashion',
-      price: 179,
+      name: 'Lenovo thinkpad',
+      category: 'Reseau',
+      price: 179000,
       rating: 4.4,
       reviews: 234,
       Image: "/images/carroussel.PNG",
@@ -90,7 +90,7 @@ const ProductsPage = () => {
       id: 7,
       name: 'Tablette Graphique Pro',
       category: 'electronics',
-      price: 399,
+      price: 399000,
       rating: 4.7,
       reviews: 123,
       Image: "/images/carroussel.PNG",
@@ -99,10 +99,10 @@ const ProductsPage = () => {
     },
     {
       id: 8,
-      name: 'Chaise Ergonomique',
-      category: 'home',
-      price: 329,
-      originalPrice: 399,
+      name: 'Camera canon',
+      category: 'electronics',
+      price: 329000,
+      originalPrice: 399000,
       rating: 4.6,
       reviews: 167,
       Image: "/images/carroussel.PNG",
@@ -114,9 +114,9 @@ const ProductsPage = () => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPrice = priceRange === 'all' || 
-      (priceRange === 'under200' && product.price < 200) ||
-      (priceRange === '200to400' && product.price >= 200 && product.price <= 400) ||
-      (priceRange === 'over400' && product.price > 400);
+      (priceRange === 'under200000' && product.price < 200000) ||
+      (priceRange === '200000to400000' && product.price >= 200000 && product.price <= 400000) ||
+      (priceRange === 'over400000' && product.price > 400000);
     
     return matchesCategory && matchesSearch && matchesPrice;
   });
@@ -143,16 +143,16 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-slate-100">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Produits</span>
+              Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-800 to-pink-600">Produits</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed">
               Découvrez notre sélection premium de produits soigneusement choisis pour leur qualité exceptionnelle
             </p>
           </div>
@@ -161,7 +161,7 @@ const ProductsPage = () => {
 
       {/* Filters Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+        <div className="bg-white backdrop-blur-lg rounded-2xl p-6 border border-white/20">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="relative">
@@ -171,7 +171,7 @@ const ProductsPage = () => {
                 placeholder="Rechercher un produit..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-gray/20 rounded-lg text-gray placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
@@ -180,10 +180,10 @@ const ProductsPage = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
+                className="w-full px-4 py-2 bg-white/10 border border-gray/20 rounded-lg text-gray focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
               >
                 {categories.map(category => (
-                  <option key={category.id} value={category.id} className="bg-slate-800">
+                  <option key={category.id} value={category.id} className="bg-white">
                     {category.name} ({category.count})
                   </option>
                 ))}
@@ -196,12 +196,12 @@ const ProductsPage = () => {
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
+                className="w-full px-4 py-2 bg-white/10 border border-gray/20 rounded-lg text-backdrop-blur-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
               >
-                <option value="all" className="bg-slate-800">Tous les prix</option>
-                <option value="under200" className="bg-slate-800">Moins de 200€</option>
-                <option value="200to400" className="bg-slate-800">200€ - 400€</option>
-                <option value="over400" className="bg-slate-800">Plus de 400€</option>
+                <option value="all" className="bg-white">Tous les prix</option>
+                <option value="under200000" className="bg-white">Moins de 200000F</option>
+                <option value="200000to400000" className="bg-white">200000F - 400000F</option>
+                <option value="over400000" className="bg-white">Plus de 400000F</option>
               </select>
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
@@ -211,13 +211,13 @@ const ProductsPage = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
+                className="w-full px-4 py-2 bg-white/10 border border-gray/20 rounded-lg text-gray focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
               >
-                <option value="name" className="bg-slate-800">Trier par nom</option>
-                <option value="price-low" className="bg-slate-800">Prix croissant</option>
-                <option value="price-high" className="bg-slate-800">Prix décroissant</option>
-                <option value="rating" className="bg-slate-800">Meilleures notes</option>
-                <option value="reviews" className="bg-slate-800">Plus d&apos;avis</option>
+                <option value="name" className="bg-white">Trier par nom</option>
+                <option value="price-low" className="bg-white">Prix croissant</option>
+                <option value="price-high" className="bg-white">Prix décroissant</option>
+                <option value="rating" className="bg-white">Meilleures notes</option>
+                <option value="reviews" className="bg-white">Plus d&apos;avis</option>
               </select>
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
@@ -228,7 +228,7 @@ const ProductsPage = () => {
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="mb-8">
-          <p className="text-gray-300 text-center">
+          <p className="text-gray-800 text-center">
             {sortedProducts.length} produit{sortedProducts.length > 1 ? 's' : ''} trouvé{sortedProducts.length > 1 ? 's' : ''}
           </p>
         </div>
@@ -278,8 +278,8 @@ const ProductsPage = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-400 transition-colors">
+              <div className="p-6 bg-white">
+                <h3 className="text-lg font-semibold text-gray mb-2 group-hover:text-purple-400 transition-colors">
                   {product.name}
                 </h3>
 
@@ -301,12 +301,12 @@ const ProductsPage = () => {
                 {/* Price */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold text-white">
-                      {product.price}€
+                    <span className="text-2xl font-bold text-gray">
+                      {product.price}F
                     </span>
                     {product.originalPrice && (
                       <span className="text-gray-400 line-through text-sm">
-                        {product.originalPrice}€
+                        {product.originalPrice}F
                       </span>
                     )}
                   </div>
@@ -317,7 +317,7 @@ const ProductsPage = () => {
                   disabled={!product.inStock}
                   className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 ${
                     product.inStock
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 hover:scale-105'
+                      ? 'bg-gradient-to-r from-blue-800 to-blue-500 text-white hover:from-purple-700 hover:to-pink-700 hover:scale-105'
                       : 'bg-gray-600 text-gray-300 cursor-not-allowed'
                   }`}
                 >
@@ -339,7 +339,7 @@ const ProductsPage = () => {
       </div>
 
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 py-16">
+      {/*<div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-3xl font-bold text-white mb-4">
             Restez informé de nos nouveautés
@@ -358,7 +358,7 @@ const ProductsPage = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 };

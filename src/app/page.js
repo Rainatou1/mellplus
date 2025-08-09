@@ -289,9 +289,9 @@ const MellPlusNiger = () => {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical'
                   }}>{product.name}</h4>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                     <div>
-                      <span className="text-lg md:text-xl font-bold text-blue-600">{product.price} FCFA</span>
+                      <span className="text-lg md:text-xl font-bold text-gray">{product.price} FCFA</span>
                       {product.originalPrice && (
                         <div className="text-xs md:text-sm text-gray-500 line-through">
                           {product.originalPrice} FCFA

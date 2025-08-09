@@ -112,21 +112,21 @@ const ProductDetailPage = () => {
     {
       id: 2,
       name: 'Coque Protection Premium',
-      price: 29,
+      price: 2900,
       image: '/images/ordi.jpg',
       rating: 4.6
     },
     {
       id: 3,
       name: 'Chargeur Sans Fil Rapide',
-      price: 49,
+      price: 4000,
       image: '/images/ordi.jpg',
       rating: 4.7
     },
     {
       id: 4,
       name: 'Écouteurs Bluetooth Pro',
-      price: 159,
+      price: 1500,
       image: '/images/ordi.jpg',
       rating: 4.8
     }
@@ -148,12 +148,12 @@ const ProductDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-slate-100">
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <nav className="text-sm text-gray-400">
           <span>Accueil</span> / <span>Produits</span> / <span>Électronique</span> / 
-          <span className="text-white"> {product.name}</span>
+          <span className="text-black"> {product.name}</span>
         </nav>
       </div>
 
@@ -209,8 +209,8 @@ const ProductDetailPage = () => {
           <div className="space-y-6">
             {/* Header */}
             <div>
-              <p className="text-purple-400 font-semibold">{product.brand}</p>
-              <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
+              <p className="text-blue-400 font-semibold">{product.brand}</p>
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray mb-2">
                 {product.name}
               </h1>
               
@@ -228,7 +228,7 @@ const ProductDetailPage = () => {
                     />
                   ))}
                 </div>
-                <span className="text-white font-semibold">{product.rating}</span>
+                <span className="text-gray font-semibold">{product.rating}</span>
                 <span className="text-gray-400">({product.reviewCount} avis)</span>
               </div>
             </div>
@@ -236,14 +236,14 @@ const ProductDetailPage = () => {
             {/* Price */}
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
-                <span className="text-4xl font-bold text-white">{product.price}€</span>
+                <span className="text-4xl font-bold text-gray">{product.price}€</span>
                 {product.originalPrice && (
                   <span className="text-xl text-gray-400 line-through">{product.originalPrice}€</span>
                 )}
               </div>
               {product.originalPrice && (
                 <p className="text-green-400 font-semibold">
-                  Vous économisez {calculateSavings()}€ !
+                  Vous économisez {calculateSavings()}F !
                 </p>
               )}
             </div>
@@ -264,7 +264,7 @@ const ProductDetailPage = () => {
 
             {/* Color Selection */}
             <div>
-              <h3 className="text-white font-semibold mb-3">Couleur : {selectedColor}</h3>
+              <h3 className="text-gray font-semibold mb-3">Couleur : {selectedColor}</h3>
               <div className="flex space-x-3">
                 {product.colors.map((color) => (
                   <button
@@ -284,7 +284,7 @@ const ProductDetailPage = () => {
 
             {/* Size Selection */}
             <div>
-              <h3 className="text-white font-semibold mb-3">Taille : {selectedSize}</h3>
+              <h3 className="text-gray font-semibold mb-3">Taille : {selectedSize}</h3>
               <div className="flex space-x-3">
                 {product.sizes.map((size) => (
                   <button
@@ -293,7 +293,7 @@ const ProductDetailPage = () => {
                     className={`px-4 py-2 rounded-lg border transition-colors ${
                       selectedSize === size
                         ? 'border-purple-500 bg-purple-500/20 text-purple-400'
-                        : 'border-white/20 bg-white/10 text-white hover:border-purple-500/50'
+                        : 'border-white/20 bg-white/10 text-gray hover:border-purple-500/50'
                     }`}
                   >
                     {size}
@@ -304,36 +304,36 @@ const ProductDetailPage = () => {
 
             {/* Quantity */}
             <div>
-              <h3 className="text-white font-semibold mb-3">Quantité</h3>
+              <h3 className="text-gray font-semibold mb-3">Quantité</h3>
               <div className="flex items-center space-x-4">
                 <div className="flex items-center bg-white/10 backdrop-blur-lg rounded-lg border border-white/20">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="p-3 text-white hover:text-purple-400 transition-colors"
+                    className="p-3 text-gray hover:text-purple-400 transition-colors"
                     disabled={quantity <= 1}
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="px-4 py-3 text-white font-semibold min-w-[60px] text-center">
+                  <span className="px-4 py-3 text-gray font-semibold min-w-[60px] text-center">
                     {quantity}
                   </span>
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="p-3 text-white hover:text-purple-400 transition-colors"
+                    className="p-3 text-gray hover:text-purple-400 transition-colors"
                     disabled={quantity >= product.stockCount}
                   >
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
                 <span className="text-gray-400">
-                  Total: <span className="text-white font-bold">{product.price * quantity}€</span>
+                  Total: <span className="text-gray font-bold">{product.price * quantity}€</span>
                 </span>
               </div>
             </div>
 
             {/* Actions */}
             <div className="flex space-x-4">
-              <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 flex items-center justify-center space-x-2">
+              <button className="flex-1 bg-gradient-to-r from-blue-800 to-blue-500 text-white py-4 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 flex items-center justify-center space-x-2">
                 <ShoppingCart className="w-5 h-5" />
                 <span>Ajouter au panier</span>
               </button>
@@ -343,25 +343,25 @@ const ProductDetailPage = () => {
                 className={`p-4 rounded-lg border transition-all duration-300 ${
                   isWishlisted
                     ? 'border-red-500 bg-red-500/20 text-red-400'
-                    : 'border-white/20 bg-white/10 text-white hover:border-red-500/50'
+                    : 'border-white/20 bg-white/10 text-gray hover:border-red-500/50'
                 }`}
               >
                 <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
               </button>
               
-              <button className="p-4 rounded-lg border border-white/20 bg-white/10 text-white hover:border-purple-500/50 transition-colors">
+              <button className="p-4 rounded-lg border border-white/20 bg-white/10 text-gray hover:border-purple-500/50 transition-colors">
                 <Share2 className="w-5 h-5" />
               </button>
             </div>
 
             {/* Features */}
             <div className="bg-white/10 backdrop-blur-lg rounded-lg p-6 border border-white/20">
-              <h3 className="text-white font-semibold mb-4">Caractéristiques principales</h3>
+              <h3 className="text-gray font-semibold mb-4">Caractéristiques principales</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {product.features.map((feature, index) => (
                   <div key={index} className="flex items-center space-x-2">
                     <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">{feature}</span>
+                    <span className="text-gray-600 text-sm">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -372,22 +372,22 @@ const ProductDetailPage = () => {
               <div className="flex items-center space-x-3 p-4 bg-white/10 backdrop-blur-lg rounded-lg border border-white/20">
                 <Truck className="w-8 h-8 text-purple-400" />
                 <div>
-                  <p className="text-white font-semibold text-sm">Livraison gratuite</p>
-                  <p className="text-gray-400 text-xs">Dès 50€ d&apos;achat</p>
+                  <p className="text-gray font-semibold text-sm">Livraison gratuite</p>
+                  <p className="text-gray-600 text-xs">Dès 50€ d&apos;achat</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 p-4 bg-white/10 backdrop-blur-lg rounded-lg border border-white/20">
                 <Shield className="w-8 h-8 text-green-400" />
                 <div>
-                  <p className="text-white font-semibold text-sm">Garantie 2 ans</p>
-                  <p className="text-gray-400 text-xs">Incluse</p>
+                  <p className="text-gray font-semibold text-sm">Garantie 2 ans</p>
+                  <p className="text-gray-600 text-xs">Incluse</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 p-4 bg-white/10 backdrop-blur-lg rounded-lg border border-white/20">
                 <RotateCcw className="w-8 h-8 text-blue-400" />
                 <div>
-                  <p className="text-white font-semibold text-sm">Retour 30 jours</p>
-                  <p className="text-gray-400 text-xs">Gratuit</p>
+                  <p className="text-gray font-semibold text-sm">Retour 30 jours</p>
+                  <p className="text-gray-600 text-xs">Gratuit</p>
                 </div>
               </div>
             </div>
@@ -405,8 +405,8 @@ const ProductDetailPage = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`flex-1 py-4 px-6 font-semibold transition-colors ${
                     activeTab === tab
-                      ? 'text-purple-400 bg-white/10'
-                      : 'text-gray-400 hover:text-white'
+                      ? 'text-blue-400 bg-white'
+                      : 'text-gray-700 hover:text-black'
                   }`}
                 >
                   {tab === 'description' && 'Description'}
@@ -420,24 +420,24 @@ const ProductDetailPage = () => {
             <div className="p-8">
               {activeTab === 'description' && (
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <p className="text-gray-700 text-lg leading-relaxed mb-6">
                     {product.description}
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                      <h4 className="text-white font-semibold mb-4">Points forts</h4>
+                      <h4 className="text-gray font-semibold mb-4">Points forts</h4>
                       <ul className="space-y-2">
                         {product.features.map((feature, index) => (
                           <li key={index} className="flex items-center space-x-2">
                             <Check className="w-4 h-4 text-green-400" />
-                            <span className="text-gray-300">{feature}</span>
+                            <span className="text-gray-700">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold mb-4">Dans la boîte</h4>
-                      <ul className="space-y-2 text-gray-300">
+                      <h4 className="text-gray font-semibold mb-4">Dans la boîte</h4>
+                      <ul className="space-y-2 text-gray-700">
                         <li>• Smartphone {product.name}</li>
                         <li>• Câble USB-C vers Lightning</li>
                         <li>• Documentation</li>
@@ -452,8 +452,8 @@ const ProductDetailPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {Object.entries(product.specifications).map(([key, value]) => (
                     <div key={key} className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-gray-400 font-medium">{key}</span>
-                      <span className="text-white font-semibold">{value}</span>
+                      <span className="text-gray-700 font-medium">{key}</span>
+                      <span className="text-gray font-semibold">{value}</span>
                     </div>
                   ))}
                 </div>
@@ -464,7 +464,7 @@ const ProductDetailPage = () => {
                   {/* Reviews Summary */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="text-center">
-                      <div className="text-4xl font-bold text-white mb-2">{product.rating}</div>
+                      <div className="text-4xl font-bold text-gray mb-2">{product.rating}</div>
                       <div className="flex justify-center mb-2">
                         {[...Array(5)].map((_, i) => (
                           <Star
@@ -477,7 +477,7 @@ const ProductDetailPage = () => {
                           />
                         ))}
                       </div>
-                      <p className="text-gray-400">{product.reviewCount} avis</p>
+                      <p className="text-gray-600">{product.reviewCount} avis</p>
                     </div>
                     <div className="md:col-span-2">
                       {[5, 4, 3, 2, 1].map((stars) => (
@@ -504,13 +504,13 @@ const ProductDetailPage = () => {
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex items-center space-x-4">
                             <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                              <User className="w-5 h-5 text-white" />
+                              <User className="w-5 h-5 text-gray" />
                             </div>
                             <div>
                               <div className="flex items-center space-x-2">
-                                <span className="text-white font-semibold">{review.author}</span>
+                                <span className="text-gray font-semibold">{review.author}</span>
                                 {review.verified && (
-                                  <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">
+                                  <span className="text-xs bg-green-500 text-gray px-2 py-1 rounded">
                                     Achat vérifié
                                   </span>
                                 )}
@@ -533,14 +533,14 @@ const ProductDetailPage = () => {
                             </div>
                           </div>
                         </div>
-                        <h4 className="text-white font-semibold mb-2">{review.title}</h4>
+                        <h4 className="text-gray font-semibold mb-2">{review.title}</h4>
                         <p className="text-gray-300 mb-4">{review.content}</p>
                         <div className="flex items-center space-x-4">
-                          <button className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors">
+                          <button className="flex items-center space-x-2 text-gray-400 hover:text-gray transition-colors">
                             <ThumbsUp className="w-4 h-4" />
                             <span className="text-sm">Utile ({review.helpful})</span>
                           </button>
-                          <button className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors">
+                          <button className="flex items-center space-x-2 text-gray-400 hover:text-gray transition-colors">
                             <ThumbsDown className="w-4 h-4" />
                             <span className="text-sm">Pas utile</span>
                           </button>
@@ -556,8 +556,8 @@ const ProductDetailPage = () => {
 
         {/* Related Products */}
         <div className="mt-16">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">
-            Produits <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Complémentaires</span>
+          <h2 className="text-3xl font-bold text-gray mb-8 text-center">
+            Produits <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-800 to-pink-600">Complémentaires</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedProducts.map((relatedProduct) => (
@@ -569,16 +569,16 @@ const ProductDetailPage = () => {
                   alt={relatedProduct.name}
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-6">
-                  <h3 className="text-white font-semibold mb-2">{relatedProduct.name}</h3>
+                <div className="p-6 bg-white">
+                  <h3 className="text-gray font-semibold mb-2">{relatedProduct.name}</h3>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-white">{relatedProduct.price}€</span>
+                    <span className="text-2xl font-bold text-gray">{relatedProduct.price}F</span>
                     <div className="flex items-center">
                       <Star className="w-4 h-4 text-yellow-400 fill-current" />
                       <span className="text-gray-300 ml-1">{relatedProduct.rating}</span>
                     </div>
                   </div>
-                  <button className="w-full mt-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300">
+                  <button className="w-full mt-4 bg-gradient-to-r from-blue-800 to-blue-500 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300">
                     Ajouter au panier
                   </button>
                 </div>

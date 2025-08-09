@@ -37,7 +37,7 @@ const ContactDevisPage = () => {
   });
 
   try {
-    const response = await fetch('https://formspree.io/f/mqalgpbg', {
+    const response = await fetch('https://formspree.io/f/xvgqvjwr', {
       method: 'POST',
       body: formDataToSend,
       headers: {
@@ -225,7 +225,7 @@ const ContactDevisPage = () => {
                           >
                             <option value="informatique">Matériel informatique</option>
                             <option value="telephonie">Téléphonie</option>
-                            <option value="electromenager">Électroménager</option>
+                            <option value="electromenager">Accessoire</option>
                             <option value="bureautique">Bureautique</option>
                             <option value="mixte">Plusieurs catégories</option>
                           </select>
