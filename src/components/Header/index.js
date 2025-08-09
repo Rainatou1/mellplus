@@ -58,14 +58,6 @@ export default function Header() {
       { name: 'Multiprise', link: '/produit' },
       { name: 'Fournitures', link: '/produit' }
     ]
-  },
-  {
-    name: 'Services',
-    subcategories: [
-      { name: 'Développement Web et mobile', link: '/produit' },
-      { name: 'Maintenance informatique', link: '/produit' },
-      { name: 'Conseils expert', link: '/produit' }
-    ]
   }
 ];
 
@@ -207,6 +199,7 @@ export default function Header() {
                   )}
                 </div>
               ))}
+              <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
               <Link href="/contact" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Contact</Link>
               <a href="/about" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap">A propos</a>
             </div>
@@ -241,8 +234,9 @@ export default function Header() {
                     )}
                   </div>
                 ))}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2">Contact</a>
-                <a href="#" className="block text-red-600 hover:text-red-700 py-2 font-semibold">Promotions</a>
+                <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
+                <a href="/contact" className="block text-gray-700 hover:text-blue-600 py-2">Contact</a>
+                <a href="/about" className="block text-red-600 hover:text-red-700 py-2 font-semibold">A propos</a>
                 
                 {/* Mobile Account Link */}
                 <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-4">

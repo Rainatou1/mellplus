@@ -41,12 +41,12 @@ export default function Footer() {
               </ul>
             </div>
             <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Services</h5>
+              <Link href="/service"><h5 className="font-semibold mb-4 text-base md:text-lg">Nos Services</h5></Link>
               <ul className="space-y-2 text-gray-400 text-sm md:text-base">
-                <li><a href="#" className="hover:text-white">Support technique</a></li>
-                <li><a href="#" className="hover:text-white">Develeoppement web & mobile</a></li>
-                <li><a href="#" className="hover:text-white">Maintenance</a></li>
-                <li><a href="#" className="hover:text-white">Conseil expert</a></li>
+                <li><a href="/produit" className="hover:text-white">Nos produits</a></li>
+                <li><a href="#" className="hover:text-white">Blog</a></li>
+                {/*<li><a href="#" className="hover:text-white">Maintenance</a></li>
+                <li><a href="#" className="hover:text-white">Conseil expert</a></li>*/}
               </ul>
             </div>
             <div>
@@ -55,7 +55,7 @@ export default function Footer() {
                 <li><a href="cgv" className="hover:text-white">CGV</a></li>
                 <li><a href="cgv" className="hover:text-white">Mentions Legales</a></li>
                 <li><a href="#" className="hover:text-white">Politique de retour</a></li>
-                <li><a href="#" className="hover:text-white">Qui sommes nous?</a></li>
+                <li><a href="/about" className="hover:text-white">Qui sommes nous?</a></li>
               </ul>
             </div>
             
@@ -64,15 +64,15 @@ export default function Footer() {
               <div className="space-y-2 text-gray-400 text-sm md:text-base">
                 <div className="flex items-center space-x-2">
                   <Phone className="w-4 h-4 flex-shrink-0" />
-                  <span>+227 96 12 34 56</span>
+                  <span>+227 20 35 23 23/+227 20 35 24 24</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="w-4 h-4 flex-shrink-0" />
-                  <span className="break-all">contact@mellplusniger.com</span>
+                  <span className="break-all">mellplus@mellplusniger.com</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4 flex-shrink-0" />
-                  <span>Niamey, Niger</span>
+                  <span>Boulevard Mali Béro Ex Kalao Porte N°2770</span>
                 </div>
               </div>
             </div>

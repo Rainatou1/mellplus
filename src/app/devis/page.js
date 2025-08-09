@@ -98,7 +98,7 @@ const ContactDevisPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Téléphone</h3>
               <p className="text-gray-600 mb-2">Lun-Ven: 8h-18h | Sam: 8h-16h</p>
-              <p className="text-lg font-semibold text-blue-600">+227 96 12 34 56</p>
+              <p className="text-lg font-semibold text-blue-600">+227 20 35 23 23/+227 20 35 24 24</p>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-green-600">
@@ -107,7 +107,7 @@ const ContactDevisPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Email</h3>
               <p className="text-gray-600 mb-2">Réponse sous 24h</p>
-              <p className="text-lg font-semibold text-green-600">contact@mellplusniger.com</p>
+              <p className="text-lg font-semibold text-green-600">mellplus@mellplusniger.com</p>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-orange-600">
@@ -116,7 +116,7 @@ const ContactDevisPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Adresse</h3>
               <p className="text-gray-600 mb-2">Showroom & Bureau</p>
-              <p className="text-lg font-semibold text-orange-600">Avenue de l&apos;Uranium, Niamey</p>
+              <p className="text-lg font-semibold text-orange-600">Boulevard Mali Béro Ex Kalao Porte N°2770, Niamey</p>
             </div>
           </div>
         </div>
