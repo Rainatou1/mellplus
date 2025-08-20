@@ -95,6 +95,7 @@ export default function Header() {
           <div className="flex items-center justify-between py-3 md:py-4">
             {/* Logo */}
             <div className="flex items-center flex-shrink-0">
+              <Link href="/#">
               <div className="bg-white text-white p-2 md:p-3 rounded-lg mr-2 md:mr-3">
                 <Image
                 width={50}
@@ -103,6 +104,7 @@ export default function Header() {
                 alt="logo" 
                 className="w-6 h-6 md:w-16 md:h-12" />
               </div>
+              </Link>
               <div>
                 <h1 className="text-lg md:text-2xl font-bold text-gray-800">Mell Plus Niger</h1>
                 <p className="text-xs md:text-sm text-gray-600 hidden sm:block">Votre partenaire IT au Niger</p>

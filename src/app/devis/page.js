@@ -360,10 +360,10 @@ const ContactDevisPage = () => {
                     <span>Samedi:</span>
                     <span className="font-semibold">8h00 - 16h00</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/*<div className="flex justify-between">
                     <span>Dimanche:</span>
                     <span className="text-red-600">Fermé</span>
-                  </div>
+                  </div>*/}
                 </div>
               </div>
 
