@@ -22,3 +22,5 @@ Thumbs.db
 # BFG cleaner
 *.jar
 .bfg-report/
+
+/src/generated/prisma
