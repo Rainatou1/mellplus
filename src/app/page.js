@@ -380,7 +380,7 @@ const MellPlusNiger = () => {
               </div>
             </div>
 
-            {/* Gaming */}
+            {/* best sellers */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
@@ -402,7 +402,7 @@ const MellPlusNiger = () => {
               </div>
             </div>
 
-            {/* Nos créateurs */}
+            {/* Nos accessoires */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
@@ -415,8 +415,8 @@ const MellPlusNiger = () => {
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
-                    <h4 className="text-xl md:text-2xl font-bold mb-2">Nos créateurs</h4>
-                    <p className="text-sm opacity-90">Outils pour créatifs et designers</p>
+                    <h4 className="text-xl md:text-2xl font-bold mb-2">Accessoires</h4>
+                    <p className="text-sm opacity-90">Offrez vous ce qu'il y a de meilleur</p>
                   </div>
                   <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
                     VOIR ›
@@ -448,7 +448,7 @@ const MellPlusNiger = () => {
               </div>
             </div>
 
-            {/* Solutions Business */}
+            {/* Soldes */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
@@ -461,8 +461,8 @@ const MellPlusNiger = () => {
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
-                    <h4 className="text-xl md:text-2xl font-bold mb-2">Solutions Business</h4>
-                    <p className="text-sm opacity-90">Équipements professionnels sur mesure</p>
+                    <h4 className="text-xl md:text-2xl font-bold mb-2">Nos soldes</h4>
+                    <p className="text-sm opacity-90">Équipements professionnels pour vous</p>
                   </div>
                   <button className="bg-purple bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
                     VOIR ›
@@ -494,8 +494,8 @@ const MellPlusNiger = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg">
+        <div className="max-w-7xl mx-auto px-4 text-center ">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
             Un conseiller Mell Plus Niger vous répond dans les 48h !
