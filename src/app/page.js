@@ -51,6 +51,46 @@ const MellPlusNiger = () => {
       ctaPrimary: "Voir les promos",
       ctaSecondary: "Tous les produits",
       bgGradient: "from-red-600 to-pink-700"
+    },
+    {
+      id: 5,
+      title: "Promotion PC portable",
+      subtitle: "Une offre évolutive avec plus de 15 000 références",
+      description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
+      image: "/images/hp-removebg.png",
+      ctaPrimary: "Demander un devis",
+      ctaSecondary: "Nos services",
+      bgGradient: "from-pink-600 to-blue-800"
+    },
+    {
+      id: 6,
+      title: "dernieres demarque",
+      subtitle: "iPhone 15, MacBook Pro, HP Pavilion",
+      description: "Découvrez la nouvelle gamme HP avec des offres exclusives et un service après-vente premium",
+      image: "/images/carroussel.PNG",
+      ctaPrimary: "Voir les produits",
+      ctaSecondary: "En savoir plus",
+      bgGradient: "from-gray-800 to-black-900"
+    },
+    {
+      id: 7,
+      title: "economisez 10%",
+      subtitle: "Arldo",
+      description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
+      image: "/images/carroussel.PNG",
+      ctaPrimary: "Demander un devis",
+      ctaSecondary: "Voir catalogue",
+      bgGradient: "from-blue-600 to-teal-700"
+    },
+    {
+      id: 8,
+      title: "solde d'été",
+      subtitle: "Jusqu'à -30% sur une sélection",
+      description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
+      image: "/images/carroussel.PNG",
+      ctaPrimary: "Voir les promos",
+      ctaSecondary: "Tous les produits",
+      bgGradient: "from-purple-600 to-pink-700"
     }
   ];
 
@@ -58,7 +98,7 @@ const MellPlusNiger = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 9000);
 
     return () => clearInterval(interval);
   }, [slides.length]);
