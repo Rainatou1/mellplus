@@ -95,7 +95,7 @@ const ContactDevisPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Téléphone</h3>
               <p className="text-gray-600 mb-2">Lun-Ven: 8h-18h | Sam: 8h-16h</p>
-              <p className="text-lg font-semibold text-blue-600">+227 20 35 23 23/+227 20 35 24 24</p>
+              <p className="text-lg font-semibold text-blue-600">+227 20 35 23 23</p>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-green-600">
@@ -103,7 +103,7 @@ const ContactDevisPage = () => {
                 <Mail className="w-8 h-8 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Email</h3>
-              <p className="text-gray-600 mb-2">Réponse sous 24h</p>
+              <p className="text-gray-600 mb-2">Réponse sous 12h</p>
               <p className="text-lg font-semibold text-green-600">mellplus@mellplusniger.com</p>
             </div>
 
