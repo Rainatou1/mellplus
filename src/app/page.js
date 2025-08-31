@@ -182,7 +182,7 @@ const MellPlusNiger = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">      
+    <div className="max-w-7xl mx-auto px-4 min-h-screen bg-gray-50">      
       {/* Hero Carousel */}
       <section className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
         {/* Slides */}
@@ -239,14 +239,14 @@ const MellPlusNiger = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 "
           aria-label="Slide précédent"
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 backdrop-blur-sm"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 "
           aria-label="Slide suivant"
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
