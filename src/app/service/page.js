@@ -257,7 +257,7 @@ const AllServicesPage = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats */}{/*
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
@@ -272,7 +272,7 @@ const AllServicesPage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Service Detail */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

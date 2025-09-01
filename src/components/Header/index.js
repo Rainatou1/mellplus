@@ -11,10 +11,11 @@ export default function Header() {
   const [activeCategory, setActiveCategory] = useState(null);
  const categoriy = [
     { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
-    { name: 'Image & Son', subcategories: ['Cameras', 'Casques', 'Tablettes'] },
-    { name: 'Reseau&Serveur', subcategories: ['Switch', 'Telephone IP', 'Videosurveillance'] },
+    { name: 'Sécurité', subcategories: ['Videosurveillance', 'Incendie', 'Controle Accès'] },
+    { name: 'Reseau&Serveur', subcategories: ['Switch', 'Telephone IP'] },
     { name: 'Peripheriques', subcategories: ['Imprimantes', 'Scanners', 'Composants'] },
     { name: 'Connectiques', subcategories: ['Cables', 'Multiprise', 'Fournitures'] },
+    { name: 'Accessoires', subcategories: ['Image', 'Son', 'Fournitures'] },
     { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
   ];  
   const categories = [
@@ -28,11 +29,11 @@ export default function Header() {
     ]
   },
   {
-    name: 'Image & Son',
+    name: 'Sécurité',
     subcategories: [
-      { name: 'Cameras', link: '/produit' },
-      { name: 'Casques', link: '/produit' },
-      { name: 'Tablettes', link: '/produit' }
+      { name: 'Videosurveillance', link: '/produit' },
+      { name: 'Incendie', link: '/produit' },
+      { name: 'Controle Accès', link: '/produit' }
     ]
   },
   {
@@ -58,6 +59,14 @@ export default function Header() {
       { name: 'Multiprise', link: '/produit' },
       { name: 'Fournitures', link: '/produit' }
     ]
+  },
+  {
+    name: 'Accessoires',
+    subcategories: [
+      { name: 'Image', link: '/produit' },
+      { name: 'Son', link: '/produit' },
+      { name: 'Fournitures', link: '/produit' }
+    ]
   }
 ];
 
@@ -70,8 +79,8 @@ export default function Header() {
           <div className="flex items-center space-x-4 xl:space-x-6">
             <div className="flex items-center space-x-2">
               <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">+227 20 35 23 23/+227 20 35 24 24</span>
-              <span className="xl:hidden">+227 20 35 23 23/+227 20 35 24 24</span>
+              <span className="hidden xl:inline">+227 20 35 23 23</span>
+              <span className="xl:hidden">+227 20 35 23 23</span>
             </div>
             <div className="flex items-center space-x-2">
               <Mail className="w-4 h-4" />

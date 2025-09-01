@@ -416,7 +416,7 @@ const MellPlusNiger = () => {
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Accessoires</h4>
-                    <p className="text-sm opacity-90">Offrez vous ce qu'il y a de meilleur</p>
+                    <p className="text-sm opacity-90">Offrez vous ce qu&apos;il y a de meilleur</p>
                   </div>
                   <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
                     VOIR ›
@@ -498,7 +498,7 @@ const MellPlusNiger = () => {
         <div className="max-w-7xl mx-auto px-4 text-center ">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
-            Un conseiller Mell Plus Niger vous répond dans les 48h !
+            Un conseiller Mell Plus Niger vous répond dans les 24chanh !
           </p>
           <Link href= "/devis">
           <button className="bg-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-blue-700">
