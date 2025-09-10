@@ -1,0 +1,285 @@
+// app/admin/layout.js
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useSession, signOut } from 'next-auth/react'
+import { useRouter, usePathname } from 'next/navigation'
+import {
+  LayoutDashboard,
+  Package,
+  Settings,
+  FileText,
+  MessageSquare,
+  Users,
+  BarChart3,
+  Menu,
+  X,
+  LogOut,
+  Bell,
+  Search,
+  ChevronDown,
+  ShoppingCart,
+  Briefcase,
+  Mail,
+  TrendingUp
+} from 'lucide-react'
+import Link from 'next/link'
+
+const menuItems = [
+  { 
+    href: '/admin/dashboard', 
+    label: 'Tableau de bord', 
+    icon: LayoutDashboard,
+    badge: null 
+  },
+  { 
+    href: '/admin/products', 
+    label: 'Produits', 
+    icon: Package,
+    badge: null 
+  },
+  { 
+    href: '/admin/services', 
+    label: 'Services', 
+    icon: Briefcase,
+    badge: null 
+  },
+  { 
+    href: '/admin/quotes', 
+    label: 'Devis', 
+    icon: FileText,
+    badge: '3' // Nombre de nouveaux devis
+  },
+  { 
+    href: '/admin/contacts', 
+    label: 'Messages', 
+    icon: MessageSquare,
+    badge: '5' // Nombre de messages non lus
+  },
+  { 
+    href: '/admin/orders', 
+    label: 'Commandes', 
+    icon: ShoppingCart,
+    badge: null 
+  },
+  { 
+    href: '/admin/customers', 
+    label: 'Clients', 
+    icon: Users,
+    badge: null 
+  },
+  { 
+    href: '/admin/analytics', 
+    label: 'Statistiques', 
+    icon: BarChart3,
+    badge: null 
+  },
+  { 
+    href: '/admin/settings', 
+    label: 'Paramètres', 
+    icon: Settings,
+    badge: null 
+  },
+]
+
+export default function AdminLayout({ children }) {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const pathname = usePathname()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [notifications, setNotifications] = useState(8)
+
+  // Redirection si non authentifié
+  useEffect(() => {
+    if (status === 'loading') return
+    if (!session && pathname !== '/admin/login') {
+      router.push('/admin/login')
+    }
+  }, [session, status, router, pathname])
+
+  // Ne pas afficher le layout sur la page de login
+  if (pathname === '/admin/login' || status === 'loading') {
+    return <>{children}</>
+  }
+
+  if (!session) {
+    return null
+  }
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: true, callbackUrl: '/admin/login' })
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Sidebar Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed top-0 left-0 z-50 h-full w-64 bg-gray-900 text-white transform transition-transform duration-200 ease-in-out
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0
+      `}>
+        {/* Logo */}
+        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-800">
+          <Link href="/admin/dashboard" className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">M</span>
+            </div>
+            <span className="text-xl font-bold">Mell Plus</span>
+          </Link>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-gray-400 hover:text-white"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <nav className="px-4 py-6 space-y-1">
+          {menuItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
+            
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`
+                  flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors
+                  ${isActive 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                  }
+                `}
+              >
+                <div className="flex items-center space-x-3">
+                  <Icon className="w-5 h-5" />
+                  <span className="font-medium">{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span className="px-2 py-0.5 text-xs font-medium bg-red-600 text-white rounded-full">
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* User Info Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
+          <div className="flex items-center space-x-3 px-3 py-2">
+            <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+              <span className="text-sm font-medium">
+                {session.user?.name?.charAt(0).toUpperCase()}
+              </span>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium">{session.user?.name}</p>
+              <p className="text-xs text-gray-400">{session.user?.role}</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content Area */}
+      <div className="lg:ml-64">
+        {/* Top Header */}
+        <header className="bg-white shadow-sm border-b border-gray-200">
+          <div className="flex items-center justify-between h-16 px-6">
+            {/* Left side */}
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden text-gray-600 hover:text-gray-900"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+              
+              {/* Search Bar */}
+              <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-2 w-96">
+                <Search className="w-5 h-5 text-gray-400 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Rechercher..."
+                  className="bg-transparent flex-1 outline-none text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Right side */}
+            <div className="flex items-center space-x-4">
+              {/* Notifications */}
+              <button className="relative p-2 text-gray-600 hover:text-gray-900">
+                <Bell className="w-6 h-6" />
+                {notifications > 0 && (
+                  <span className="absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center">
+                    {notifications}
+                  </span>
+                )}
+              </button>
+
+              {/* User Menu */}
+              <div className="relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center space-x-3 text-gray-700 hover:text-gray-900"
+                >
+                  <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-medium">
+                      {session.user?.name?.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="hidden md:block text-sm font-medium">
+                    {session.user?.name}
+                  </span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+
+                {/* Dropdown Menu */}
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                    <Link
+                      href="/admin/profile"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Mon profil
+                    </Link>
+                    <Link
+                      href="/admin/settings"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Paramètres
+                    </Link>
+                    <hr className="my-1" />
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Déconnexion
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <main className="p-6">
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}
