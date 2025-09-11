@@ -34,7 +34,6 @@ import {
   MapPin,
   ArrowRight,
   Package,
-  Plus,
   Briefcase
 } from 'lucide-react'
 
