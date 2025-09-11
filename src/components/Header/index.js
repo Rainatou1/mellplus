@@ -107,11 +107,11 @@ export default function Header() {
               <Link href="/#">
               <div className="bg-white text-white p-2 md:p-3 rounded-lg mr-2 md:mr-3">
                 <Image
-                width={50}
-                height={50}
-                src="/images/R.png"
+                width={600}
+                height={600}
+                src="/images/logo.png"
                 alt="logo" 
-                className="w-6 h-6 md:w-16 md:h-12" />
+                className="w-6 h-6 md:w-24 md:h-20" />
               </div>
               </Link>
               <div>
@@ -148,12 +148,15 @@ export default function Header() {
                 <span className="hidden xl:inline">Mon Compte</span>
               </button>*/}
 
-              {/* Cart */}{/* 
-              <button className="flex items-center space-x-1 md:space-x-2 bg-blue-600 text-white px-2 md:px-4 py-2 rounded-lg hover:bg-blue-700">
+              {/* Promotions Button */}
+              <Link 
+                href="/promotions"
+                className="flex items-center space-x-1 md:space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 md:px-4 py-2 rounded-lg hover:from-red-600 hover:to-pink-600 transition-all shadow-md"
+              >
                 <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="text-sm md:text-base">Panier</span>
-                <span className="hidden sm:inline">(0)</span>
-              </button>*/}
+                <span className="text-sm md:text-base font-semibold">PROMOS</span>
+                <span className="hidden sm:inline text-yellow-200">🔥</span>
+              </Link>
 
               {/* Mobile Menu Button */}
               <button
@@ -210,9 +213,13 @@ export default function Header() {
                   )}
                 </div>
               ))}
+              <Link href="/products" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Produits</Link>
+              {/*<Link href="/promotions" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap flex items-center gap-1">
+                🔥 Promotions
+              </Link>*/}
               <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
               <Link href="/contact" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Contact</Link>
-              <a href="/about" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap">A propos</a>
+              <a href="/about" className="text-gray-700 hover:text-gray-900 py-2 whitespace-nowrap">A propos</a>
             </div>
           </nav>
 
@@ -245,9 +252,13 @@ export default function Header() {
                     )}
                   </div>
                 ))}
+                <Link href="/products" className="block text-gray-700 hover:text-blue-600 py-2">Produits</Link>
+                <Link href="/promotions" className="block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1">
+                  🔥 Promotions
+                </Link>
                 <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
                 <a href="/contact" className="block text-gray-700 hover:text-blue-600 py-2">Contact</a>
-                <a href="/about" className="block text-red-600 hover:text-red-700 py-2 font-semibold">A propos</a>
+                <a href="/about" className="block text-gray-700 hover:text-gray-900 py-2">A propos</a>
                 
                 {/* Mobile Account Link */}
                 <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-4">
