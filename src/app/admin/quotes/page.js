@@ -34,6 +34,7 @@ import {
   MapPin,
   ArrowRight,
   Package,
+  Plus,
   Briefcase
 } from 'lucide-react'
 
@@ -561,7 +562,7 @@ export default function AdminQuotesPage() {
                       Message du client
                     </h4>
                     <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                      <p className="text-sm text-gray-700 italic">"{selectedQuote.message}"</p>
+                      <p className="text-sm text-gray-700 italic">&quot;{selectedQuote.message}&quot;</p>
                     </div>
                   </div>
                 )}
@@ -572,7 +573,7 @@ export default function AdminQuotesPage() {
                     <div className="flex items-center gap-2">
                       <AlertCircle className="w-4 h-4 text-orange-500" />
                       <p className="text-sm text-orange-700">
-                        Valide jusqu'au {new Date(selectedQuote.validUntil).toLocaleDateString('fr-FR')}
+                        Valide jusqu&apos;au {new Date(selectedQuote.validUntil).toLocaleDateString('fr-FR')}
                       </p>
                     </div>
                   </div>

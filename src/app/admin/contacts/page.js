@@ -661,7 +661,7 @@ export default function AdminContactsPage() {
               <div className="mb-4">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" />
-                  <span className="text-sm text-gray-700">Envoyer une copie à l'équipe</span>
+                  <span className="text-sm text-gray-700">Envoyer une copie à l&apos;équipe</span>
                 </label>
               </div>
 

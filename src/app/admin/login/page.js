@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react'
+import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle, Link } from 'lucide-react'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
             <Lock className="w-8 h-8" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Mell Plus Admin</h1>
-          <p className="text-gray-600 mt-2">Connectez-vous à votre espace d'administration</p>
+          <p className="text-gray-600 mt-2">Connectez-vous à votre espace d&apos;administration</p>
         </div>
 
         {/* Formulaire */}
@@ -163,9 +163,9 @@ export default function AdminLoginPage() {
 
           {/* Lien retour */}
           <div className="mt-6 text-center">
-            <a href="/" className="text-sm text-gray-600 hover:text-gray-900">
+            <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">
               ← Retour au site
-            </a>
+            </Link>
           </div>
         </div>
 

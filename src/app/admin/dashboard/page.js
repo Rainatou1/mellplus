@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import {
   TrendingUp,
   TrendingDown,
@@ -218,7 +219,7 @@ export default function AdminDashboard() {
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold mb-2">Bienvenue dans votre espace admin</h1>
-            <p className="text-blue-100">Vue d'ensemble de votre activité commerciale</p>
+            <p className="text-blue-100">Vue d&apos;ensemble de votre activité commerciale</p>
             <div className="flex items-center gap-4 mt-4">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-blue-200" />
