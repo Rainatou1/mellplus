@@ -3,8 +3,9 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle, Link } from 'lucide-react'
+import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react'
 
 export default function AdminLoginPage() {
   const router = useRouter()
