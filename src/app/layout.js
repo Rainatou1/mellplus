@@ -4,6 +4,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { SessionProvider } from "next-auth/react";
 import SessionProviderWrapper from "./SessionProviderWrapper";
+import Providers from './providers';
+import { Toaster } from 'react-hot-toast'
 
 
 const geistSans = Geist({
@@ -27,11 +29,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProviderWrapper>
+        <Providers>
         <Header />
         {children}
         <Footer />
-        </SessionProviderWrapper>
+        <Toaster position="top-right" />
+        </Providers>
       </body>
     </html>
   );

@@ -22,7 +22,6 @@ import {
   TrendingUp,
   Calendar,
   Package,
-  Tool,
   Wrench,
   Monitor,
   Wifi,
@@ -89,7 +88,7 @@ export default function AdminServicesPage() {
       duration: 'Contrat mensuel',
       featured: true,
       active: true,
-      icon: 'tool',
+      icon: 'wrench',
       requests: 45,
       completed: 42,
       rating: 4.6,
@@ -252,7 +251,7 @@ export default function AdminServicesPage() {
   const getIconComponent = (icon) => {
     const icons = {
       wifi: <Wifi className="w-6 h-6" />,
-      tool: <Tool className="w-6 h-6" />,
+      wrench: <Wrench className="w-6 h-6" />,
       book: <BookOpen className="w-6 h-6" />,
       code: <Code className="w-6 h-6" />,
       shield: <Shield className="w-6 h-6" />,

@@ -33,6 +33,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react'
+import { useDashboardStats } from '../../../../hooks/useData'
 
 export default function AdminContactsPage() {
   const [messages, setMessages] = useState([
@@ -129,6 +130,7 @@ export default function AdminContactsPage() {
   const [showReplyModal, setShowReplyModal] = useState(false)
   const [replyText, setReplyText] = useState('')
   const [selectedMessages, setSelectedMessages] = useState([])
+ 
 
   // Statistiques
   const stats = {

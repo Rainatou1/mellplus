@@ -24,6 +24,7 @@ import {
   TrendingUp
 } from 'lucide-react'
 import Link from 'next/link'
+import { Toaster } from 'react-hot-toast'
 
 const menuItems = [
   { 
@@ -279,6 +280,8 @@ export default function AdminLayout({ children }) {
         <main className="p-6">
           {children}
         </main>
+        
+        <Toaster position="top-right" />
       </div>
     </div>
   )

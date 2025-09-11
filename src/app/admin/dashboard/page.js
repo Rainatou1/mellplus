@@ -26,8 +26,12 @@ import {
   MoreVertical
 } from 'lucide-react'
 import Link from 'next/link'
+import { useDashboardStats } from '../../../../hooks/useData'
 
 export default function AdminDashboard() {
+  // ✅ Move the hook call inside the component
+  const { stats: hookStats, loading, error, refetch } = useDashboardStats()
+
   const [stats, setStats] = useState({
     revenue: { 
       total: 12500000, 
@@ -64,6 +68,13 @@ export default function AdminDashboard() {
       urgent: 2
     }
   })
+
+  // Update local state when hook data changes
+  useEffect(() => {
+    if (hookStats && !loading) {
+      setStats(hookStats)
+    }
+  }, [hookStats, loading])
 
   const [recentActivities] = useState([
     {
@@ -172,6 +183,34 @@ export default function AdminDashboard() {
   // Calculer le max pour le graphique
   const maxRevenue = Math.max(...chartData.map(d => d.revenus))
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    )
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Erreur de chargement</h2>
+          <p className="text-gray-600 mb-4">{error.message}</p>
+          <button 
+            onClick={refetch}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-8">
       {/* Header avec gradient moderne */}
@@ -214,14 +253,14 @@ export default function AdminDashboard() {
               <DollarSign className="w-6 h-6 text-white" />
             </div>
             <span className={`flex items-center text-sm font-medium ${
-              stats.revenue.change > 0 ? 'text-green-600' : 'text-red-600'
+              (stats?.revenue?.change ?? 0) > 0 ? 'text-green-600' : 'text-red-600'
             }`}>
-              {stats.revenue.change > 0 ? (
+              {(stats?.revenue?.change ?? 0) > 0 ? (
                 <ArrowUpRight className="w-4 h-4 mr-1" />
               ) : (
                 <ArrowDownRight className="w-4 h-4 mr-1" />
               )}
-              {Math.abs(stats.revenue.change)}%
+              {Math.abs(stats?.revenue?.change ?? 0)}%
             </span>
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-1">
@@ -245,25 +284,25 @@ export default function AdminDashboard() {
               <ShoppingCart className="w-6 h-6 text-white" />
             </div>
             <span className={`flex items-center text-sm font-medium ${
-              stats.orders.change > 0 ? 'text-green-600' : 'text-red-600'
+              stats?.orders?.change > 0 ? 'text-green-600' : 'text-red-600'
             }`}>
-              {stats.orders.change > 0 ? (
+              {stats?.orders?.change > 0 ? (
                 <ArrowUpRight className="w-4 h-4 mr-1" />
               ) : (
                 <ArrowDownRight className="w-4 h-4 mr-1" />
               )}
-              {Math.abs(stats.orders.change)}%
+              {Math.abs(stats?.orders?.change || 0)}%
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{stats.orders.total}</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-1">{stats?.orders?.total || 0}</h3>
           <p className="text-sm text-gray-500">Commandes totales</p>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <div className="flex items-center justify-between">
               <span className="text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded-full">
-                {stats.orders.pending} en attente
+                {stats?.orders?.pending || 0} en attente
               </span>
               <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                {stats.orders.completed} complétées
+                {stats?.orders?.completed || 0} complétées
               </span>
             </div>
           </div>

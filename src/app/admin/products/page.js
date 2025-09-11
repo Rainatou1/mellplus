@@ -30,8 +30,12 @@ import {
   Box
 } from 'lucide-react'
 import Image from 'next/image'
+import { useDashboardStats } from '../../../../hooks/useData'
+
+
 
 export default function AdminProductsPage() {
+  
   const [products, setProducts] = useState([
     {
       id: '1',
