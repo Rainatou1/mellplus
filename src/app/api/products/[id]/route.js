@@ -67,8 +67,6 @@ export async function PUT(request, { params }) {
         ...(body.subcategory !== undefined && { subcategory: body.subcategory }),
         ...(body.brand !== undefined && { brand: body.brand }),
         ...(body.model !== undefined && { model: body.model }),
-        ...(body.sku !== undefined && { sku: body.sku }),
-        ...(body.barcode !== undefined && { barcode: body.barcode }),
         ...(body.image !== undefined && { image: body.image }),
         ...(body.images !== undefined && { images: body.images }),
         ...(body.specifications !== undefined && { specifications: body.specifications }),
@@ -102,7 +100,7 @@ export async function PUT(request, { params }) {
 
     if (error?.code === 'P2002') {
       return NextResponse.json(
-        { error: 'Un produit avec ce slug ou SKU existe déjà' },
+        { error: 'Un produit avec ce slug existe déjà' },
         { status: 409 }
       )
     }

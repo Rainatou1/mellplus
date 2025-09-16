@@ -5,8 +5,11 @@ import { useState, useEffect } from 'react'
 import { Search, Filter, ShoppingCart, Eye, Star, Heart } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { matchSubcategory, getCategoryDisplayName } from '@/lib/categoryMapping'
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams()
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -16,6 +19,7 @@ export default function ProductsPage() {
   const [filters, setFilters] = useState({
     search: '',
     category: 'all',
+    subcategory: '',
     minPrice: '',
     maxPrice: '',
     sortBy: 'name'
@@ -23,13 +27,27 @@ export default function ProductsPage() {
 
   const PRODUCTS_PER_PAGE = 12
 
+  // Initialize filters from URL parameters
   useEffect(() => {
+    const categoryParam = searchParams.get('category')
+    const subcategoryParam = searchParams.get('subcategory')
+    const searchParam = searchParams.get('search')
+    
+    if (categoryParam || subcategoryParam || searchParam) {
+      setFilters(prev => ({
+        ...prev,
+        category: categoryParam || 'all',
+        subcategory: subcategoryParam || '',
+        search: searchParam || ''
+      }))
+    }
+    
     fetchProducts()
-  }, [])
+  }, [searchParams])
 
   useEffect(() => {
     applyFilters()
-  }, [products, filters, currentPage])
+  }, [products, filters, currentPage]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchProducts = async () => {
     try {
@@ -65,6 +83,13 @@ export default function ProductsPage() {
     // Filtrage par catégorie
     if (filters.category !== 'all') {
       filtered = filtered.filter(product => product.category === filters.category)
+    }
+
+    // Filtrage par sous-catégorie avec smart matching
+    if (filters.subcategory) {
+      filtered = filtered.filter(product => 
+        matchSubcategory(product, filters.subcategory)
+      )
     }
 
     // Filtrage par prix
@@ -109,6 +134,7 @@ export default function ProductsPage() {
     setFilters({
       search: '',
       category: 'all',
+      subcategory: '',
       minPrice: '',
       maxPrice: '',
       sortBy: 'name'
@@ -146,10 +172,19 @@ export default function ProductsPage() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                Nos Produits
+                {filters.subcategory 
+                  ? `${filters.subcategory} - Produits` 
+                  : filters.category !== 'all' 
+                    ? `${getCategoryDisplayName(filters.category)} - Produits`
+                    : 'Nos Produits'
+                }
               </h1>
               <p className="text-gray-600 mt-1">
-                Plus de {products.length} produits disponibles
+                {filteredProducts.length > 0 
+                  ? `${filteredProducts.length} produits trouvés`
+                  : `Plus de ${products.length} produits disponibles`
+                }
+                {filters.subcategory && ` dans la catégorie ${filters.subcategory}`}
               </p>
             </div>
             <Link
@@ -163,6 +198,32 @@ export default function ProductsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Breadcrumb */}
+        {(filters.category !== 'all' || filters.subcategory) && (
+          <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <nav className="flex items-center space-x-2 text-sm text-gray-600">
+              <Link href="/products" className="hover:text-blue-600">Tous les produits</Link>
+              {filters.category !== 'all' && (
+                <>
+                  <span>/</span>
+                  <Link 
+                    href={`/products?category=${filters.category}`} 
+                    className="hover:text-blue-600"
+                  >
+                    {getCategoryDisplayName(filters.category)}
+                  </Link>
+                </>
+              )}
+              {filters.subcategory && (
+                <>
+                  <span>/</span>
+                  <span className="font-medium text-blue-600">{filters.subcategory}</span>
+                </>
+              )}
+            </nav>
+          </div>
+        )}
+
         {/* Barre de recherche et filtres */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
@@ -324,6 +385,7 @@ function ProductCard({ product }) {
           src={product.image || '/api/placeholder/300/200'}
           alt={product.name}
           fill
+          unoptimized
           className="object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
             e.target.src = '/api/placeholder/300/200'

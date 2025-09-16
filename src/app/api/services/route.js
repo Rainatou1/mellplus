@@ -1,10 +1,10 @@
-// app/api/products/route.js
+// app/api/services/route.js
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
-// GET - Récupérer les produits
+// GET - Récupérer les services
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
@@ -13,43 +13,44 @@ export async function GET(request) {
     const category = searchParams.get('category')
     const search = searchParams.get('search')
     const featured = searchParams.get('featured')
-    const inStock = searchParams.get('inStock')
-    
+    const active = searchParams.get('active')
+
     // Construire les filtres
     const where = {}
-    
+
     if (category && category !== 'all') {
       where.category = category
     }
-    
+
     if (featured === 'true') {
       where.featured = true
     }
-    
-    if (inStock === 'true') {
-      where.inStock = true
+
+    if (active !== null) {
+      where.active = active === 'true'
     }
-    
+
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } }
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+        { shortDesc: { contains: search, mode: 'insensitive' } }
       ]
     }
-    
-    // Récupérer les produits avec pagination
-    const [products, total] = await Promise.all([
-      prisma.product.findMany({
+
+    // Récupérer les services avec pagination
+    const [services, total] = await Promise.all([
+      prisma.service.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { createdAt: 'desc' }
       }),
-      prisma.product.count({ where })
+      prisma.service.count({ where })
     ])
-    
+
     return NextResponse.json({
-      products,
+      services,
       pagination: {
         page,
         limit,
@@ -57,17 +58,17 @@ export async function GET(request) {
         totalPages: Math.ceil(total / limit)
       }
     })
-    
+
   } catch (error) {
-    console.error('Erreur lors de la récupération des produits:', error)
+    console.error('Erreur lors de la récupération des services:', error)
     return NextResponse.json(
-      { error: 'Erreur lors de la récupération des produits' },
+      { error: 'Erreur lors de la récupération des services' },
       { status: 500 }
     )
   }
 }
 
-// POST - Créer un nouveau produit (Admin)
+// POST - Créer un nouveau service (Admin)
 export async function POST(request) {
   try {
     // Vérifier l'authentification
@@ -78,64 +79,62 @@ export async function POST(request) {
         { status: 401 }
       )
     }
-    
+
     const body = await request.json()
-    
-    // Utiliser le slug fourni ou créer à partir du nom
-    const slug = body.slug || body.name
+
+    // Utiliser le slug fourni ou créer à partir du titre
+    const slug = body.slug || body.title
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9\s]/g, '')
       .replace(/\s+/g, '-')
       .replace(/^-+|-+$/g, '')
-    
-    // Créer le produit
-    const product = await prisma.product.create({
+
+    // Créer le service
+    const service = await prisma.service.create({
       data: {
-        name: body.name,
+        title: body.title,
         slug,
-        description: body.description || null,
-        price: body.price || null,
+        description: body.description,
+        shortDesc: body.shortDesc || null,
         category: body.category,
-        subcategory: body.subcategory || null,
-        brand: body.brand || null,
-        model: body.model || null,
+        features: body.features || [],
+        benefits: body.benefits || [],
+        process: body.process || [],
+        pricing: body.pricing || 'CUSTOM',
+        basePrice: body.basePrice || null,
+        priceNote: body.priceNote || null,
+        icon: body.icon || null,
         image: body.image || null,
-        images: body.images || [],
-        specifications: body.specifications || {},
-        inStock: (body.quantity || 0) > 0,
-        quantity: body.quantity || 0,
-        lowStock: body.lowStock || 5,
+        gallery: body.gallery || [],
         featured: body.featured || false,
-        isNew: body.isNew !== undefined ? body.isNew : true,
-        discount: body.discount || null,
-        publishedAt: body.publishedAt ? new Date(body.publishedAt) : null
+        active: body.active !== undefined ? body.active : true,
+        order: body.order || 0
       }
     })
-    
+
     return NextResponse.json(
-      { 
+      {
         success: true,
-        product 
+        service
       },
       { status: 201 }
     )
-    
+
   } catch (error) {
-    console.error('Erreur lors de la création du produit:', error)
-    
+    console.error('Erreur lors de la création du service:', error)
+
     if (error?.code === 'P2002') {
       return NextResponse.json(
-        { error: 'Un produit avec ce nom existe déjà' },
+        { error: 'Un service avec ce titre existe déjà' },
         { status: 409 }
       )
     }
-    
+
     return NextResponse.json(
-      { error: 'Erreur lors de la création du produit' },
+      { error: 'Erreur lors de la création du service' },
       { status: 500 }
     )
   }
 }
-

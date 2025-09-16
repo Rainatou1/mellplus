@@ -195,7 +195,7 @@ export default function PromotionsPage() {
       </div>
 
       {/* Statistiques des promotions */}
-      <div className="bg-white border-b">
+      {/*<div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
             <div className="p-4">
@@ -222,7 +222,7 @@ export default function PromotionsPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div>*/}
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Barre de recherche et filtres */}
@@ -417,6 +417,7 @@ function PromoProductCard({ product }) {
           src={product.image || '/api/placeholder/300/200'}
           alt={product.name}
           fill
+          unoptimized
           className="object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
             e.target.src = '/api/placeholder/300/200'

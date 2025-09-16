@@ -57,17 +57,27 @@ export const authOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id
         token.role = user.role
       }
+
+      // Update token when session update is triggered
+      if (trigger === 'update' && session?.name) {
+        token.name = session.name
+      }
+
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id
         session.user.role = token.role
+        // Use updated name from token if available
+        if (token.name) {
+          session.user.name = token.name
+        }
       }
       return session
     }

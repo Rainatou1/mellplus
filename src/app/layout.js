@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import ConditionalLayout from "../components/ConditionalLayout";
 import { SessionProvider } from "next-auth/react";
 import SessionProviderWrapper from "./SessionProviderWrapper";
 import Providers from './providers';
@@ -30,10 +29,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-        <Header />
-        {children}
-        <Footer />
-        <Toaster position="top-right" />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
+          <Toaster position="top-right" />
         </Providers>
       </body>
     </html>

@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from "next/image";
+import SearchBar from '../SearchBar';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState(null);
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
  const categoriy = [
     { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
     { name: 'Sécurité', subcategories: ['Videosurveillance', 'Incendie', 'Controle Accès'] },
@@ -18,54 +20,88 @@ export default function Header() {
     { name: 'Accessoires', subcategories: ['Image', 'Son', 'Fournitures'] },
     { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
   ];  
+  // Mapping des catégories de l'interface vers la base de données
+  const categoryMapping = {
+    'Informatique': 'INFORMATIQUE',
+    'Sécurité': 'SECURITE', 
+    'Reseau&Serveur': 'RESEAU',
+    'Peripheriques': 'BUREAUTIQUE',
+    'Connectiques': 'ACCESSOIRES',
+    'Accessoires': 'ACCESSOIRES'
+  }
+
   const categories = [
   {
     name: 'Informatique',
+    dbCategory: 'INFORMATIQUE',
     subcategories: [
-      { name: 'Ordinateurs Portables', link: '/produit' },
-      { name: 'Ordinateurs de Bureau', link: '/produit' },
-      { name: 'Accéssoires', link: '/produit' },
-      { name: 'Logiciels', link: '/produit' }
+      { name: 'Ordinateurs Portables', subcategory: 'Portables' },
+      { name: 'Ordinateurs de Bureau', subcategory: 'Bureau' },
+      { name: 'Accessoires', subcategory: 'Accessoires' },
+      { name: 'Logiciels', subcategory: 'Logiciels' }
     ]
   },
   {
     name: 'Sécurité',
+    dbCategory: 'SECURITE',
     subcategories: [
-      { name: 'Videosurveillance', link: '/produit' },
-      { name: 'Incendie', link: '/produit' },
-      { name: 'Controle Accès', link: '/produit' }
+      { name: 'Videosurveillance', subcategory: 'Videosurveillance' },
+      { name: 'Incendie', subcategory: 'Incendie' },
+      { name: 'Controle d\'accès', subcategory: 'Controle d\'accès' }
     ]
   },
   {
     name: 'Reseau&Serveur',
+    dbCategory: 'RESEAU',
     subcategories: [
-      { name: 'Switch', link: '/produit' },
-      { name: 'Telephone IP', link: '/produit' },
-      { name: 'Videosurveillance', link: '/produit' }
+      { name: 'Switch', subcategory: 'Switch' },
+      { name: 'Telephone IP', subcategory: 'Telephone IP' },
+      { name: 'Serveurs', subcategory: 'Serveurs' }
     ]
   },
   {
     name: 'Peripheriques',
+    dbCategory: 'BUREAUTIQUE',
     subcategories: [
-      { name: 'Imprimantes', link: '/produit' },
-      { name: 'Scanners', link: '/produit' },
-      { name: 'Composants', link: '/produit' }
+      { name: 'Imprimantes', subcategory: 'Imprimantes' },
+      { name: 'Scanners', subcategory: 'Scanners' },
+      { name: 'Composants', subcategory: 'Composants' }
     ]
   },
   {
     name: 'Connectiques',
+    dbCategory: 'ACCESSOIRES',
     subcategories: [
-      { name: 'Cables', link: '/category' },
-      { name: 'Multiprise', link: '/produit' },
-      { name: 'Fournitures', link: '/produit' }
+      { name: 'Cables', subcategory: 'Cables' },
+      { name: 'Multiprise', subcategory: 'Multiprise' },
+      { name: 'Fournitures', subcategory: 'Fournitures' }
     ]
   },
   {
     name: 'Accessoires',
+    dbCategory: 'ACCESSOIRES',
     subcategories: [
-      { name: 'Image', link: '/produit' },
-      { name: 'Son', link: '/produit' },
-      { name: 'Fournitures', link: '/produit' }
+      {
+        name: 'Video',
+        subcategory: 'Video',
+        subSubcategories: [
+          { name: 'Appareil photo', subcategory: 'Appareil photo' },
+          { name: 'Videomaker', subcategory: 'Videomaker' },
+          { name: 'Webcam', subcategory: 'Webcam' }
+        ]
+      },
+      {
+        name: 'Son',
+        subcategory: 'Son',
+        subSubcategories: [
+          { name: 'Casque audio', subcategory: 'Casque audio' },
+          { name: 'micro', subcategory: 'micro' },
+          { name: 'micro cravate', subcategory: 'micro cravate' }
+        ]
+      },
+      { name: 'Audio', subcategory: 'Audio' },
+      { name: 'Stockage', subcategory: 'Stockage' },
+      { name: 'Divers', subcategory: 'Divers' }
     ]
   }
 ];
@@ -99,19 +135,19 @@ export default function Header() {
       </div>
             {/* Main Header */}
 
-    <header className="bg-white shadow-lg sticky top-0 z-50">
+    <header className="bg-blue-400 shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between py-3 md:py-4">
+          <div className="flex items-center justify-between py-2 md:py-3">
             {/* Logo */}
             <div className="flex items-center flex-shrink-0">
               <Link href="/#">
-              <div className="bg-white text-white p-2 md:p-3 rounded-lg mr-2 md:mr-3">
+              <div className="bg-blue-400 text-white p-1 md:p-2 rounded-lg mr-2 md:mr-3">
                 <Image
                 width={600}
                 height={600}
                 src="/images/logo.png"
                 alt="logo" 
-                className="w-6 h-6 md:w-24 md:h-20" />
+                className="w-12 h-12 md:w-20 md:h-16" />
               </div>
               </Link>
               <div>
@@ -122,14 +158,7 @@ export default function Header() {
 
             {/* Desktop Search Bar */}
             <div className="hidden md:flex flex-1 max-w-xl lg:max-w-2xl mx-4 lg:mx-8">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Rechercher un produit..."
-                  className="w-full px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="absolute right-3 top-2 lg:top-3 w-5 h-5 lg:w-6 lg:h-6 text-gray-400" />
-              </div>
+              <SearchBar />
             </div>
 
             {/* Header Actions */}
@@ -170,21 +199,15 @@ export default function Header() {
 
           {/* Mobile Search Bar */}
           {isMobileSearchOpen && (
-            <div className="md:hidden pb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Rechercher un produit..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="absolute right-3 top-3 w-6 h-6 text-gray-400" />
-              </div>
+            <div className="md:hidden pb-3">
+              <SearchBar isMobile={true} onClose={() => setIsMobileSearchOpen(false)} />
             </div>
           )}
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:block border-t border-gray-200 relative">
-            <div className="flex items-center space-x-4 lg:space-x-8 py-3 ">
+          <nav className="hidden md:block border-t border-blue-100 relative">
+            <div className="flex items-center space-x-4 lg:space-x-8 py-2 ">
+              <Link href="/#" className="text-white hover:text-gray-600 py-2 whitespace-nowrap">Acceuil</Link>
               {categories.map((category, index) => (
                 <div
                   key={index}
@@ -192,7 +215,7 @@ export default function Header() {
                   onMouseEnter={() => setActiveCategory(index)}
                   onMouseLeave={() => setActiveCategory(null)}
                 >
-                  <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">
+                  <button className="flex items-center space-x-1 text-white hover:text-gray-200 py-2 whitespace-nowrap">
                     <span>{category.name}</span>
                     <ChevronDown className="w-4 h-4" />
                   </button>
@@ -200,33 +223,63 @@ export default function Header() {
                   {/* Dropdown */}
                   {activeCategory === index && (
                     <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1">
+                      {/* Lien vers toute la catégorie */}
+                      <Link
+                        href={`/products?category=${category.dbCategory}`}
+                        className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded transition-colors font-medium border-b mb-2"
+                      >
+                        Voir tous les {category.name}
+                      </Link>
+                      {/* Liens vers les sous-catégories */}
                       {category.subcategories.map((sub, subIndex) => (
-                        <a
+                        <div
                           key={subIndex}
-                          href={sub.link}
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
+                          className="relative"
+                          onMouseEnter={() => setActiveSubcategory(subIndex)}
+                          onMouseLeave={() => setActiveSubcategory(null)}
                         >
-                          {sub.name}
-                        </a>
+                          <Link
+                            href={`/products?category=${category.dbCategory}&subcategory=${sub.subcategory}`}
+                            className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
+                          >
+                            {sub.name}
+                            {sub.subSubcategories && <ChevronDown className="w-4 h-4 rotate-[-90deg]" />}
+                          </Link>
+
+                          {/* Sub-subcategories dropdown */}
+                          {sub.subSubcategories && activeSubcategory === subIndex && (
+                            <div className="absolute left-full top-0 ml-2 bg-white shadow-xl border rounded-lg p-3 min-w-44 z-50">
+                              {sub.subSubcategories.map((subSub, subSubIndex) => (
+                                <Link
+                                  key={subSubIndex}
+                                  href={`/products?category=${category.dbCategory}&subcategory=${subSub.subcategory}`}
+                                  className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors text-sm"
+                                >
+                                  {subSub.name}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       ))}
                     </div>
                   )}
                 </div>
               ))}
-              <Link href="/products" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Produits</Link>
-              {/*<Link href="/promotions" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap flex items-center gap-1">
+              {/*<Link href="/products" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Produits</Link>
+              <Link href="/promotions" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap flex items-center gap-1">
                 🔥 Promotions
               </Link>*/}
-              <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
-              <Link href="/contact" className="text-gray-700 hover:text-blue-600 py-2 whitespace-nowrap">Contact</Link>
-              <a href="/about" className="text-gray-700 hover:text-gray-900 py-2 whitespace-nowrap">A propos</a>
+              <a href="/service" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Services</a>
+              <Link href="/contact" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Contact</Link>
+              <a href="/about" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">A propos</a>
             </div>
           </nav>
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <nav className="md:hidden border-t border-gray-200 py-4">
-              <div className="space-y-4">
+            <nav className="md:hidden border-t border-blue-100 py-3">
+              <div className="space-y-3">
                 {categories.map((category, index) => (
                   <div key={index}>
                     <button 
@@ -239,14 +292,46 @@ export default function Header() {
                     
                     {activeCategory === index && (
                       <div className="pl-4 space-y-2 mt-2">
+                        {/* Lien vers toute la catégorie */}
+                        <Link
+                          href={`/products?category=${category.dbCategory}`}
+                          className="block py-2 text-gray-600 hover:text-blue-600 font-medium"
+                        >
+                          Voir tous les {category.name}
+                        </Link>
+                        {/* Liens vers les sous-catégories */}
                         {category.subcategories.map((sub, subIndex) => (
-                          <a
-                            key={subIndex}
-                            href={sub.link}
-                            className="block py-2 text-gray-600 hover:text-blue-600"
-                          >
-                            {sub.name}
-                          </a>
+                          <div key={subIndex}>
+                            <button
+                              onClick={() => setActiveSubcategory(activeSubcategory === subIndex ? null : subIndex)}
+                              className="flex items-center justify-between w-full text-left py-2 text-gray-600 hover:text-blue-600"
+                            >
+                              <Link
+                                href={`/products?category=${category.dbCategory}&subcategory=${sub.subcategory}`}
+                                className="flex-1"
+                              >
+                                {sub.name}
+                              </Link>
+                              {sub.subSubcategories && (
+                                <ChevronDown className={`w-4 h-4 transition-transform ${activeSubcategory === subIndex ? 'rotate-180' : ''}`} />
+                              )}
+                            </button>
+
+                            {/* Sub-subcategories for mobile */}
+                            {sub.subSubcategories && activeSubcategory === subIndex && (
+                              <div className="pl-4 space-y-1 mt-1">
+                                {sub.subSubcategories.map((subSub, subSubIndex) => (
+                                  <Link
+                                    key={subSubIndex}
+                                    href={`/products?category=${category.dbCategory}&subcategory=${subSub.subcategory}`}
+                                    className="block py-1.5 text-sm text-gray-500 hover:text-blue-600"
+                                  >
+                                    {subSub.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ))}
                       </div>
                     )}
@@ -261,7 +346,7 @@ export default function Header() {
                 <a href="/about" className="block text-gray-700 hover:text-gray-900 py-2">A propos</a>
                 
                 {/* Mobile Account Link */}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-4">
+                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-3">
                   <div className="flex items-center space-x-2">
                     <User className="w-5 h-5" />
                     <span>Mon Compte</span>

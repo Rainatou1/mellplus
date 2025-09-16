@@ -21,7 +21,8 @@ import {
   ShoppingCart,
   Briefcase,
   Mail,
-  TrendingUp
+  TrendingUp,
+  MonitorPlay
 } from 'lucide-react'
 import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
@@ -39,11 +40,17 @@ const menuItems = [
     icon: Package,
     badge: null 
   },
-  { 
-    href: '/admin/services', 
-    label: 'Services', 
+  {
+    href: '/admin/services',
+    label: 'Services',
     icon: Briefcase,
-    badge: null 
+    badge: null
+  },
+  {
+    href: '/admin/carousel',
+    label: 'Carousel',
+    icon: MonitorPlay,
+    badge: null
   },
   { 
     href: '/admin/quotes', 
@@ -58,6 +65,12 @@ const menuItems = [
     badge: '5' // Nombre de messages non lus
   },
   { 
+    href: '/#', 
+    label: 'Acceuil', 
+    icon: Package,
+    badge: null 
+  },
+  /*{ 
     href: '/admin/orders', 
     label: 'Commandes', 
     icon: ShoppingCart,
@@ -80,7 +93,7 @@ const menuItems = [
     label: 'Paramètres', 
     icon: Settings,
     badge: null 
-  },
+  },*/
 ]
 
 export default function AdminLayout({ children }) {

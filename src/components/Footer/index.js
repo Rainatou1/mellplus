@@ -18,7 +18,7 @@ export default function Footer() {
                     <Image
                       width={100}
                       height={90}
-                      src="/images/R.png"
+                      src="/images/logo.png"
                       alt="logo" 
                       className="w-6 h-6 md:w-18 md:h-14" />
                 </div>
@@ -33,17 +33,18 @@ export default function Footer() {
               <h5 className="font-semibold mb-4 text-base md:text-lg">Produits</h5>
               <ul className="space-y-2 text-gray-400 text-sm md:text-base">
                 <li><a href="#" className="hover:text-white">Informatique</a></li>
-                <li><a href="#" className="hover:text-white">Image & Son</a></li>
+                <li><a href="#" className="hover:text-white">Sécurité</a></li>
                 <li><a href="#" className="hover:text-white">Réseau & Serveur</a></li>
                 <li><a href="#" className="hover:text-white">Peripheriques</a></li>
                 <li><a href="#" className="hover:text-white">Connectiques</a></li>
+                <li><a href="#" className="hover:text-white">Accessoires</a></li>
 
               </ul>
             </div>
             <div>
               <Link href="/service"><h5 className="font-semibold mb-4 text-base md:text-lg">Nos Services</h5></Link>
               <ul className="space-y-2 text-gray-400 text-sm md:text-base">
-                <li><a href="/produit" className="hover:text-white">Nos produits</a></li>
+                <li><a href="/produit" className="hover:text-white">Nos promos</a></li>
                 <li><a href="#" className="hover:text-white">Blog</a></li>
                 {/*<li><a href="#" className="hover:text-white">Maintenance</a></li>
                 <li><a href="#" className="hover:text-white">Conseil expert</a></li>*/}
@@ -64,7 +65,7 @@ export default function Footer() {
               <div className="space-y-2 text-gray-400 text-sm md:text-base">
                 <div className="flex items-center space-x-2">
                   <Phone className="w-4 h-4 flex-shrink-0" />
-                  <span>+227 20 35 23 23/+227 20 35 24 24</span>
+                  <span>+227 20 35 23 23</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="w-4 h-4 flex-shrink-0" />

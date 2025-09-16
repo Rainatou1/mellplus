@@ -239,14 +239,14 @@ const MellPlusNiger = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 "
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20"
           aria-label="Slide précédent"
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white  hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20 "
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20"
           aria-label="Slide suivant"
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -354,7 +354,7 @@ const MellPlusNiger = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-6 md:mb-8">
             <h3 className="text-xl md:text-2xl font-bold mb-2">DÉCOUVRIR</h3>
-            <p className="text-gray-600 text-sm md:text-base">Conseils, inspirations, innovations</p>
+            <p className="text-gray-600 text-sm md:text-base">Offres, créativité, innovations</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -373,7 +373,7 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Seconde vie</h4>
                     <p className="text-sm opacity-90">Produits reconditionnés et durables</p>
                   </div>
-                  <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
+                  <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
                 </div>
@@ -395,7 +395,7 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Best sellers</h4>
                     <p className="text-sm opacity-90">PC et accessoires</p>
                   </div>
-                  <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
+                  <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
                 </div>
@@ -418,7 +418,7 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Accessoires</h4>
                     <p className="text-sm opacity-90">Offrez vous ce qu&apos;il y a de meilleur</p>
                   </div>
-                  <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
+                  <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
                 </div>
@@ -438,10 +438,10 @@ const MellPlusNiger = () => {
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
                 <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between text-white">
                   <div>
-                    <h4 className="text-2xl md:text-3xl font-bold mb-2">S&apos;équiper IA</h4>
-                    <p className="text-sm md:text-base opacity-90">Solutions d&apos;Intelligence Artificielle pour entreprises</p>
+                    <h4 className="text-2xl md:text-3xl font-bold mb-2">Nos services</h4>
+                    <p className="text-sm md:text-base opacity-90">Solutions sur mesures pour vos entreprises</p>
                   </div>
-                  <button className="bg-black bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
+                  <button className=" bg-opacity-20 border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
                 </div>
@@ -464,7 +464,7 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Nos soldes</h4>
                     <p className="text-sm opacity-90">Équipements professionnels pour vous</p>
                   </div>
-                  <button className="bg-purple bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all w-fit">
+                  <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
                 </div>
@@ -485,7 +485,7 @@ const MellPlusNiger = () => {
                   height={600}
                   src={partner.logo} 
                   alt={partner.name}
-                  className="h-10 md:h-16 object-contain grayscale hover:grayscale-0 transition-all"
+                  className="h-10 md:h-16 object-contain hover:grayscale transition-all"
                 />
               </div>
             ))}
@@ -498,13 +498,18 @@ const MellPlusNiger = () => {
         <div className="max-w-7xl mx-auto px-4 text-center ">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">
-            Un conseiller Mell Plus Niger vous répond dans les 24chanh !
+            Un conseiller Mell Plus Niger vous répond dans les 12h !
           </p>
           <Link href= "/devis">
           <button className="bg-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-blue-700">
             JE DEMANDE UN DEVIS
           </button>
           </Link>
+        </div>
+      </section>
+      <section>
+        <div>
+
         </div>
       </section>
     </div>

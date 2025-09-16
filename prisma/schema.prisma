@@ -28,8 +28,6 @@ model Product {
   // Informations détaillées
   brand       String?
   model       String?
-  sku         String?  @unique
-  barcode     String?
   
   // Images et médias
   image       String?  // Image principale
@@ -59,7 +57,6 @@ model Product {
   
   @@index([category])
   @@index([slug])
-  @@index([sku])
 }
 
 enum ProductCategory {
@@ -393,6 +390,42 @@ model Newsletter {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@index([email])
+}
+
+// Carousel pour la page d'accueil
+model Carousel {
+  id          String   @id @default(cuid())
+
+  // Contenu de la slide
+  title       String
+  subtitle    String?
+  description String?  @db.Text
+  image       String   // URL de l'image
+
+  // Actions (boutons)
+  ctaPrimary  String?  // Texte du bouton principal
+  ctaSecondary String? // Texte du bouton secondaire
+  linkPrimary String?  // Lien du bouton principal
+  linkSecondary String? // Lien du bouton secondaire
+
+  // Style et apparence
+  bgGradient  String   @default("from-blue-600 to-blue-800") // Classes Tailwind
+  textColor   String   @default("text-white") // Couleur du texte
+
+  // Gestion et ordre
+  active      Boolean  @default(true)
+  order       Int      @default(0) // Ordre d'affichage
+  featured    Boolean  @default(false) // Mise en avant
+
+  // Métadonnées
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations (optionnel: créé par quel admin)
+  createdBy   String?
+
+  @@index([active])
+  @@index([order])
 }

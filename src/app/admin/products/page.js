@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Plus, Search, Edit, Trash2, Eye, X, Upload, Save } from 'lucide-react'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
+import ImageUpload from '@/components/admin/ImageUpload'
 
 const PRODUCT_CATEGORIES = [
   'INFORMATIQUE',
@@ -58,11 +59,10 @@ export default function AdminProductsPage() {
 
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase()
-      filtered = filtered.filter(product => 
+      filtered = filtered.filter(product =>
         product.name?.toLowerCase().includes(searchLower) ||
         product.description?.toLowerCase().includes(searchLower) ||
-        product.brand?.toLowerCase().includes(searchLower) ||
-        product.sku?.toLowerCase().includes(searchLower)
+        product.brand?.toLowerCase().includes(searchLower)
       )
     }
 
@@ -157,7 +157,7 @@ export default function AdminProductsPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
-                placeholder="Rechercher un produit (nom, description, marque, SKU)..."
+                placeholder="Rechercher un produit (nom, description, marque)..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -220,6 +220,7 @@ export default function AdminProductsPage() {
                                 alt={product.name}
                                 width={48}
                                 height={48}
+                                unoptimized
                                 className="object-cover rounded-lg"
                                 onError={(e) => {
                                   e.target.src = '/api/placeholder/48/48'
@@ -234,8 +235,7 @@ export default function AdminProductsPage() {
                               {product.name}
                             </div>
                             <div className="text-xs text-gray-500">
-                              {product.brand && `${product.brand} • `}
-                              {product.sku && `SKU: ${product.sku}`}
+                              {product.brand && product.brand}
                             </div>
                           </div>
                         </div>
@@ -362,8 +362,6 @@ function ProductModal({ product, onClose, onSave }) {
     subcategory: product?.subcategory || '',
     brand: product?.brand || '',
     model: product?.model || '',
-    sku: product?.sku || '',
-    barcode: product?.barcode || '',
     image: product?.image || '',
     images: product?.images || [],
     specifications: product?.specifications || {},
@@ -378,7 +376,6 @@ function ProductModal({ product, onClose, onSave }) {
   const [loading, setLoading] = useState(false)
   const [newSpecKey, setNewSpecKey] = useState('')
   const [newSpecValue, setNewSpecValue] = useState('')
-  const [newImage, setNewImage] = useState('')
 
   // Générer le slug automatiquement à partir du nom
   const generateSlug = (name) => {
@@ -459,22 +456,6 @@ function ProductModal({ product, onClose, onSave }) {
     setFormData(prev => ({ ...prev, specifications: newSpecs }))
   }
 
-  const addImage = () => {
-    if (newImage && !formData.images.includes(newImage)) {
-      setFormData(prev => ({
-        ...prev,
-        images: [...prev.images, newImage]
-      }))
-      setNewImage('')
-    }
-  }
-
-  const removeImage = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index)
-    }))
-  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -632,32 +613,6 @@ function ProductModal({ product, onClose, onSave }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      SKU
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.sku}
-                      onChange={(e) => setFormData(prev => ({...prev, sku: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="Code produit unique"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Code barre
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.barcode}
-                      onChange={(e) => setFormData(prev => ({...prev, barcode: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -732,78 +687,19 @@ function ProductModal({ product, onClose, onSave }) {
             <h3 className="text-lg font-semibold mb-4">Images</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Image principale
-                </label>
-                <input
-                  type="url"
-                  value={formData.image}
-                  onChange={(e) => setFormData(prev => ({...prev, image: e.target.value}))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="https://example.com/image.jpg"
-                />
-                {formData.image && (
-                  <div className="mt-2">
-                    <Image
-                      src={formData.image}
-                      alt="Aperçu"
-                      width={150}
-                      height={150}
-                      className="object-cover rounded-lg"
-                      onError={(e) => {
-                        e.target.style.display = 'none'
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+              <ImageUpload
+                value={formData.image}
+                onChange={(url) => setFormData(prev => ({...prev, image: url}))}
+                label="Image principale"
+                multiple={false}
+              />
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Galerie d&apos;images
-                </label>
-                <div className="flex gap-2 mb-2">
-                  <input
-                    type="url"
-                    placeholder="URL de l'image"
-                    value={newImage}
-                    onChange={(e) => setNewImage(e.target.value)}
-                    className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded"
-                  />
-                  <button
-                    type="button"
-                    onClick={addImage}
-                    className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  {formData.images.map((img, index) => (
-                    <div key={index} className="flex items-center gap-2 p-2 border rounded">
-                      <Image
-                        src={img}
-                        alt={`Image ${index + 1}`}
-                        width={40}
-                        height={40}
-                        className="object-cover rounded"
-                        onError={(e) => {
-                          e.target.style.display = 'none'
-                        }}
-                      />
-                      <span className="text-xs text-gray-600 flex-1 truncate">{img}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <X size={16} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <ImageUpload
+                value={formData.images}
+                onChange={(urls) => setFormData(prev => ({...prev, images: urls}))}
+                label="Galerie d'images"
+                multiple={true}
+              />
             </div>
           </div>
 
