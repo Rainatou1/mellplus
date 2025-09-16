@@ -43,6 +43,8 @@ model Product {
   
   // Marketing et visibilité
   featured    Boolean  @default(false)
+  bestSeller  Boolean  @default(false)
+  refurbished Boolean  @default(false)
   isNew       Boolean  @default(true)
   discount    Int?     // Pourcentage de réduction
   

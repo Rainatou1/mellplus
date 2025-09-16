@@ -76,6 +76,8 @@ export async function PUT(request, { params }) {
         }),
         ...(body.lowStock !== undefined && { lowStock: body.lowStock }),
         ...(body.featured !== undefined && { featured: body.featured }),
+        ...(body.bestSeller !== undefined && { bestSeller: body.bestSeller }),
+        ...(body.refurbished !== undefined && { refurbished: body.refurbished }),
         ...(body.isNew !== undefined && { isNew: body.isNew }),
         ...(body.discount !== undefined && { discount: body.discount }),
         ...(body.publishedAt !== undefined && { publishedAt: body.publishedAt }),

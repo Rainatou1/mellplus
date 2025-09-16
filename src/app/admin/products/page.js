@@ -265,8 +265,18 @@ export default function AdminProductsPage() {
                               Vedette
                             </span>
                           )}
-                          {product.isNew && (
+                          {product.bestSeller && (
+                            <span className="px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800">
+                              Best Seller
+                            </span>
+                          )}
+                          {product.refurbished && (
                             <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                              Seconde Vie
+                            </span>
+                          )}
+                          {product.isNew && (
+                            <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
                               Nouveau
                             </span>
                           )}
@@ -368,6 +378,8 @@ function ProductModal({ product, onClose, onSave }) {
     quantity: product?.quantity || 0,
     lowStock: product?.lowStock || 5,
     featured: product?.featured || false,
+    bestSeller: product?.bestSeller || false,
+    refurbished: product?.refurbished || false,
     isNew: product?.isNew !== undefined ? product.isNew : true,
     discount: product?.discount || '',
     publishedAt: product?.publishedAt ? true : false
@@ -655,6 +667,26 @@ function ProductModal({ product, onClose, onSave }) {
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">Produit vedette</span>
+                    </label>
+
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.bestSeller}
+                        onChange={(e) => setFormData(prev => ({...prev, bestSeller: e.target.checked}))}
+                        className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Best seller</span>
+                    </label>
+
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.refurbished}
+                        onChange={(e) => setFormData(prev => ({...prev, refurbished: e.target.checked}))}
+                        className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Seconde vie (reconditionné)</span>
                     </label>
 
                     <label className="flex items-center">

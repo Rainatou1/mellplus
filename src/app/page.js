@@ -9,6 +9,10 @@ const MellPlusNiger = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [promoProducts, setPromoProducts] = useState([]);
+  const [promoLoading, setPromoLoading] = useState(true);
+  const [bestSellerProducts, setBestSellerProducts] = useState([]);
+  const [bestSellerLoading, setBestSellerLoading] = useState(true);
 
   // Slides du carrousel
   const slides = [
@@ -103,6 +107,52 @@ const MellPlusNiger = () => {
     return () => clearInterval(interval);
   }, [slides.length]);
 
+  // Fetch promotional products and best sellers
+  useEffect(() => {
+    fetchPromoProducts();
+    fetchBestSellerProducts();
+  }, []);
+
+  const fetchPromoProducts = async () => {
+    try {
+      setPromoLoading(true);
+      const response = await fetch('/api/products/promotions?limit=8');
+
+      if (response.ok) {
+        const data = await response.json();
+        setPromoProducts(data.products || []);
+      } else {
+        console.error('Erreur lors du chargement des produits en promotion');
+        setPromoProducts([]);
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      setPromoProducts([]);
+    } finally {
+      setPromoLoading(false);
+    }
+  };
+
+  const fetchBestSellerProducts = async () => {
+    try {
+      setBestSellerLoading(true);
+      const response = await fetch('/api/products/bestsellers?limit=4');
+
+      if (response.ok) {
+        const data = await response.json();
+        setBestSellerProducts(data.products || []);
+      } else {
+        console.error('Erreur lors du chargement des produits best sellers');
+        setBestSellerProducts([]);
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      setBestSellerProducts([]);
+    } finally {
+      setBestSellerLoading(false);
+    }
+  };
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
@@ -113,6 +163,26 @@ const MellPlusNiger = () => {
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+  };
+
+  // Helper functions for promotional products
+  const formatPrice = (price) => {
+    if (!price) return 'N/A';
+    return new Intl.NumberFormat('fr-NE', {
+      style: 'currency',
+      currency: 'XOF',
+      minimumFractionDigits: 0
+    }).format(Number(price));
+  };
+
+  const calculateDiscountedPrice = (originalPrice, discount) => {
+    if (!originalPrice || !discount) return originalPrice;
+    return originalPrice * (1 - discount / 100);
+  };
+
+  const calculateSavings = (originalPrice, discount) => {
+    if (!originalPrice || !discount) return 0;
+    return originalPrice * (discount / 100);
   };
 
  
@@ -146,38 +216,6 @@ const MellPlusNiger = () => {
       icon: <Shield className="w-6 h-6 md:w-8 md:h-8 text-purple-600" />,
       title: "Garantie",
       description: "Service après-vente professionnel"
-    }
-  ];
-
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "PC Portable HP ProBook 450",
-      price: "450 000",
-      originalPrice: "520 000",
-      image: "/images/ordi.jpg",
-      badge: "Promo"
-    },
-    {
-      id: 2,
-      name: "iPhone 15 Pro 128GB",
-      price: "980 000",
-      image: "/images/ordi.jpg",
-      badge: "Nouveau"
-    },
-    {
-      id: 3,
-      name: "Climatiseur Samsung 12000 BTU",
-      price: "380 000",
-      image: "/images/ordi.jpg",
-      badge: "Best Seller"
-    },
-    {
-      id: 4,
-      name: "Imprimante HP LaserJet Pro",
-      price: "220 000",
-      image: "/images/ordi.jpg",
-      badge: ""
     }
   ];
 
@@ -301,51 +339,270 @@ const MellPlusNiger = () => {
       <section className="py-8 md:py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
-            <h3 className="text-xl md:text-2xl font-bold mb-4 sm:mb-0">Produits en vedette</h3>
-            <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold mb-2">🏆 Produits en vedette</h3>
+              <p className="text-gray-600 text-sm md:text-base">Nos produits les plus populaires</p>
+            </div>
+            <Link href="/bestsellers" className="text-blue-600 hover:text-blue-700 font-semibold">
               Voir tous les produits →
-            </a>
+            </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-            {featuredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  <Image
-                    width={500}
-                    height={500} 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-40 md:h-48 object-cover"
-                  />
-                  {product.badge && (
-                    <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs md:text-sm">
-                      {product.badge}
-                    </span>
-                  )}
+          {bestSellerLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
+                  <div className="h-40 md:h-48 bg-gray-200 rounded mb-4"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                  <div className="h-8 bg-gray-200 rounded"></div>
                 </div>
-                <div className="p-3 md:p-4">
-                  <h4 className="font-semibold mb-2 text-sm md:text-base overflow-hidden" style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical'
-                  }}>{product.name}</h4>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                    <div>
-                      <span className="text-lg md:text-xl font-bold text-gray">{product.price} FCFA</span>
-                      {product.originalPrice && (
-                        <div className="text-xs md:text-sm text-gray-500 line-through">
-                          {product.originalPrice} FCFA
-                        </div>
+              ))}
+            </div>
+          ) : bestSellerProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              {bestSellerProducts.map((product) => (
+                <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    <Image
+                      width={500}
+                      height={500}
+                      src={product.image || '/images/ordi.jpg'}
+                      alt={product.name}
+                      className="w-full h-40 md:h-48 object-cover"
+                    />
+                    {/* Best Seller Badge */}
+                    <span className="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-2 py-1 rounded text-xs md:text-sm font-bold">
+                      🏆 Best Seller
+                    </span>
+                    {/* Stock Status */}
+                    <div className={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${
+                      product.quantity <= 0 || !product.inStock
+                        ? 'text-red-600 bg-red-50'
+                        : product.quantity <= (product.lowStock || 5)
+                        ? 'text-orange-600 bg-orange-50'
+                        : 'text-green-600 bg-green-50'
+                    }`}>
+                      {product.quantity <= 0 || !product.inStock
+                        ? 'RUPTURE'
+                        : product.quantity <= (product.lowStock || 5)
+                        ? 'LIMITÉ'
+                        : 'EN STOCK'
+                      }
+                    </div>
+                  </div>
+                  <div className="p-3 md:p-4">
+                    <h4 className="font-semibold mb-2 text-sm md:text-base overflow-hidden" style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical'
+                    }}>{product.name}</h4>
+
+                    {/* Category */}
+                    <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
+                      {product.category}
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                      <div>
+                        {product.discount ? (
+                          <>
+                            <span className="text-lg md:text-xl font-bold text-red-600">
+                              {formatPrice(product.price * (1 - product.discount / 100))}
+                            </span>
+                            <div className="text-xs md:text-sm text-gray-500 line-through">
+                              {formatPrice(product.price)}
+                            </div>
+                          </>
+                        ) : (
+                          <span className="text-lg md:text-xl font-bold text-gray-900">
+                            {formatPrice(product.price)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Link
+                        href={`/products/${product.slug || product.id}`}
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+                      >
+                        Détails
+                      </Link>
+                      {(product.quantity > 0 && product.inStock) ? (
+                        <Link
+                          href={`/contact?product=${product.id}`}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1"
+                        >
+                          <ShoppingCart className="w-4 h-4" />
+                          Commander
+                        </Link>
+                      ) : (
+                        <button
+                          disabled
+                          className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed"
+                        >
+                          Épuisé
+                        </button>
                       )}
                     </div>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 text-sm md:text-base">
-                    Ajouter au panier
-                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg p-12 text-center">
+              <div className="text-6xl mb-4">🏆</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucun produit vedette pour le moment</h3>
+              <p className="text-gray-600">Les produits best sellers apparaîtront bientôt ici !</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Promotions Section */}
+      <section className="py-8 md:py-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold mb-2">🔥 Promotions</h3>
+              <p className="text-gray-600 text-sm md:text-base">Ne ratez pas nos offres exceptionnelles</p>
+            </div>
+            <Link
+              href="/promotions"
+              className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-2"
+            >
+              Voir plus →
+            </Link>
           </div>
+
+          {promoLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
+                  <div className="h-48 bg-gray-200 rounded mb-4"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                  <div className="h-8 bg-gray-200 rounded"></div>
+                </div>
+              ))}
+            </div>
+          ) : promoProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              {promoProducts.map((product) => (
+                <div key={product.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-2 border-red-100 relative">
+                  {/* Badge de réduction */}
+                  {product.discount && (
+                    <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg">
+                      -{product.discount}%
+                    </div>
+                  )}
+
+                  {/* Image du produit */}
+                  <div className="relative h-48 bg-gray-100 overflow-hidden">
+                    <Image
+                      src={product.image || '/images/ordi.jpg'}
+                      alt={product.name}
+                      width={300}
+                      height={200}
+                      unoptimized
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+
+                    {/* Badge de stock */}
+                    <div className={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${
+                      product.quantity <= 0 || !product.inStock
+                        ? 'text-red-600 bg-red-50'
+                        : product.quantity <= (product.lowStock || 5)
+                        ? 'text-orange-600 bg-orange-50'
+                        : 'text-green-600 bg-green-50'
+                    }`}>
+                      {product.quantity <= 0 || !product.inStock
+                        ? 'RUPTURE'
+                        : product.quantity <= (product.lowStock || 5)
+                        ? 'LIMITÉ'
+                        : 'EN STOCK'
+                      }
+                    </div>
+                  </div>
+
+                  {/* Contenu */}
+                  <div className="p-4">
+                    {/* Catégorie */}
+                    <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
+                      {product.category}
+                    </div>
+
+                    {/* Nom du produit */}
+                    <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
+                      {product.name}
+                    </h3>
+
+                    {/* Économies réalisées */}
+                    {product.discount && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-2 mb-3">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-gray-600">Économie :</span>
+                          <span className="font-bold text-red-600">{formatPrice(calculateSavings(product.price, product.discount))}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Prix */}
+                    <div className="mb-4">
+                      <div className="flex items-center gap-3">
+                        {product.discount ? (
+                          <>
+                            <div className="text-xl font-bold text-red-600">
+                              {formatPrice(calculateDiscountedPrice(product.price, product.discount))}
+                            </div>
+                            <div className="text-sm text-gray-500 line-through">
+                              {formatPrice(product.price)}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-xl font-bold text-gray-900">
+                            {formatPrice(product.price)}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Boutons d'action */}
+                    <div className="flex gap-2">
+                      <Link
+                        href={`/products/${product.slug || product.id}`}
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+                      >
+                        Détails
+                      </Link>
+                      {(product.quantity > 0 && product.inStock) ? (
+                        <Link
+                          href={`/contact?product=${product.id}`}
+                          className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
+                        >
+                          <ShoppingCart className="w-4 h-4" />
+                          Profiter
+                        </Link>
+                      ) : (
+                        <button
+                          disabled
+                          className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed"
+                        >
+                          Épuisé
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg p-12 text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucune promotion en cours</h3>
+              <p className="text-gray-600">Revenez bientôt pour découvrir nos prochaines offres !</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -373,9 +630,11 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Seconde vie</h4>
                     <p className="text-sm opacity-90">Produits reconditionnés et durables</p>
                   </div>
-                  <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
-                    VOIR ›
-                  </button>
+                  <Link href="/seconde-vie">
+                    <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
+                      VOIR ›
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

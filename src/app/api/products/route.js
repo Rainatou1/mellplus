@@ -108,6 +108,8 @@ export async function POST(request) {
         quantity: body.quantity || 0,
         lowStock: body.lowStock || 5,
         featured: body.featured || false,
+        bestSeller: body.bestSeller || false,
+        refurbished: body.refurbished || false,
         isNew: body.isNew !== undefined ? body.isNew : true,
         discount: body.discount || null,
         publishedAt: body.publishedAt ? new Date(body.publishedAt) : null
