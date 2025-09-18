@@ -309,10 +309,10 @@ function BestSellerProductCard({ product }) {
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-2 border-yellow-100 relative">
       {/* Badge Best Seller */}
-      <div className="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg flex items-center gap-1">
+      {/*<div className="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg flex items-center gap-1">
         <Award size={14} />
         BEST SELLER
-      </div>
+      </div>*/}
 
       {/* Image du produit */}
       <div className="relative h-48 bg-gray-100 overflow-hidden">
@@ -369,7 +369,7 @@ function BestSellerProductCard({ product }) {
         )}
 
         {/* Statistiques de popularité */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2 mb-3">
+        {/*<div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2 mb-3">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600 flex items-center gap-1">
               <TrendingUp size={14} />
@@ -377,16 +377,16 @@ function BestSellerProductCard({ product }) {
             </span>
             <span className="font-bold text-yellow-600">{product.views || 0}</span>
           </div>
-        </div>
+        </div>*/}
 
         {/* Prix */}
         <div className="mb-4">
           {product.discount ? (
-            <div className="flex items-center gap-3">
-              <div className="text-2xl font-bold text-red-600">
+            <div className="flex items-center gap-2">
+              <div className="text-xl text-red-600">
                 {formatPrice(product.price * (1 - product.discount / 100))}
               </div>
-              <div className="text-lg text-gray-500 line-through">
+              <div className="text-sm text-gray-500 line-through">
                 {formatPrice(product.price)}
               </div>
             </div>
@@ -427,7 +427,7 @@ function BestSellerProductCard({ product }) {
           {(product.quantity > 0 && product.inStock) ? (
             <Link
               href={`/contact?product=${product.id}`}
-              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
+              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
             >
               <ShoppingCart size={14} />
               Commander

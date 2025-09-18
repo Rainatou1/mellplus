@@ -143,21 +143,21 @@ export default function Header() {
               <Link href="/#">
               <div className="bg-blue-400 text-white p-1 md:p-2 rounded-lg mr-2 md:mr-3">
                 <Image
-                width={600}
-                height={600}
+                width={900}
+                height={900}
                 src="/images/logo.png"
                 alt="logo" 
-                className="w-12 h-12 md:w-20 md:h-16" />
+                className="w-12 h-12 md:w-28 md:h-19" />
               </div>
               </Link>
               <div>
-                <h1 className="text-lg md:text-2xl font-bold text-gray-800">Mell Plus Niger</h1>
-                <p className="text-xs md:text-sm text-gray-600 hidden sm:block">Votre partenaire IT au Niger</p>
+                <h1 className="text-lg md:text-2xl font-bold text-white">Mell Plus Niger</h1>
+                <p className="text-xs md:text-sm text-white hidden sm:block">Votre partenaire IT au Niger</p>
               </div>
             </div>
 
             {/* Desktop Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-xl lg:max-w-2xl mx-4 lg:mx-8">
+            <div className="hidden md:flex flex-1 max-w-xl lg:max-w-2xl mx-4 lg:mx-8 bg-white rounded-lg">
               <SearchBar />
             </div>
 
@@ -207,7 +207,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:block border-t border-blue-100 relative">
             <div className="flex items-center space-x-4 lg:space-x-8 py-2 ">
-              <Link href="/#" className="text-white hover:text-gray-600 py-2 whitespace-nowrap">Acceuil</Link>
+              <Link href="/#" className="text-gray-600 hover:text-white py-2 whitespace-nowrap">Acceuil</Link>
               {categories.map((category, index) => (
                 <div
                   key={index}

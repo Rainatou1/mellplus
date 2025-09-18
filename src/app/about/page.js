@@ -65,7 +65,7 @@ const AboutPage = () => {
       name: 'Mai guizo',
       role: 'CEO & Fondateur',
       bio: 'Passionné par l\'innovation digitale depuis plus de 8 ans. Expert en stratégie web et développement d\'entreprise.',
-      avatar: 'images/dg.jpg',
+      avatar: '/images/dg.jpg',
       skills: ['Leadership', 'Stratégie', 'Business Development'],
       linkedin: '#',
       experience: '20+ ans'
@@ -74,7 +74,7 @@ const AboutPage = () => {
       name: 'Aboubacar Siddick Dari',
       role: 'Chargé de communication',
       bio: 'Développeuse full-stack experte en React et Node.js. Architecte de solutions web scalables et performantes.',
-      avatar: 'images/aboubacar.jpg',
+      avatar: '/images/aboubacar.jpg',
       skills: ['React', 'Node.js', 'Architecture'],
       linkedin: '#',
       experience: '6+ ans'
@@ -83,7 +83,7 @@ const AboutPage = () => {
       name: 'Saddalah Thomas',
       role: 'Ingénieur logiciel',
       bio: 'Spécialiste du développement mobile iOS et Android. Créateur d\'apps intuitives et performantes.',
-      avatar: 'images/sadallah.jpg',
+      avatar: '/images/sadallah.jpg',
       skills: ['React Native', 'Swift', 'Kotlin'],
       linkedin: '#',
       experience: '5+ ans'
@@ -92,7 +92,7 @@ const AboutPage = () => {
       name: 'Fatima Amani',
       role: 'Assistante TIC',
       bio: 'Designer créative spécialisée dans l\'expérience utilisateur. Transforme les idées en interfaces magnifiques.',
-      avatar: 'images/fatima.jpg',
+      avatar: '/images/fatima.jpg',
       skills: ['UI Design', 'UX Research', 'Prototyping'],
       linkedin: '#',
       experience: '4+ ans'

@@ -405,7 +405,7 @@ function PromoProductCard({ product }) {
   const savings = calculateSavings(product.price, product.discount)
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-2 border-red-100 relative">
+    <div className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-1 border-gray-100 relative">
       {/* Badge de réduction */}
       <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg">
         -{product.discount}%
@@ -466,7 +466,7 @@ function PromoProductCard({ product }) {
         )}
 
         {/* Économies réalisées */}
-        <div className="bg-red-50 border border-red-200 rounded-lg p-2 mb-3">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Vous économisez :</span>
             <span className="font-bold text-red-600">{formatPrice(savings)}</span>
@@ -475,11 +475,11 @@ function PromoProductCard({ product }) {
 
         {/* Prix */}
         <div className="mb-4">
-          <div className="flex items-center gap-3">
-            <div className="text-2xl font-bold text-red-600">
+          <div className="flex items-center gap-2">
+            <div className="text-xl text-red-600">
               {formatPrice(discountedPrice)}
             </div>
-            <div className="text-lg text-gray-500 line-through">
+            <div className="text-sm text-gray-500 line-through">
               {formatPrice(product.price)}
             </div>
           </div>
@@ -515,7 +515,7 @@ function PromoProductCard({ product }) {
           {(product.quantity > 0 && product.inStock) ? (
             <Link
               href={`/contact?product=${product.id}`}
-              className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
+              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
             >
               <ShoppingCart size={14} />
               Profiter

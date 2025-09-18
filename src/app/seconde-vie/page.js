@@ -142,20 +142,17 @@ export default function SecondeViePage() {
               <h1 className="text-4xl md:text-6xl font-bold">
                 SECONDE VIE
               </h1>
-              <Leaf size={48} className="text-green-300" />
+              <Recycle size={48} className="text-green-300" />
             </div>
             <p className="text-xl md:text-2xl mb-6 opacity-90">
-              Produits reconditionnés durables et écologiques
+              Produits reconditionnés durables 
             </p>
             <div className="flex items-center justify-center gap-6 text-lg">
               <div className="flex items-center gap-2">
                 <Award className="text-green-300" />
                 <span>Garantie qualité</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Leaf className="text-green-300" />
-                <span>Éco-responsable</span>
-              </div>
+              
             </div>
           </div>
         </div>
