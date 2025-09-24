@@ -233,14 +233,14 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
+         {/* <div className="flex gap-3">
             <button className="px-4 py-2 bg-white/20 backdrop-blur border border-white/30 rounded-lg hover:bg-white/30 transition-all">
               Télécharger le rapport
             </button>
             <button className="px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-all font-medium">
               Nouvelle vente
             </button>
-          </div>
+          </div>*/}
         </div>
       </div>
 

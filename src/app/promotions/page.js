@@ -225,8 +225,75 @@ export default function PromotionsPage() {
       </div>*/}
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Barre de recherche et filtres */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Left Banner - Hidden on small screens */}
+          <div className="hidden lg:block lg:w-1/4 space-y-4">
+           
+
+            {/* Services Banner */}
+              <div className="bg-gradient-to-br from-red-600 to-red-800 p-4 text-white text-center ">
+                <div className="text-3xl mb-2">🔧</div>
+                <h3 className="text-lg font-bold mb-2">Nos Services</h3>
+                <p className="text-xs opacity-90 mb-3">Installation & Maintenance</p>
+                <div className="space-y-2 text-xs">
+                  <div>✓ Installation réseau</div>
+                  <div>✓ Developpement logiciel</div>
+                  <div>✓ Support technique</div>
+                </div>
+                <Link href="/services" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                  Découvrir
+                </Link>
+              </div>
+              {/* Best Sellers Info Banner */}
+            <div className="bg-gradient-to-br from-blue-300 to-blue-600 p-4 text-white text-center rounded-lg shadow-lg">
+              <div className="text-3xl mb-2">🏆</div>
+              <h3 className="text-lg font-bold mb-2">Best Sellers</h3>
+              <p className="text-xs opacity-90 mb-3">Les produits les plus populaires</p>
+              <div className="space-y-2 text-xs">
+                <div>✓ Produits les plus demandés</div>
+                <div>✓ Qualité garantie</div>
+                <div>✓ Stock disponible</div>
+              </div>
+              <div className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block cursor-pointer">
+                Découvrir maintenant
+              </div>
+            </div>
+
+            {/* Flash Sales Banner */}
+            <div className="bg-white p-4 text-gray text-center rounded-lg shadow-lg">
+              <div className="text-3xl mb-2">⚡</div>
+              <h3 className="text-lg font-bold mb-2">Ventes Flash</h3>
+              <p className="text-xs opacity-90 mb-3">Offres éclair quotidiennes</p>
+              <div className="space-y-2 text-xs">
+                <div>✓ Nouveaux produits chaque jour</div>
+                <div>✓ Réductions exceptionnelles</div>
+                <div>✓ Durée limitée</div>
+              </div>
+              <div className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block cursor-pointer">
+                Voir les offres
+              </div>
+            </div>
+
+            {/* Loyalty Program Banner */}
+            <div className="bg-gradient-to-br from-blue-400 to-blue-800 p-4 text-white text-center rounded-lg shadow-lg">
+              <div className="text-3xl mb-2">💎</div>
+              <h3 className="text-lg font-bold mb-2">Programme Fidélité</h3>
+              <p className="text-xs opacity-90 mb-3">Plus d&apos;achats, plus d&apos;avantages</p>
+              <div className="space-y-2 text-xs">
+                <div>✓ Réductions cumulées</div>
+                <div>✓ Offres exclusives</div>
+                <div>✓ Points de fidélité</div>
+              </div>
+              <Link href="/contact" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                En savoir plus
+              </Link>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            {/* Barre de recherche et filtres */}
+            <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Recherche */}
             <div className="flex-1 relative">
@@ -244,7 +311,7 @@ export default function PromotionsPage() {
             <select
               value={filters.category}
               onChange={(e) => setFilters({...filters, category: e.target.value})}
-              className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">Toutes les catégories</option>
               {categories.map(category => (
@@ -255,7 +322,7 @@ export default function PromotionsPage() {
             </select>
 
             {/* Réduction minimum */}
-            <select
+            {/*<select
               value={filters.minDiscount}
               onChange={(e) => setFilters({...filters, minDiscount: e.target.value})}
               className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
@@ -266,7 +333,7 @@ export default function PromotionsPage() {
               <option value="30">30% et plus</option>
               <option value="40">40% et plus</option>
               <option value="50">50% et plus</option>
-            </select>
+            </select>*/}
 
             {/* Prix maximum */}
             <input
@@ -300,70 +367,72 @@ export default function PromotionsPage() {
           </div>
         </div>
 
-        {/* Grille des produits en promotion */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-            {filteredProducts.map((product) => (
-              <PromoProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white rounded-lg p-12 text-center">
-            <div className="text-6xl mb-4">🎉</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {products.length === 0 ? 'Aucune promotion en cours' : 'Aucun produit trouvé'}
-            </h3>
-            <p className="text-gray-600 mb-4">
-              {products.length === 0 
-                ? 'Revenez bientôt pour découvrir nos prochaines offres !' 
-                : 'Essayez de modifier vos critères de recherche'
-              }
-            </p>
-            {products.length > 0 && (
-              <button
-                onClick={resetFilters}
-                className="text-red-600 hover:text-red-800 font-medium"
-              >
-                Voir toutes les promotions
-              </button>
+            {/* Grille des produits en promotion */}
+            {filteredProducts.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 mb-8">
+                {filteredProducts.map((product) => (
+                  <PromoProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg p-12 text-center">
+                <div className="text-6xl mb-4">🎉</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {products.length === 0 ? 'Aucune promotion en cours' : 'Aucun produit trouvé'}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {products.length === 0
+                    ? 'Revenez bientôt pour découvrir nos prochaines offres !'
+                    : 'Essayez de modifier vos critères de recherche'
+                  }
+                </p>
+                {products.length > 0 && (
+                  <button
+                    onClick={resetFilters}
+                    className="text-red-600 hover:text-red-800 font-medium"
+                  >
+                    Voir toutes les promotions
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                >
+                  Précédent
+                </button>
+
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-4 py-2 border rounded-lg ${
+                      currentPage === i + 1
+                        ? 'bg-red-600 text-white border-red-600'
+                        : 'hover:bg-gray-50'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                >
+                  Suivant
+                </button>
+              </div>
             )}
           </div>
-        )}
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2">
-            <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Précédent
-            </button>
-            
-            {[...Array(totalPages)].map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-4 py-2 border rounded-lg ${
-                  currentPage === i + 1
-                    ? 'bg-red-600 text-white border-red-600'
-                    : 'hover:bg-gray-50'
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-            
-            <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Suivant
-            </button>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   )
@@ -405,7 +474,7 @@ function PromoProductCard({ product }) {
   const savings = calculateSavings(product.price, product.discount)
 
   return (
-    <div className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-1 border-gray-100 relative">
+    <div className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border border-gray-300 relative">
       {/* Badge de réduction */}
       <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg">
         -{product.discount}%
@@ -414,116 +483,76 @@ function PromoProductCard({ product }) {
       {/* Image du produit */}
       <div className="relative h-48 bg-gray-100 overflow-hidden">
         <Image
-          src={product.image || '/api/placeholder/300/200'}
+          src={product.image || '/images/ordi.jpg'}
           alt={product.name}
-          fill
+          width={300}
+          height={200}
           unoptimized
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
-            e.target.src = '/api/placeholder/300/200'
+            e.target.src = '/images/ordi.jpg'
           }}
         />
-        
+
         {/* Badge de stock */}
-        <div className={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${stockStatus.color}`}>
-          {stockStatus.text}
-        </div>
-
-        {/* Overlay gradient pour améliorer la lisibilité */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-        {/* Boutons d&apos;action en hover */}
-        <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
-          <button className="bg-white p-2 rounded-full shadow-md hover:bg-gray-50 transition-colors">
-            <Heart size={16} className="text-gray-600" />
-          </button>
-          <Link
-            href={`/products/${product.slug || product.id}`}
-            className="bg-white p-2 rounded-full shadow-md hover:bg-gray-50 transition-colors"
-          >
-            <Eye size={16} className="text-gray-600" />
-          </Link>
+        <div className={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${
+          product.quantity <= 0 || !product.inStock
+            ? 'text-red-600 bg-red-50'
+            : product.quantity <= (product.lowStock || 5)
+            ? 'text-orange-600 bg-orange-50'
+            : 'text-green-600 bg-green-50'
+        }`}>
+          {product.quantity <= 0 || !product.inStock
+            ? 'RUPTURE'
+            : product.quantity <= (product.lowStock || 5)
+            ? 'LIMITÉ'
+            : 'EN STOCK'
+          }
         </div>
       </div>
 
       {/* Contenu */}
       <div className="p-4">
-        {/* Catégorie */}
-        <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
-          {product.category}
-        </div>
-
         {/* Nom du produit */}
         <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
           {product.name}
         </h3>
 
-        {/* Description courte */}
-        {product.description && (
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-            {product.description}
-          </p>
-        )}
-
-        {/* Économies réalisées */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Vous économisez :</span>
-            <span className="font-bold text-red-600">{formatPrice(savings)}</span>
-          </div>
-        </div>
-
         {/* Prix */}
-        <div className="mb-4">
-          <div className="flex items-center gap-2">
-            <div className="text-xl text-red-600">
+        <div className="mb-3">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="text-base font-bold text-red-600">
               {formatPrice(discountedPrice)}
             </div>
             <div className="text-sm text-gray-500 line-through">
               {formatPrice(product.price)}
             </div>
           </div>
-          <div className="text-xs text-gray-500 mt-1">
-            Prix final après réduction
+          <div className="text-xs text-green-600 font-medium">
+            Économies: {formatPrice(savings)}
           </div>
         </div>
-
-        {/* Évaluation si disponible */}
-        {product.rating && (
-          <div className="flex items-center gap-1 mb-3">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                size={14}
-                className={i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}
-              />
-            ))}
-            <span className="text-xs text-gray-500 ml-1">
-              ({product.reviews || 0})
-            </span>
-          </div>
-        )}
 
         {/* Boutons d&apos;action */}
         <div className="flex gap-2">
           <Link
             href={`/products/${product.slug || product.id}`}
-            className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+            className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm font-medium transition-colors text-center"
           >
-            Voir détails
+            Voir
           </Link>
           {(product.quantity > 0 && product.inStock) ? (
             <Link
               href={`/contact?product=${product.id}`}
-              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-red-600 hover:to-pink-600 text-white px-3 py-2 rounded text-sm font-medium transition-all flex items-center gap-1"
             >
               <ShoppingCart size={14} />
-              Profiter
+              Acheter
             </Link>
           ) : (
             <button
               disabled
-              className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed"
+              className="bg-gray-300 text-gray-500 px-3 py-2 rounded text-sm font-medium cursor-not-allowed"
             >
               Épuisé
             </button>

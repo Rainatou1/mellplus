@@ -11,6 +11,28 @@ export default function Header() {
 
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
+
+  // Helper functions to convert database categories to URL slugs
+  const getCategorySlug = (dbCategory) => {
+    const slugMap = {
+      'INFORMATIQUE': 'informatique',
+      'PERIPHERIQUES': 'peripheriques',
+      'SECURITE': 'securite',
+      'RESEAUX_SERVEUR': 'reseaux-serveur',
+      'CONNECTIQUES': 'connectiques',
+      'ACCESSOIRES': 'accessoires'
+    }
+    return slugMap[dbCategory] || dbCategory.toLowerCase()
+  }
+
+  const getSubcategorySlug = (subcategory) => {
+    return subcategory.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/^-+|-+$/g, '')
+  }
  const categoriy = [
     { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
     { name: 'Sécurité', subcategories: ['Videosurveillance', 'Incendie', 'Controle Accès'] },
@@ -23,10 +45,10 @@ export default function Header() {
   // Mapping des catégories de l'interface vers la base de données
   const categoryMapping = {
     'Informatique': 'INFORMATIQUE',
-    'Sécurité': 'SECURITE', 
-    'Reseau&Serveur': 'RESEAU',
-    'Peripheriques': 'BUREAUTIQUE',
-    'Connectiques': 'ACCESSOIRES',
+    'Sécurité': 'SECURITE',
+    'Reseau&Serveur': 'RESEAUX_SERVEUR',
+    'Peripheriques': 'PERIPHERIQUES',
+    'Connectiques': 'CONNECTIQUES',
     'Accessoires': 'ACCESSOIRES'
   }
 
@@ -52,7 +74,7 @@ export default function Header() {
   },
   {
     name: 'Reseau&Serveur',
-    dbCategory: 'RESEAU',
+    dbCategory: 'RESEAUX_SERVEUR',
     subcategories: [
       { name: 'Switch', subcategory: 'Switch' },
       { name: 'Telephone IP', subcategory: 'Telephone IP' },
@@ -61,7 +83,7 @@ export default function Header() {
   },
   {
     name: 'Peripheriques',
-    dbCategory: 'BUREAUTIQUE',
+    dbCategory: 'PERIPHERIQUES',
     subcategories: [
       { name: 'Imprimantes', subcategory: 'Imprimantes' },
       { name: 'Scanners', subcategory: 'Scanners' },
@@ -70,7 +92,7 @@ export default function Header() {
   },
   {
     name: 'Connectiques',
-    dbCategory: 'ACCESSOIRES',
+    dbCategory: 'CONNECTIQUES',
     subcategories: [
       { name: 'Cables', subcategory: 'Cables' },
       { name: 'Multiprise', subcategory: 'Multiprise' },
@@ -225,7 +247,7 @@ export default function Header() {
                     <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1">
                       {/* Lien vers toute la catégorie */}
                       <Link
-                        href={`/products?category=${category.dbCategory}`}
+                        href={`/products/category/${getCategorySlug(category.dbCategory)}`}
                         className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded transition-colors font-medium border-b mb-2"
                       >
                         Voir tous les {category.name}
@@ -239,7 +261,7 @@ export default function Header() {
                           onMouseLeave={() => setActiveSubcategory(null)}
                         >
                           <Link
-                            href={`/products?category=${category.dbCategory}&subcategory=${sub.subcategory}`}
+                            href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(sub.subcategory)}`}
                             className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
                           >
                             {sub.name}
@@ -252,7 +274,7 @@ export default function Header() {
                               {sub.subSubcategories.map((subSub, subSubIndex) => (
                                 <Link
                                   key={subSubIndex}
-                                  href={`/products?category=${category.dbCategory}&subcategory=${subSub.subcategory}`}
+                                  href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(subSub.subcategory)}`}
                                   className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors text-sm"
                                 >
                                   {subSub.name}
@@ -294,7 +316,7 @@ export default function Header() {
                       <div className="pl-4 space-y-2 mt-2">
                         {/* Lien vers toute la catégorie */}
                         <Link
-                          href={`/products?category=${category.dbCategory}`}
+                          href={`/products/category/${getCategorySlug(category.dbCategory)}`}
                           className="block py-2 text-gray-600 hover:text-blue-600 font-medium"
                         >
                           Voir tous les {category.name}
@@ -307,7 +329,7 @@ export default function Header() {
                               className="flex items-center justify-between w-full text-left py-2 text-gray-600 hover:text-blue-600"
                             >
                               <Link
-                                href={`/products?category=${category.dbCategory}&subcategory=${sub.subcategory}`}
+                                href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(sub.subcategory)}`}
                                 className="flex-1"
                               >
                                 {sub.name}
@@ -323,7 +345,7 @@ export default function Header() {
                                 {sub.subSubcategories.map((subSub, subSubIndex) => (
                                   <Link
                                     key={subSubIndex}
-                                    href={`/products?category=${category.dbCategory}&subcategory=${subSub.subcategory}`}
+                                    href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(subSub.subcategory)}`}
                                     className="block py-1.5 text-sm text-gray-500 hover:text-blue-600"
                                   >
                                     {subSub.name}

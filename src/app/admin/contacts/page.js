@@ -1,7 +1,7 @@
 // app/admin/contacts/page.js
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   MessageSquare,
   Search,
@@ -33,95 +33,11 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react'
-import { useDashboardStats } from '../../../../hooks/useData'
+import toast from 'react-hot-toast'
 
 export default function AdminContactsPage() {
-  const [messages, setMessages] = useState([
-    {
-      id: '1',
-      name: 'Jean-Baptiste Kouamé',
-      email: 'jb.kouame@entreprise.ne',
-      phone: '+227 96 12 34 56',
-      company: 'Tech Solutions Niger',
-      subject: 'Demande d\'information sur les serveurs',
-      message: 'Bonjour, nous sommes intéressés par vos solutions serveur pour notre datacenter. Nous aimerions avoir plus d\'informations sur les modèles disponibles, les prix et les délais de livraison. Pouvez-vous nous envoyer une documentation détaillée ? Cordialement.',
-      status: 'unread',
-      priority: 'high',
-      category: 'information',
-      source: 'website',
-      createdAt: '2024-01-20T14:30:00',
-      ip: '197.214.10.45',
-      starred: false,
-      replied: false,
-      archived: false
-    },
-    {
-      id: '2',
-      name: 'Fatima Diallo',
-      email: 'fatima.d@ong-education.ne',
-      phone: '+227 90 87 65 43',
-      company: 'ONG Éducation Pour Tous',
-      subject: 'Partenariat pour équipement scolaire',
-      message: 'Nous recherchons un partenaire fiable pour équiper 10 écoles en matériel informatique. Pouvons-nous organiser une réunion pour discuter d\'un partenariat à long terme ?',
-      status: 'read',
-      priority: 'urgent',
-      category: 'partnership',
-      source: 'email',
-      createdAt: '2024-01-20T10:15:00',
-      starred: true,
-      replied: false,
-      archived: false
-    },
-    {
-      id: '3',
-      name: 'Mohamed Ali',
-      email: 'mali@startup.ne',
-      phone: '+227 91 23 45 67',
-      subject: 'Support technique urgent',
-      message: 'Notre serveur principal est en panne depuis ce matin. Nous avons besoin d\'une intervention urgente. Merci de nous contacter au plus vite.',
-      status: 'read',
-      priority: 'urgent',
-      category: 'support',
-      source: 'phone',
-      createdAt: '2024-01-20T08:00:00',
-      starred: false,
-      replied: true,
-      archived: false,
-      response: 'Notre équipe technique a été dépêchée sur site. Intervention en cours.'
-    },
-    {
-      id: '4',
-      name: 'Aminata Sow',
-      email: 'asow@hotel-sahel.ne',
-      company: 'Hôtel Sahel',
-      subject: 'Réclamation commande #CMD-2024-015',
-      message: 'Nous avons reçu 3 climatiseurs au lieu de 5 commandés. Merci de nous livrer les 2 manquants rapidement.',
-      status: 'read',
-      priority: 'normal',
-      category: 'complaint',
-      source: 'website',
-      createdAt: '2024-01-19T16:45:00',
-      starred: false,
-      replied: true,
-      archived: false
-    },
-    {
-      id: '5',
-      name: 'Ibrahim Touré',
-      email: 'ibrahim.t@gmail.com',
-      phone: '+227 97 11 22 33',
-      subject: 'Demande de devis',
-      message: 'Je souhaite obtenir un devis pour 20 ordinateurs portables pour mon entreprise.',
-      status: 'unread',
-      priority: 'normal',
-      category: 'quote',
-      source: 'website',
-      createdAt: '2024-01-19T11:30:00',
-      starred: false,
-      replied: false,
-      archived: false
-    }
-  ])
+  const [messages, setMessages] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const [selectedMessage, setSelectedMessage] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -130,7 +46,65 @@ export default function AdminContactsPage() {
   const [showReplyModal, setShowReplyModal] = useState(false)
   const [replyText, setReplyText] = useState('')
   const [selectedMessages, setSelectedMessages] = useState([])
- 
+
+  // Fetch contacts from API
+  const fetchContacts = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/contact')
+      if (response.ok) {
+        const data = await response.json()
+        // Transform API data to match component structure
+        const transformedMessages = data.contacts.map(contact => ({
+          id: contact.id,
+          name: contact.name,
+          email: contact.email,
+          phone: contact.phone || '',
+          company: contact.company || '',
+          subject: contact.subject,
+          message: contact.message,
+          status: contact.read ? 'read' : 'unread',
+          priority: getPriorityFromSubject(contact.subject),
+          category: getCategoryFromSubject(contact.subject),
+          source: contact.source || 'website',
+          createdAt: contact.createdAt,
+          ip: contact.ip,
+          starred: contact.starred || false,
+          replied: contact.replied || false,
+          archived: contact.archived || false
+        }))
+        setMessages(transformedMessages)
+      } else {
+        toast.error('Erreur lors du chargement des messages')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+      toast.error('Erreur de connexion')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Helper functions to determine priority and category from subject
+  const getPriorityFromSubject = (subject) => {
+    const lowerSubject = subject.toLowerCase()
+    if (lowerSubject.includes('urgent') || lowerSubject.includes('support technique')) return 'urgent'
+    if (lowerSubject.includes('partenariat') || lowerSubject.includes('important')) return 'high'
+    return 'normal'
+  }
+
+  const getCategoryFromSubject = (subject) => {
+    const lowerSubject = subject.toLowerCase()
+    if (lowerSubject.includes('devis')) return 'quote'
+    if (lowerSubject.includes('support') || lowerSubject.includes('technique')) return 'support'
+    if (lowerSubject.includes('réclamation') || lowerSubject.includes('problème')) return 'complaint'
+    if (lowerSubject.includes('partenariat')) return 'partnership'
+    return 'information'
+  }
+
+  useEffect(() => {
+    fetchContacts()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Statistiques
   const stats = {
@@ -183,22 +157,77 @@ export default function AdminContactsPage() {
     }
   }
 
-  const markAsRead = (id) => {
-    setMessages(messages.map(m => 
-      m.id === id ? { ...m, status: 'read' } : m
-    ))
+  const markAsRead = async (id) => {
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, read: true }),
+      })
+
+      if (response.ok) {
+        setMessages(messages.map(m =>
+          m.id === id ? { ...m, status: 'read' } : m
+        ))
+      } else {
+        toast.error('Erreur lors de la mise à jour du statut')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+      toast.error('Erreur de connexion')
+    }
   }
 
-  const toggleStar = (id) => {
-    setMessages(messages.map(m => 
-      m.id === id ? { ...m, starred: !m.starred } : m
-    ))
+  const toggleStar = async (id) => {
+    const message = messages.find(m => m.id === id)
+    const newStarredStatus = !message.starred
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, starred: newStarredStatus }),
+      })
+
+      if (response.ok) {
+        setMessages(messages.map(m =>
+          m.id === id ? { ...m, starred: newStarredStatus } : m
+        ))
+      } else {
+        toast.error('Erreur lors de la mise à jour du favori')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+      toast.error('Erreur de connexion')
+    }
   }
 
-  const archiveMessage = (id) => {
-    setMessages(messages.map(m => 
-      m.id === id ? { ...m, archived: true } : m
-    ))
+  const archiveMessage = async (id) => {
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, archived: true }),
+      })
+
+      if (response.ok) {
+        setMessages(messages.map(m =>
+          m.id === id ? { ...m, archived: true } : m
+        ))
+        toast.success('Message archivé')
+      } else {
+        toast.error('Erreur lors de l\'archivage')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+      toast.error('Erreur de connexion')
+    }
   }
 
   const deleteMessage = (id) => {
@@ -363,7 +392,18 @@ export default function AdminContactsPage() {
 
           {/* Messages */}
           <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
-            {filteredMessages.map((message) => {
+            {loading ? (
+              <div className="p-8 text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Chargement des messages...</p>
+              </div>
+            ) : filteredMessages.length === 0 ? (
+              <div className="p-8 text-center">
+                <MessageSquare className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-600">Aucun message trouvé</p>
+              </div>
+            ) : (
+              filteredMessages.map((message) => {
               const categoryConfig = getCategoryConfig(message.category)
               
               return (
@@ -437,7 +477,7 @@ export default function AdminContactsPage() {
                   </div>
                 </div>
               )
-            })}
+            }))}
           </div>
 
           {/* Pagination */}

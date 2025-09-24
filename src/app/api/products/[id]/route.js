@@ -1,15 +1,51 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { z } from 'zod'
 
-// GET - Récupérer un produit spécifique par ID
+// Schéma de validation pour la mise à jour d'un produit
+const updateProductSchema = z.object({
+  name: z.string().min(1, 'Le nom est requis').optional(),
+  slug: z.string().optional(),
+  description: z.string().optional(),
+  price: z.number().positive('Le prix doit être positif').optional(),
+  category: z.enum(['INFORMATIQUE', 'PERIPHERIQUES', 'SECURITE', 'RESEAUX_SERVEUR', 'CONNECTIQUES', 'ACCESSOIRES']).optional(),
+  subcategory: z.string().nullable().optional(),
+  subSubcategory: z.string().nullable().optional(),
+  brand: z.string().optional(),
+  model: z.string().optional(),
+  image: z.string().optional(),
+  images: z.array(z.string()).optional(),
+  specifications: z.record(z.any()).optional(),
+  inStock: z.boolean().optional(),
+  quantity: z.number().int().min(0).optional(),
+  lowStock: z.number().int().min(0).optional(),
+  featured: z.boolean().optional(),
+  bestSeller: z.boolean().optional(),
+  refurbished: z.boolean().optional(),
+  isNew: z.boolean().optional(),
+  discount: z.number().int().min(0).max(100).nullable().optional(),
+  publishedAt: z.string().nullable().optional(),
+})
+
 export async function GET(request, { params }) {
   try {
-    const { id } = params
-    
-    const product = await prisma.product.findUnique({
-      where: { id }
+    const { id } = await params
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'ID du produit requis' },
+        { status: 400 }
+      )
+    }
+
+    // Récupérer le produit par ID ou slug
+    const product = await prisma.product.findFirst({
+      where: {
+        OR: [
+          { id },
+          { slug: id }
+        ]
+      }
     })
 
     if (!product) {
@@ -19,9 +55,72 @@ export async function GET(request, { params }) {
       )
     }
 
-    return NextResponse.json({ product })
+    // Récupérer des produits similaires (même catégorie, différent ID)
+    const relatedProducts = await prisma.product.findMany({
+      where: {
+        category: product.category,
+        id: {
+          not: product.id
+        },
+        inStock: true
+      },
+      take: 4,
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    // Transformer les données pour correspondre au format attendu
+    const transformedProduct = {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      longDescription: product.longDescription || product.description,
+      price: product.price,
+      discount: product.discount || null,
+      category: product.category,
+      brand: product.brand || null,
+      image: product.image,
+      images: product.images ? (Array.isArray(product.images) ? product.images : [product.image]) : [product.image].filter(Boolean),
+      inStock: product.inStock,
+      quantity: product.quantity || 0,
+      lowStock: product.lowStock || 5,
+      specifications: product.specifications || {},
+      rating: product.rating || null,
+      reviews: product.reviewCount || 0,
+      slug: product.slug || product.id,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt
+    }
+
+    const transformedRelatedProducts = relatedProducts.map(p => ({
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      discount: p.discount || null,
+      category: p.category,
+      image: p.image,
+      inStock: p.inStock,
+      quantity: p.quantity || 0
+    }))
+
+    return NextResponse.json({
+      product: transformedProduct,
+      relatedProducts: transformedRelatedProducts
+    })
+
   } catch (error) {
     console.error('Erreur lors de la récupération du produit:', error)
+
+    // Gestion des erreurs Prisma
+    if (error?.code === 'P2025') {
+      return NextResponse.json(
+        { error: 'Produit non trouvé' },
+        { status: 404 }
+      )
+    }
+
     return NextResponse.json(
       { error: 'Erreur lors de la récupération du produit' },
       { status: 500 }
@@ -29,70 +128,95 @@ export async function GET(request, { params }) {
   }
 }
 
-// PUT - Mettre à jour un produit (Admin)
 export async function PUT(request, { params }) {
   try {
-    // Vérifier l'authentification
-    const session = await getServerSession(authOptions)
-    if (!session || !['ADMIN', 'SUPER_ADMIN'].includes(session.user.role)) {
+    const { id } = await params
+
+    if (!id) {
       return NextResponse.json(
-        { error: 'Non autorisé' },
-        { status: 401 }
+        { error: 'ID du produit requis' },
+        { status: 400 }
       )
     }
-    
-    const { id } = params
+
+    // Parser le body de la requête
     const body = await request.json()
-    
-    // Créer le slug à partir du nom s'il n'est pas fourni
-    if (body.name && !body.slug) {
-      body.slug = body.name
+
+    // Valider les données
+    const validatedData = updateProductSchema.parse(body)
+
+    // Générer le slug si le nom a changé
+    if (validatedData.name) {
+      validatedData.slug = validatedData.name
         .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9\s]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/^-+|-+$/g, '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Supprimer les accents
+        .replace(/[^a-z0-9\s-]/g, '') // Garder seulement lettres, chiffres, espaces et tirets
+        .replace(/\s+/g, '-') // Remplacer espaces par tirets
+        .replace(/-+/g, '-') // Éviter les tirets multiples
+        .trim('-') // Supprimer tirets en début/fin
     }
-    
-    // Mettre à jour le produit
-    const product = await prisma.product.update({
-      where: { id },
-      data: {
-        ...(body.name && { name: body.name }),
-        ...(body.slug && { slug: body.slug }),
-        ...(body.description !== undefined && { description: body.description }),
-        ...(body.price !== undefined && { price: body.price }),
-        ...(body.category && { category: body.category }),
-        ...(body.subcategory !== undefined && { subcategory: body.subcategory }),
-        ...(body.brand !== undefined && { brand: body.brand }),
-        ...(body.model !== undefined && { model: body.model }),
-        ...(body.image !== undefined && { image: body.image }),
-        ...(body.images !== undefined && { images: body.images }),
-        ...(body.specifications !== undefined && { specifications: body.specifications }),
-        ...(body.quantity !== undefined && { 
-          quantity: body.quantity,
-          inStock: body.quantity > 0 
-        }),
-        ...(body.lowStock !== undefined && { lowStock: body.lowStock }),
-        ...(body.featured !== undefined && { featured: body.featured }),
-        ...(body.bestSeller !== undefined && { bestSeller: body.bestSeller }),
-        ...(body.refurbished !== undefined && { refurbished: body.refurbished }),
-        ...(body.isNew !== undefined && { isNew: body.isNew }),
-        ...(body.discount !== undefined && { discount: body.discount }),
-        ...(body.publishedAt !== undefined && { publishedAt: body.publishedAt }),
-        updatedAt: new Date()
+
+    // Vérifier que le produit existe
+    const existingProduct = await prisma.product.findFirst({
+      where: {
+        OR: [
+          { id },
+          { slug: id }
+        ]
       }
     })
-    
-    return NextResponse.json({
-      success: true,
-      product
+
+    if (!existingProduct) {
+      return NextResponse.json(
+        { error: 'Produit non trouvé' },
+        { status: 404 }
+      )
+    }
+
+    // Préparer les données de mise à jour
+    const updateData = { ...validatedData }
+
+    // Calculer automatiquement inStock basé sur la quantité
+    if (validatedData.quantity !== undefined) {
+      updateData.inStock = validatedData.quantity > 0
+    }
+
+    // Gérer la publication du produit
+    if (validatedData.publishedAt !== undefined) {
+      updateData.publishedAt = validatedData.publishedAt ? new Date(validatedData.publishedAt) : null
+    }
+
+    // Mise à jour du produit
+    const updatedProduct = await prisma.product.update({
+      where: { id: existingProduct.id },
+      data: updateData
     })
-    
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Produit mis à jour avec succès',
+        product: updatedProduct
+      },
+      { status: 200 }
+    )
+
   } catch (error) {
     console.error('Erreur lors de la mise à jour du produit:', error)
-    
+
+    // Gestion des erreurs de validation
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          error: 'Données invalides',
+          details: error.errors
+        },
+        { status: 400 }
+      )
+    }
+
+    // Gestion des erreurs Prisma
     if (error?.code === 'P2025') {
       return NextResponse.json(
         { error: 'Produit non trouvé' },
@@ -106,7 +230,7 @@ export async function PUT(request, { params }) {
         { status: 409 }
       )
     }
-    
+
     return NextResponse.json(
       { error: 'Erreur lors de la mise à jour du produit' },
       { status: 500 }
@@ -114,40 +238,57 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE - Supprimer un produit (Admin)
 export async function DELETE(request, { params }) {
   try {
-    // Vérifier l'authentification
-    const session = await getServerSession(authOptions)
-    if (!session || !['ADMIN', 'SUPER_ADMIN'].includes(session.user.role)) {
+    const { id } = await params
+
+    if (!id) {
       return NextResponse.json(
-        { error: 'Non autorisé' },
-        { status: 401 }
+        { error: 'ID du produit requis' },
+        { status: 400 }
       )
     }
-    
-    const { id } = params
-    
+
+    // Vérifier que le produit existe
+    const existingProduct = await prisma.product.findFirst({
+      where: {
+        OR: [
+          { id },
+          { slug: id }
+        ]
+      }
+    })
+
+    if (!existingProduct) {
+      return NextResponse.json(
+        { error: 'Produit non trouvé' },
+        { status: 404 }
+      )
+    }
+
     // Supprimer le produit
     await prisma.product.delete({
-      where: { id }
+      where: { id: existingProduct.id }
     })
-    
-    return NextResponse.json({
-      success: true,
-      message: 'Produit supprimé avec succès'
-    })
-    
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Produit supprimé avec succès'
+      },
+      { status: 200 }
+    )
+
   } catch (error) {
     console.error('Erreur lors de la suppression du produit:', error)
-    
+
     if (error?.code === 'P2025') {
       return NextResponse.json(
         { error: 'Produit non trouvé' },
         { status: 404 }
       )
     }
-    
+
     return NextResponse.json(
       { error: 'Erreur lors de la suppression du produit' },
       { status: 500 }

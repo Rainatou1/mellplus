@@ -421,9 +421,9 @@ function ProductCard({ product }) {
       {/* Contenu */}
       <div className="p-4">
         {/* Catégorie */}
-        <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
+        {/*<div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
           {product.category}
-        </div>
+        </div>*/}
 
         {/* Nom du produit */}
         <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">

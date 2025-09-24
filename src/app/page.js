@@ -116,7 +116,7 @@ const MellPlusNiger = () => {
   const fetchPromoProducts = async () => {
     try {
       setPromoLoading(true);
-      const response = await fetch('/api/products/promotions?limit=8');
+      const response = await fetch('/api/products/promotions?limit=4&sortBy=createdAt');
 
       if (response.ok) {
         const data = await response.json();
@@ -136,7 +136,7 @@ const MellPlusNiger = () => {
   const fetchBestSellerProducts = async () => {
     try {
       setBestSellerLoading(true);
-      const response = await fetch('/api/products/bestsellers?limit=4');
+      const response = await fetch('/api/products/bestsellers?limit=4&sortBy=createdAt&sortOrder=desc');
 
       if (response.ok) {
         const data = await response.json();
@@ -220,7 +220,8 @@ const MellPlusNiger = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 min-h-screen bg-gray-50">      
+    <div className="max-w-7xl mx-auto px-4 min-h-screen bg-gray-50">
+      <div className="pt-2 md:pt-5"></div>
       {/* Hero Carousel */}
       <section className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
         {/* Slides */}
@@ -335,18 +336,69 @@ const MellPlusNiger = () => {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-8 md:py-12 bg-gray-50">
+      {/* Featured Products with Banners */}
+      <div className="py-8 md:py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
-            <div>
-              <h3 className="text-xl md:text-2xl font-bold mb-2">🏆 Produits en vedette</h3>
-              <p className="text-gray-600 text-sm md:text-base">Nos produits les plus populaires</p>
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left Banners - Hidden on small screens */}
+            <div className="hidden lg:block lg:w-1/4 space-y-4">
+              {/* Services Banner */}
+              {/*<div className="bg-gradient-to-br from-red-600 to-red-800 p-4 text-white text-center ">
+                <div className="text-3xl mb-2">🔧</div>
+                <h3 className="text-lg font-bold mb-2">Nos Services</h3>
+                <p className="text-xs opacity-90 mb-3">Installation & Maintenance</p>
+                <div className="space-y-2 text-xs">
+                  <div>✓ Installation réseau</div>
+                  <div>✓ Developpement logiciel</div>
+                  <div>✓ Support technique</div>
+                </div>
+                <Link href="/services" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                  Découvrir
+                </Link>
+              </div>*/}
+              {/* Seconde Vie Info Banner */}
+            <div className="bg-gradient-to-br from-blue-50 to-blue-200 p-4 text-gray text-center rounded-lg shadow-lg">
+              <div className="text-3xl mb-2">♻️</div>
+              <h3 className="text-lg font-bold mb-2">Seconde Vie</h3>
+              <p className="text-xs opacity-90 mb-3">Produits reconditionnés durables</p>
+              <div className="space-y-2 text-xs">
+                <div>✓ Garantie qualité</div>
+                <div>✓ Prix avantageux</div>
+                <div>✓ Contrôle technique complet</div>
+              </div>
+              <div className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block cursor-pointer">
+                Découvrir maintenant
+              </div>
             </div>
-            <Link href="/bestsellers" className="text-blue-600 hover:text-blue-700 font-semibold">
-              Voir tous les produits →
-            </Link>
-          </div>
+
+              {/* Offre speciale Banner */}
+              <div className=" p-4 text-blue border-2 border-gray-300 text-center">
+                <div className="text-3xl mb-2">🎯</div>
+                <h3 className="text-lg font-bold mb-2">Offres Spéciales</h3>
+                <p className="text-xs opacity-90 mb-3">Entreprises & Particuliers</p>
+                <div className="space-y-2 text-xs">
+                  <div>✓ Remises en volume</div>
+                  <div>✓ Devis gratuit</div>
+                  <div>✓ Garantie étendue</div>
+                </div>
+                <Link href="/contact" className="mt-3 bg-white text-blue-600 border-blue-500 border-1 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                  Demander
+                </Link>
+              </div>
+            </div>
+            
+
+            {/* Featured Products Section */}
+            <section className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
+                <div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">🏆 Produits en vedette</h3>
+                  <p className="text-gray-600 text-sm md:text-base">Nos produits les plus populaires</p>
+                </div>
+                <Link href="/bestsellers" className="text-blue-600 hover:text-blue-700 font-semibold">
+                  Voir tous les produits →
+                </Link>
+              </div>
           {bestSellerLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {[...Array(4)].map((_, i) => (
@@ -359,9 +411,9 @@ const MellPlusNiger = () => {
               ))}
             </div>
           ) : bestSellerProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
               {bestSellerProducts.map((product) => (
-                <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div key={product.id} className="bg-white border-1 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative">
                     <Image
                       width={500}
@@ -371,8 +423,8 @@ const MellPlusNiger = () => {
                       className="w-full h-40 md:h-48 object-cover"
                     />
                     {/* Best Seller Badge */}
-                    <span className="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-2 py-1 rounded text-xs md:text-sm font-bold">
-                      🏆 Best Seller
+                    <span className="absolute top-2 left-2 text-white px-2 py-1 rounded text-xs md:text-sm font-bold">
+                      🏆
                     </span>
                     {/* Stock Status */}
                     <div className={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${
@@ -398,9 +450,9 @@ const MellPlusNiger = () => {
                     }}>{product.name}</h4>
 
                     {/* Category */}
-                    <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
+                    {/*<div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
                       {product.category}
-                    </div>
+                    </div>*/}
 
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                       <div>
@@ -433,8 +485,8 @@ const MellPlusNiger = () => {
                           href={`/contact?product=${product.id}`}
                           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1"
                         >
-                          <ShoppingCart className="w-4 h-4" />
-                          Commander
+                          {/*<ShoppingCart className="w-4 h-4" />*/}
+                          Devis
                         </Link>
                       ) : (
                         <button
@@ -456,40 +508,76 @@ const MellPlusNiger = () => {
               <p className="text-gray-600">Les produits best sellers apparaîtront bientôt ici !</p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Promotions Section */}
-      <section className="py-8 md:py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
-            <div>
-              <h3 className="text-xl md:text-2xl font-bold mb-2">🔥 Promotions</h3>
-              <p className="text-gray-600 text-sm md:text-base">Ne ratez pas nos offres exceptionnelles</p>
-            </div>
-            <Link
-              href="/promotions"
-              className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-2"
-            >
-              Voir plus →
-            </Link>
+            </section>
           </div>
+        </div>
+      </div>
 
-          {promoLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
-                  <div className="h-48 bg-gray-200 rounded mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-                  <div className="h-8 bg-gray-200 rounded"></div>
+      {/* Promotions Section with Banner */}
+      <div className="py-8 md:py-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left Banner - Hidden on small screens */}
+            <div className="hidden lg:block lg:w-1/4">
+              <div className="bg-gradient-to-br from-blue-200 to-blue-800 rounded-lg p-6 text-white h-full min-h-[500px] flex flex-col justify-center items-center text-center shadow-lg">
+                <div className="mb-4">
+                  <div className="text-4xl mb-2">🏪</div>
+                  <h3 className="text-xl font-bold mb-2">Mell Plus Niger</h3>
+                  <p className="text-sm opacity-90 mb-4">Votre partenaire IT de confiance</p>
                 </div>
-              ))}
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span>✓</span>
+                    <span>Plus de 15 000 références</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span>✓</span>
+                    <span>Support technique expert</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span>✓</span>
+                    <span>Reponse sous 12h</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span>✓</span>
+                    <span>Garantie constructeur</span>
+                  </div>
+                </div>
+                <Link href="/contact" className="mt-6 bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                  Nous contacter
+                </Link>
+              </div>
             </div>
-          ) : promoProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+
+            {/* Promotions Section */}
+            <section className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
+                <div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">🔥 Promotions</h3>
+                  <p className="text-gray-600 text-sm md:text-base">Ne ratez pas nos offres exceptionnelles</p>
+                </div>
+                <Link
+                  href="/promotions"
+                  className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2"
+                >
+                  Voir plus →
+                </Link>
+              </div>
+              {promoLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
+                      <div className="h-48 bg-gray-200 rounded mb-4"></div>
+                      <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                      <div className="h-8 bg-gray-200 rounded"></div>
+                    </div>
+                  ))}
+                </div>
+              ) : promoProducts.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
               {promoProducts.map((product) => (
-                <div key={product.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-2 border-red-100 relative">
+                <div key={product.id} className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-1 border-gray-300 relative">
                   {/* Badge de réduction */}
                   {product.discount && (
                     <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg">
@@ -528,9 +616,9 @@ const MellPlusNiger = () => {
                   {/* Contenu */}
                   <div className="p-4">
                     {/* Catégorie */}
-                    <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
+                    {/*<div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
                       {product.category}
-                    </div>
+                    </div>*/}
 
                     {/* Nom du produit */}
                     <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
@@ -539,20 +627,20 @@ const MellPlusNiger = () => {
 
                     {/* Économies réalisées */}
                     {product.discount && (
-                      <div className="bg-red-50 border border-red-200 rounded-lg p-2 mb-3">
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-1 mb-1">
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-gray-600">Économie :</span>
-                          <span className="font-bold text-red-600">{formatPrice(calculateSavings(product.price, product.discount))}</span>
+                          <span className="font-bold text-green-600">{formatPrice(calculateSavings(product.price, product.discount))}</span>
                         </div>
                       </div>
                     )}
 
                     {/* Prix */}
                     <div className="mb-4">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
                         {product.discount ? (
                           <>
-                            <div className="text-xl font-bold text-red-600">
+                            <div className="text-lg font-bold text-red-600">
                               {formatPrice(calculateDiscountedPrice(product.price, product.discount))}
                             </div>
                             <div className="text-sm text-gray-500 line-through">
@@ -578,7 +666,7 @@ const MellPlusNiger = () => {
                       {(product.quantity > 0 && product.inStock) ? (
                         <Link
                           href={`/contact?product=${product.id}`}
-                          className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
+                          className="bg-gradient-to-r hover:from-red-600 hover:to-pink-600 hover:text-white text-blue-500 border-1 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
                         >
                           <ShoppingCart className="w-4 h-4" />
                           Profiter
@@ -595,16 +683,18 @@ const MellPlusNiger = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg p-12 text-center">
-              <div className="text-6xl mb-4">🎉</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucune promotion en cours</h3>
-              <p className="text-gray-600">Revenez bientôt pour découvrir nos prochaines offres !</p>
-            </div>
-          )}
+                </div>
+              ) : (
+                <div className="bg-white rounded-lg p-12 text-center">
+                  <div className="text-6xl mb-4">🎉</div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucune promotion en cours</h3>
+                  <p className="text-gray-600">Revenez bientôt pour découvrir nos prochaines offres !</p>
+                </div>
+              )}
+            </section>
+          </div>
         </div>
-      </section>
+      </div>
 
       {/* À Découvrir Section */}
       <section className="py-8 md:py-12 bg-white">
@@ -766,11 +856,7 @@ const MellPlusNiger = () => {
           </Link>
         </div>
       </section>
-      <section>
-        <div>
-
-        </div>
-      </section>
+      <div className="py-4 md:py-4"></div>
     </div>
   );
 };

@@ -39,7 +39,7 @@ export function getCategoryDisplayName(category) {
   const categoryNames = {
     'INFORMATIQUE': 'Informatique',
     'TELEPHONIE': 'Téléphonie',
-    'CLIMATISATION': 'Climatisation',
+    'PERIPHERIQUES': 'Périphériques',
     'BUREAUTIQUE': 'Bureautique',
     'GAMING': 'Gaming',
     'RESEAU': 'Réseau & Serveur',

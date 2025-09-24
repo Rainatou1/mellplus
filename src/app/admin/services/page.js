@@ -279,7 +279,7 @@ export default function AdminServicesPage() {
       </div>
 
       {/* Statistiques avec icônes */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+      {/*<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-lg transition-shadow">
           <div className="flex items-center justify-between mb-2">
             <Briefcase className="w-8 h-8 text-gray-400" />
@@ -345,7 +345,7 @@ export default function AdminServicesPage() {
           </div>
           <p className="text-sm text-emerald-600">Taux réussite</p>
         </div>
-      </div>
+      </div>*/}
 
       {/* Filtres et recherche */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">

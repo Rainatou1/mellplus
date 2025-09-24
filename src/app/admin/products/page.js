@@ -7,16 +7,202 @@ import toast from 'react-hot-toast'
 import ImageUpload from '@/components/admin/ImageUpload'
 
 const PRODUCT_CATEGORIES = [
-  'INFORMATIQUE',
-  'TELEPHONIE', 
-  'CLIMATISATION',
-  'BUREAUTIQUE',
-  'GAMING',
-  'RESEAU',
-  'SECURITE',
-  'ENERGIE',
-  'ACCESSOIRES'
+  { value: 'INFORMATIQUE', label: 'Informatique' },
+  { value: 'PERIPHERIQUES', label: 'Périphériques' },
+  { value: 'RESEAUX_SERVEUR', label: 'Réseaux & Serveur' },
+  { value: 'SECURITE', label: 'Sécurité' },
+  { value: 'CONNECTIQUES', label: 'Connectiques' },
+  { value: 'ACCESSOIRES', label: 'Accessoires' }
 ]
+
+const SUBCATEGORIES_BY_CATEGORY = {
+  'INFORMATIQUE': [
+    { value: 'PC portable', label: 'PC portable' },
+    { value: 'PC de bureau', label: 'PC de bureau' },
+    { value: 'Serveur', label: 'Serveur' },
+    { value: 'Logiciels', label: 'Logiciels' },
+    { value: 'Stockage', label: 'Stockage' }
+  ],
+  'PERIPHERIQUES': [
+    { value: 'Imprimante', label: 'Imprimante' },
+    { value: 'Scanner', label: 'Scanner' },
+    { value: 'Moniteur', label: 'Moniteur' },
+    { value: 'Projecteur', label: 'Projecteur' }
+  ],
+  'RESEAUX_SERVEUR': [
+    { value: 'Switch', label: 'Switch' },
+    { value: 'Routeur', label: 'Routeur' },
+    { value: 'Point d\'accès WiFi', label: 'Point d\'accès WiFi' },
+    { value: 'Téléphone IP', label: 'Téléphone IP' },
+    { value: 'Serveur réseau', label: 'Serveur réseau' }
+  ],
+  'SECURITE': [
+    { value: 'Caméra de surveillance', label: 'Caméra de surveillance' },
+    { value: 'Contrôle d\'accès', label: 'Contrôle d\'accès' },
+    { value: 'Détecteur', label: 'Détecteur' },
+    { value: 'Système d\'alarme', label: 'Système d\'alarme' }
+  ],
+  'CONNECTIQUES': [
+    { value: 'Câbles', label: 'Câbles' },
+    { value: 'Multiprise', label: 'Multiprise' },
+    { value: 'Onduleur', label: 'Onduleur' },
+    { value: 'Adaptateurs', label: 'Adaptateurs' }
+  ],
+  'ACCESSOIRES': [
+    { value: 'Vidéo', label: 'Vidéo' },
+    { value: 'Son', label: 'Son' },
+    { value: 'Souris', label: 'Souris' },
+    { value: 'Clavier', label: 'Clavier' },
+    { value: 'Protection', label: 'Protection' },
+    { value: 'Support', label: 'Support' }
+  ]
+}
+
+const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
+  // INFORMATIQUE
+  'PC portable': [
+    { value: 'Laptop Business', label: 'Laptop Business' },
+    { value: 'Laptop Gaming', label: 'Laptop Gaming' },
+    { value: 'Ultrabook', label: 'Ultrabook' },
+    { value: 'Workstation portable', label: 'Workstation portable' }
+  ],
+  'PC de bureau': [
+    { value: 'PC complet', label: 'PC complet' },
+    { value: 'Unité centrale', label: 'Unité centrale' },
+    { value: 'All-in-One', label: 'All-in-One' },
+    { value: 'Mini PC', label: 'Mini PC' }
+  ],
+  'Serveur': [
+    { value: 'Serveur tour', label: 'Serveur tour' },
+    { value: 'Serveur rack', label: 'Serveur rack' },
+    { value: 'Serveur lame', label: 'Serveur lame' },
+    { value: 'NAS', label: 'NAS/Stockage' }
+  ],
+  'Logiciels': [
+    { value: 'Système d\'exploitation', label: 'Système d\'exploitation' },
+    { value: 'Suite bureautique', label: 'Suite bureautique' },
+    { value: 'Antivirus', label: 'Antivirus' },
+    { value: 'Logiciel métier', label: 'Logiciel métier' }
+  ],
+  'Stockage': [
+    { value: 'Disque dur', label: 'Disque dur' },
+    { value: 'SSD', label: 'SSD' },
+    { value: 'Disque externe', label: 'Disque externe' },
+    { value: 'Clé USB', label: 'Clé USB' }
+  ],
+
+  // PERIPHERIQUES
+  'Imprimante': [
+    { value: 'Imprimante laser', label: 'Imprimante laser' },
+    { value: 'Imprimante jet d\'encre', label: 'Imprimante jet d\'encre' },
+    { value: 'Multifonction', label: 'Multifonction' },
+    { value: 'Plotter', label: 'Plotter' }
+  ],
+  'Scanner': [
+    { value: 'Scanner à plat', label: 'Scanner à plat' },
+    { value: 'Scanner de document', label: 'Scanner de document' },
+    { value: 'Scanner portable', label: 'Scanner portable' }
+  ],
+  'Moniteur': [
+    { value: 'Moniteur LCD', label: 'Moniteur LCD' },
+    { value: 'Moniteur LED', label: 'Moniteur LED' },
+    { value: 'Moniteur 4K', label: 'Moniteur 4K' },
+    { value: 'Moniteur Gaming', label: 'Moniteur Gaming' }
+  ],
+  'Projecteur': [
+    { value: 'Projecteur bureau', label: 'Projecteur bureau' },
+    { value: 'Projecteur portable', label: 'Projecteur portable' },
+    { value: 'Vidéoprojecteur', label: 'Vidéoprojecteur' }
+  ],
+
+  // RESEAUX_SERVEUR
+  'Switch': [
+    { value: 'Switch manageable', label: 'Switch manageable' },
+    { value: 'Switch non manageable', label: 'Switch non manageable' },
+    { value: 'Switch PoE', label: 'Switch PoE' }
+  ],
+  'Routeur': [
+    { value: 'Routeur WiFi', label: 'Routeur WiFi' },
+    { value: 'Routeur professionnel', label: 'Routeur professionnel' },
+    { value: 'Routeur 4G/5G', label: 'Routeur 4G/5G' }
+  ],
+  'Point d\'accès WiFi': [
+    { value: 'Point d\'accès intérieur', label: 'Point d\'accès intérieur' },
+    { value: 'Point d\'accès extérieur', label: 'Point d\'accès extérieur' },
+    { value: 'Contrôleur WiFi', label: 'Contrôleur WiFi' }
+  ],
+
+  // SECURITE
+  'Caméra de surveillance': [
+    { value: 'Caméra IP', label: 'Caméra IP' },
+    { value: 'Caméra analogique', label: 'Caméra analogique' },
+    { value: 'Caméra PTZ', label: 'Caméra PTZ' },
+    { value: 'Enregistreur DVR/NVR', label: 'Enregistreur DVR/NVR' }
+  ],
+  'Contrôle d\'accès': [
+    { value: 'Lecteur de badge', label: 'Lecteur de badge' },
+    { value: 'Serrure électronique', label: 'Serrure électronique' },
+    { value: 'Interphone', label: 'Interphone' },
+    { value: 'Portier vidéo', label: 'Portier vidéo' }
+  ],
+  'Détecteur': [
+    { value: 'Détecteur de mouvement', label: 'Détecteur de mouvement' },
+    { value: 'Détecteur de fumée', label: 'Détecteur de fumée' },
+    { value: 'Sirène', label: 'Sirène' }
+  ],
+
+  // CONNECTIQUES
+  'Câbles': [
+    { value: 'Câble réseau', label: 'Câble réseau' },
+    { value: 'Câble HDMI', label: 'Câble HDMI' },
+    { value: 'Câble USB', label: 'Câble USB' },
+    { value: 'Câble VGA', label: 'Câble VGA' }
+  ],
+  'Adaptateurs': [
+    { value: 'Adaptateur USB', label: 'Adaptateur USB' },
+    { value: 'Adaptateur vidéo', label: 'Adaptateur vidéo' },
+    { value: 'Hub USB', label: 'Hub USB' },
+    { value: 'Convertisseur', label: 'Convertisseur' }
+  ],
+
+  // ACCESSOIRES
+  'Vidéo': [
+    { value: 'Appareil photo', label: 'Appareil photo' },
+    { value: 'Webcam', label: 'Webcam' },
+    { value: 'Caméscope', label: 'Caméscope' },
+    { value: 'Stabilisateur', label: 'Stabilisateur' }
+  ],
+  'Son': [
+    { value: 'Casque audio', label: 'Casque audio' },
+    { value: 'Micro', label: 'Micro' },
+    { value: 'Haut-parleur', label: 'Haut-parleur' },
+    { value: 'Écouteurs', label: 'Écouteurs' }
+  ],
+  'Souris': [
+    { value: 'Souris filaire', label: 'Souris filaire' },
+    { value: 'Souris sans fil', label: 'Souris sans fil' },
+    { value: 'Souris gaming', label: 'Souris gaming' },
+    { value: 'Trackball', label: 'Trackball' }
+  ],
+  'Clavier': [
+    { value: 'Clavier filaire', label: 'Clavier filaire' },
+    { value: 'Clavier sans fil', label: 'Clavier sans fil' },
+    { value: 'Clavier mécanique', label: 'Clavier mécanique' },
+    { value: 'Clavier gaming', label: 'Clavier gaming' }
+  ],
+  'Protection': [
+    { value: 'Housse laptop', label: 'Housse laptop' },
+    { value: 'Protection d\'écran', label: 'Protection d\'écran' },
+    { value: 'Étui téléphone', label: 'Étui téléphone' },
+    { value: 'Film protecteur', label: 'Film protecteur' }
+  ],
+  'Support': [
+    { value: 'Support laptop', label: 'Support laptop' },
+    { value: 'Support moniteur', label: 'Support moniteur' },
+    { value: 'Support tablette', label: 'Support tablette' },
+    { value: 'Bras articulé', label: 'Bras articulé' }
+  ]
+}
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([])
@@ -172,8 +358,8 @@ export default function AdminProductsPage() {
             >
               <option value="all">Toutes les catégories</option>
               {PRODUCT_CATEGORIES.map(category => (
-                <option key={category} value={category}>
-                  {category}
+                <option key={category.value} value={category.value}>
+                  {category.label}
                 </option>
               ))}
             </select>
@@ -347,7 +533,8 @@ export default function AdminProductsPage() {
           }}
           onSave={(product) => {
             if (editingProduct) {
-              setProducts(products.map(p => p.id === product.id ? product : p))
+              // Refetch the products to ensure we have the latest data
+              fetchProducts()
               toast.success('Produit modifié avec succès')
             } else {
               setProducts([product, ...products])
@@ -368,8 +555,9 @@ function ProductModal({ product, onClose, onSave }) {
     slug: product?.slug || '',
     description: product?.description || '',
     price: product?.price || '',
-    category: product?.category || PRODUCT_CATEGORIES[0],
+    category: product?.category || '',
     subcategory: product?.subcategory || '',
+    subSubcategory: product?.subSubcategory || '',
     brand: product?.brand || '',
     model: product?.model || '',
     image: product?.image || '',
@@ -384,6 +572,7 @@ function ProductModal({ product, onClose, onSave }) {
     discount: product?.discount || '',
     publishedAt: product?.publishedAt ? true : false
   })
+
   
   const [loading, setLoading] = useState(false)
   const [newSpecKey, setNewSpecKey] = useState('')
@@ -408,6 +597,7 @@ function ProductModal({ product, onClose, onSave }) {
     }))
   }
 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -419,7 +609,10 @@ function ProductModal({ product, onClose, onSave }) {
         quantity: parseInt(formData.quantity) || 0,
         lowStock: parseInt(formData.lowStock) || 5,
         discount: formData.discount ? parseInt(formData.discount) : null,
-        publishedAt: formData.publishedAt ? new Date().toISOString() : null
+        publishedAt: formData.publishedAt ? new Date().toISOString() : null,
+        inStock: (parseInt(formData.quantity) || 0) > 0,
+        subcategory: formData.subcategory || null,
+        subSubcategory: formData.subSubcategory || null
       }
 
       const url = product ? `/api/products/${product.id}` : '/api/products'
@@ -561,36 +754,64 @@ function ProductModal({ product, onClose, onSave }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Catégorie *
-                    </label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData(prev => ({...prev, category: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    >
-                      {PRODUCT_CATEGORIES.map(category => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Catégorie du produit *
+                  </label>
+                  <select
+                    required
+                    value={formData.category}
+                    onChange={(e) => setFormData(prev => ({...prev, category: e.target.value, subcategory: '', subSubcategory: ''}))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Sélectionner une catégorie</option>
+                    {PRODUCT_CATEGORIES.map(category => (
+                      <option key={category.value} value={category.value}>
+                        {category.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
+                {formData.category && SUBCATEGORIES_BY_CATEGORY[formData.category] && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Sous-catégorie
                     </label>
-                    <input
-                      type="text"
-                      value={formData.subcategory}
-                      onChange={(e) => setFormData(prev => ({...prev, subcategory: e.target.value}))}
+                    <select
+                      value={formData.subcategory || ''}
+                      onChange={(e) => setFormData(prev => ({...prev, subcategory: e.target.value, subSubcategory: ''}))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
+                    >
+                      <option value="">Sélectionner une sous-catégorie</option>
+                      {SUBCATEGORIES_BY_CATEGORY[formData.category].map(subcategory => (
+                        <option key={subcategory.value} value={subcategory.value}>
+                          {subcategory.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                </div>
+                )}
+
+                {formData.subcategory && SUB_SUBCATEGORIES_BY_SUBCATEGORY[formData.subcategory] && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Type de produit
+                    </label>
+                    <select
+                      value={formData.subSubcategory || ''}
+                      onChange={(e) => setFormData(prev => ({...prev, subSubcategory: e.target.value}))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Sélectionner un type de produit</option>
+                      {SUB_SUBCATEGORIES_BY_SUBCATEGORY[formData.subcategory].map(subSubcategory => (
+                        <option key={subSubcategory.value} value={subSubcategory.value}>
+                          {subSubcategory.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -659,7 +880,7 @@ function ProductModal({ product, onClose, onSave }) {
                 <div className="space-y-3">
                   <h4 className="font-medium text-gray-700">Options</h4>
                   <div className="space-y-2">
-                    <label className="flex items-center">
+                    {/*<label className="flex items-center">
                       <input
                         type="checkbox"
                         checked={formData.featured}
@@ -667,7 +888,7 @@ function ProductModal({ product, onClose, onSave }) {
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">Produit vedette</span>
-                    </label>
+                    </label>*/}
 
                     <label className="flex items-center">
                       <input

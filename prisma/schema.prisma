@@ -22,8 +22,9 @@ model Product {
   price       Decimal? @db.Decimal(10, 2)
   
   // Catégories principales de Mell Plus
-  category    ProductCategory
-  subcategory String?
+  category       ProductCategory
+  subcategory    String?
+  subSubcategory String?
   
   // Informations détaillées
   brand       String?
@@ -63,13 +64,10 @@ model Product {
 
 enum ProductCategory {
   INFORMATIQUE
-  TELEPHONIE
-  CLIMATISATION
-  BUREAUTIQUE
-  GAMING
-  RESEAU
   SECURITE
-  ENERGIE
+  RESEAUX_SERVEUR
+  PERIPHERIQUES
+  CONNECTIQUES
   ACCESSOIRES
 }
 

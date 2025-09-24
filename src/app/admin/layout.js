@@ -27,18 +27,18 @@ import {
 import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
 
-const menuItems = [
-  { 
-    href: '/admin/dashboard', 
-    label: 'Tableau de bord', 
+const getMenuItems = (unreadMessagesCount) => [
+  {
+    href: '/admin/dashboard',
+    label: 'Tableau de bord',
     icon: LayoutDashboard,
-    badge: null 
+    badge: null
   },
-  { 
-    href: '/admin/products', 
-    label: 'Produits', 
+  {
+    href: '/admin/products',
+    label: 'Produits',
     icon: Package,
-    badge: null 
+    badge: null
   },
   {
     href: '/admin/services',
@@ -52,47 +52,47 @@ const menuItems = [
     icon: MonitorPlay,
     badge: null
   },
-  { 
-    href: '/admin/quotes', 
-    label: 'Devis', 
+  {
+    href: '/admin/quotes',
+    label: 'Devis',
     icon: FileText,
     badge: '3' // Nombre de nouveaux devis
   },
-  { 
-    href: '/admin/contacts', 
-    label: 'Messages', 
+  {
+    href: '/admin/contacts',
+    label: 'Messages',
     icon: MessageSquare,
-    badge: '5' // Nombre de messages non lus
+    badge: unreadMessagesCount > 0 ? unreadMessagesCount.toString() : null
   },
-  { 
-    href: '/#', 
-    label: 'Acceuil', 
+  {
+    href: '/#',
+    label: 'Acceuil',
     icon: Package,
-    badge: null 
+    badge: null
   },
-  /*{ 
-    href: '/admin/orders', 
-    label: 'Commandes', 
+  /*{
+    href: '/admin/orders',
+    label: 'Commandes',
     icon: ShoppingCart,
-    badge: null 
+    badge: null
   },
-  { 
-    href: '/admin/customers', 
-    label: 'Clients', 
+  {
+    href: '/admin/customers',
+    label: 'Clients',
     icon: Users,
-    badge: null 
+    badge: null
   },
-  { 
-    href: '/admin/analytics', 
-    label: 'Statistiques', 
+  {
+    href: '/admin/analytics',
+    label: 'Statistiques',
     icon: BarChart3,
-    badge: null 
+    badge: null
   },
-  { 
-    href: '/admin/settings', 
-    label: 'Paramètres', 
+  {
+    href: '/admin/settings',
+    label: 'Paramètres',
     icon: Settings,
-    badge: null 
+    badge: null
   },*/
 ]
 
@@ -103,6 +103,20 @@ export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [notifications, setNotifications] = useState(8)
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0)
+
+  // Fetch unread messages count
+  const fetchUnreadMessagesCount = async () => {
+    try {
+      const response = await fetch('/api/contact?read=false')
+      if (response.ok) {
+        const data = await response.json()
+        setUnreadMessagesCount(data.contacts.length)
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du nombre de messages non lus:', error)
+    }
+  }
 
   // Redirection si non authentifié
   useEffect(() => {
@@ -111,6 +125,16 @@ export default function AdminLayout({ children }) {
       router.push('/admin/login')
     }
   }, [session, status, router, pathname])
+
+  // Fetch unread messages count on mount and periodically
+  useEffect(() => {
+    if (session) {
+      fetchUnreadMessagesCount()
+      // Refresh count every 30 seconds
+      const interval = setInterval(fetchUnreadMessagesCount, 30000)
+      return () => clearInterval(interval)
+    }
+  }, [session])
 
   // Ne pas afficher le layout sur la page de login
   if (pathname === '/admin/login' || status === 'loading') {
@@ -159,18 +183,18 @@ export default function AdminLayout({ children }) {
 
         {/* Navigation */}
         <nav className="px-4 py-6 space-y-1">
-          {menuItems.map((item) => {
+          {getMenuItems(unreadMessagesCount).map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
-            
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`
                   flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors
-                  ${isActive 
-                    ? 'bg-blue-600 text-white' 
+                  ${isActive
+                    ? 'bg-blue-600 text-white'
                     : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                   }
                 `}
