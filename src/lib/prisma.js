@@ -1,18 +1,24 @@
 // lib/prisma.js
 import { PrismaClient } from '@prisma/client'
 
+const globalForPrisma = globalThis
+
 let prisma
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient()
+  prisma = new PrismaClient({
+    log: ['error'],
+    errorFormat: 'pretty'
+  })
 } else {
   // En développement, on évite de créer plusieurs instances
-  if (!global.prisma) {
-    global.prisma = new PrismaClient({
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = new PrismaClient({
       log: ['query', 'error', 'warn'],
+      errorFormat: 'pretty'
     })
   }
-  prisma = global.prisma
+  prisma = globalForPrisma.prisma
 }
 
 export { prisma }
