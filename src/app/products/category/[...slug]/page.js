@@ -279,7 +279,7 @@ export default function CategoryPage({ params }) {
               <h3 className="text-lg font-bold mb-2">Super Promotions</h3>
               <p className="text-xs opacity-90 mb-3">Offres limitées dans le temps</p>
               <div className="space-y-2 text-xs">
-                <div>✓ Jusqu'à 50% de réduction</div>
+                <div>✓ Jusqu&apos;à 50% de réduction</div>
                 <div>✓ Produits de qualité</div>
                 <div>✓ Stocks limités</div>
               </div>
@@ -321,7 +321,7 @@ export default function CategoryPage({ params }) {
             {/* Contact Banner */}
             <div className="bg-gradient-to-br from-green-600 to-teal-600 p-4 text-white text-center rounded-lg shadow-lg">
               <div className="text-3xl mb-2">💬</div>
-              <h3 className="text-lg font-bold mb-2">Besoin d'aide ?</h3>
+              <h3 className="text-lg font-bold mb-2">Besoin d&apos;aide ?</h3>
               <p className="text-xs opacity-90 mb-3">Nos experts vous conseillent</p>
               <div className="space-y-2 text-xs">
                 <div>✓ Conseil personnalisé</div>
@@ -418,7 +418,7 @@ export default function CategoryPage({ params }) {
                   Aucun produit trouvé
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Essayez de modifier vos critères de recherche ou contactez-nous pour plus d'informations
+                  Essayez de modifier vos critères de recherche ou contactez-nous pour plus d&apos;informations
                 </p>
                 <div className="space-x-4">
                   <button

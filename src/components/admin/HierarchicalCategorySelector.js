@@ -45,7 +45,7 @@ export default function HierarchicalCategorySelector({
       setSelectedSubcategory('')
       setSelectedSubSubcategory('')
     }
-  }, [selectedMainCategory])
+  }, [selectedMainCategory, selectedSubcategory])
 
   // Mise à jour des sous-sous-catégories quand la sous-catégorie change
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function HierarchicalCategorySelector({
       setAvailableSubSubcategories([])
       setSelectedSubSubcategory('')
     }
-  }, [selectedMainCategory, selectedSubcategory])
+  }, [selectedMainCategory, selectedSubcategory, selectedSubSubcategory])
 
   // Notification du parent quand la sélection change
   useEffect(() => {

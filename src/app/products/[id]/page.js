@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -43,13 +43,7 @@ export default function ProductDetailPage() {
   const [isFavorite, setIsFavorite] = useState(false)
   const [activeTab, setActiveTab] = useState('description')
 
-  useEffect(() => {
-    if (params.id) {
-      fetchProductDetails()
-    }
-  }, [params.id])
-
-  const fetchProductDetails = async () => {
+  const fetchProductDetails = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/products/${params.id}`)
@@ -70,7 +64,13 @@ export default function ProductDetailPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [params.id, router])
+
+  useEffect(() => {
+    if (params.id) {
+      fetchProductDetails()
+    }
+  }, [params.id, fetchProductDetails])
 
   const formatPrice = (price) => {
     if (!price) return 'N/A'

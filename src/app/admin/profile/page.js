@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import {
   User,
@@ -230,7 +231,9 @@ export default function AdminProfilePage() {
             <div className="relative">
               <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                 {profile?.avatar ? (
-                  <img
+                  <image
+                    width={200}
+                    height={200}
                     src={profile.avatar}
                     alt="Avatar"
                     className="w-full h-full rounded-full object-cover"
