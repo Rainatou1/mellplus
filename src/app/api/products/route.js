@@ -37,19 +37,27 @@ export async function GET(request) {
       ]
     }
     
-    // Récupérer les produits avec pagination
-    const [products, total] = await Promise.all([
+    // Récupérer les produits avec pagination et les catégories
+    const [products, total, categories] = await Promise.all([
       prisma.product.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { createdAt: 'desc' }
       }),
-      prisma.product.count({ where })
+      prisma.product.count({ where }),
+      prisma.product.findMany({
+        select: { category: true },
+        distinct: ['category']
+      })
     ])
-    
+
+    // Extraire les catégories uniques
+    const uniqueCategories = categories.map(item => item.category)
+
     return NextResponse.json({
       products,
+      categories: uniqueCategories,
       pagination: {
         page,
         limit,
@@ -59,9 +67,17 @@ export async function GET(request) {
     })
     
   } catch (error) {
-    console.error('Erreur lors de la récupération des produits:', error)
+    console.error('Erreur lors de la récupération des produits:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack,
+      meta: error.meta
+    })
     return NextResponse.json(
-      { error: 'Erreur lors de la récupération des produits' },
+      {
+        error: 'Erreur lors de la récupération des produits',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
       { status: 500 }
     )
   }
