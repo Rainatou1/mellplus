@@ -8,7 +8,8 @@ let prisma
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient({
     log: ['error'],
-    errorFormat: 'pretty'
+    errorFormat: 'pretty',
+    datasourceUrl: process.env.DATABASE_URL,
   })
 } else {
   // En développement, on évite de créer plusieurs instances
