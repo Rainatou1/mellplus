@@ -61,7 +61,7 @@ const MellPlusNiger = () => {
       title: "Promotion PC portable",
       subtitle: "Une offre évolutive avec plus de 15 000 références",
       description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
-      image: "/images/hp-removebg.png",
+      image: "/images/hp-removebg.PNG",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Nos services",
       bgGradient: "from-pink-600 to-blue-800"
@@ -528,7 +528,7 @@ const MellPlusNiger = () => {
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-2">
                     <span>✓</span>
-                    <span>Plus de 15 000 références</span>
+                    <span>Plus de 20 ans sur le marché</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span>✓</span>
@@ -540,7 +540,7 @@ const MellPlusNiger = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <span>✓</span>
-                    <span>Garantie constructeur</span>
+                    <span>Garantie</span>
                   </div>
                 </div>
                 <Link href="/contact" className="mt-6 bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
