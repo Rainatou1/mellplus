@@ -41,8 +41,8 @@ export default function AdminQuotesPage() {
   const [quotes, setQuotes] = useState([
     {
       id: 'QT-2024-001',
-      name: 'Jean Dupont',
-      email: 'jean.dupont@entreprise.ne',
+      name: 'Raina Boubacar',
+      email: 'raina@entreprise.ne',
       phone: '+227 96 00 00 01',
       company: 'Entreprise ABC',
       address: 'Quartier Plateau, Niamey',
@@ -63,14 +63,14 @@ export default function AdminQuotesPage() {
     },
     {
       id: 'QT-2024-002',
-      name: 'Marie Koné',
+      name: 'Marie Bouraima',
       email: 'marie@hotel.ne',
       phone: '+227 90 00 00 02',
       company: 'Hôtel Sahel',
       address: 'Route de l\'Aéroport, Niamey',
       type: 'product',
       items: [
-        { name: 'Climatiseur Split 2CV', quantity: 10, unitPrice: 450000, totalPrice: 4500000, type: 'product' }
+        { name: 'Hp pavilion', quantity: 10, unitPrice: 450000, totalPrice: 4500000, type: 'product' }
       ],
       total: 4500000,
       status: 'reviewing',
@@ -102,14 +102,14 @@ export default function AdminQuotesPage() {
     },
     {
       id: 'QT-2024-004',
-      name: 'Aminata Diallo',
-      email: 'aminata@ong.ne',
+      name: 'Amina Diallo',
+      email: 'amina@ong.ne',
       phone: '+227 92 00 00 04',
       company: 'ONG Espoir',
       type: 'product',
       items: [
         { name: 'Ordinateur Desktop HP', quantity: 15, unitPrice: 350000, totalPrice: 5250000, type: 'product' },
-        { name: 'Imprimante LaserJet', quantity: 3, unitPrice: 280000, totalPrice: 840000, type: 'product' }
+        { name: 'Imprimante Epson', quantity: 3, unitPrice: 280000, totalPrice: 840000, type: 'product' }
       ],
       total: 6090000,
       status: 'accepted',

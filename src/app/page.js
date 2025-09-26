@@ -701,7 +701,7 @@ const MellPlusNiger = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-6 md:mb-8">
             <h3 className="text-xl md:text-2xl font-bold mb-2">DÉCOUVRIR</h3>
-            <p className="text-gray-600 text-sm md:text-base">Offres, créativité, innovations</p>
+            <p className="text-gray-600 text-sm md:text-base">Offres exceptionnelles, qualité</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -757,7 +757,7 @@ const MellPlusNiger = () => {
                 <Image
                   width={600}
                   height={600} 
-                  src="/images/large1.jpg" 
+                  src="/images/accessories.jpg" 
                   alt="Nos créateurs - Solutions créatives"
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -774,14 +774,14 @@ const MellPlusNiger = () => {
               </div>
             </div>
 
-            {/* S'équiper IA - Large card bottom */}
+            {/* Services - Large card bottom */}
             <div className="md:col-span-1 lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
                 <Image
                   width={900}
                   height={600} 
-                  src="/images/large2.jpg" 
-                  alt="S'équiper IA - Intelligence Artificielle"
+                  src="/images/services.jpg" 
+                  alt="Services - services"
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/*<div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>*/}
@@ -803,7 +803,7 @@ const MellPlusNiger = () => {
                 <Image
                   width={600}
                   height={600} 
-                  src="/images/sony.png" 
+                  src="/images/bags.png" 
                   alt="Solutions Business - Entreprises"
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -822,11 +822,11 @@ const MellPlusNiger = () => {
           </div>
         </div>
       </section>
-      {/* Partners Section */}
+      {/* Partners Section */}{/*
       <section className="py-8 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Nos partenaires</h3>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center">
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 items-center">
             {partners.map((partner, index) => (
               <div key={index} className="flex justify-center">
                 <Image 
@@ -840,7 +840,7 @@ const MellPlusNiger = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg">
