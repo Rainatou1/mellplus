@@ -289,7 +289,7 @@ export default function CategoryPage({ params }) {
             </div>
 
             {/* Best Sellers Info Banner */}
-            <div className="bg-gradient-to-br from-yellow-600 to-orange-600 p-4 text-white text-center rounded-lg shadow-lg">
+            <div className="bg-gradient-to-br from-blue-100 to-blue-600 p-4 text-white text-center rounded-lg shadow-lg">
               <div className="text-3xl mb-2">🏆</div>
               <h3 className="text-lg font-bold mb-2">Best Sellers</h3>
               <p className="text-xs opacity-90 mb-3">Les produits les plus populaires</p>
@@ -300,6 +300,21 @@ export default function CategoryPage({ params }) {
               </div>
               <Link href="/bestsellers" className="mt-3 bg-white text-yellow-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
                 Découvrir maintenant
+              </Link>
+            </div>
+
+             {/* Contact Banner */}
+            <div className="bg-white p-4 text-gray text-center">
+              <div className="text-3xl mb-2">💬</div>
+              <h3 className="text-lg font-bold mb-2">Besoin d&apos;aide ?</h3>
+              <p className="text-xs opacity-90 mb-3">Nos experts vous conseillent</p>
+              <div className="space-y-2 text-xs">
+                <div>✓ Conseil personnalisé</div>
+                <div>✓ Devis gratuit</div>
+                <div>✓ Support technique</div>
+              </div>
+              <Link href="/contact" className="mt-3 bg-blue text-white px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                Nous contacter
               </Link>
             </div>
 
@@ -318,20 +333,7 @@ export default function CategoryPage({ params }) {
               </Link>
             </div>
 
-            {/* Contact Banner */}
-            <div className="bg-gradient-to-br from-green-600 to-teal-600 p-4 text-white text-center rounded-lg shadow-lg">
-              <div className="text-3xl mb-2">💬</div>
-              <h3 className="text-lg font-bold mb-2">Besoin d&apos;aide ?</h3>
-              <p className="text-xs opacity-90 mb-3">Nos experts vous conseillent</p>
-              <div className="space-y-2 text-xs">
-                <div>✓ Conseil personnalisé</div>
-                <div>✓ Devis gratuit</div>
-                <div>✓ Support technique</div>
-              </div>
-              <Link href="/contact" className="mt-3 bg-white text-green-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
-                Nous contacter
-              </Link>
-            </div>
+           
           </div>
 
           {/* Main Content */}
