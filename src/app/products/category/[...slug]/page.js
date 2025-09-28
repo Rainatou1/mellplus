@@ -113,11 +113,11 @@ export default function CategoryPage({ params }) {
       filtered = filtered.filter(product => product.category === category)
     }
 
-    // Filter by subcategory using smart matching
+    // Filter by subcategory using exact matching
     if (subcategory) {
       const subcategoryName = CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.name || subcategory
       filtered = filtered.filter(product =>
-        matchSubcategory(product, subcategoryName)
+        product.subcategory === subcategoryName
       )
     }
 
@@ -125,7 +125,7 @@ export default function CategoryPage({ params }) {
     if (subSubcategory) {
       const subSubcategoryName = CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.subSubcategories?.[subSubcategory]?.name || subSubcategory
       filtered = filtered.filter(product =>
-        matchSubcategory(product, subSubcategoryName)
+        product.subcategory === subSubcategoryName
       )
     }
 
