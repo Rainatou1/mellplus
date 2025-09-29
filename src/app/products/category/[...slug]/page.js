@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
 import { Search, Filter, ShoppingCart, Eye, Star, Heart, ArrowLeft, Zap, Award, TrendingUp, Monitor, Printer, Router as RouterIcon, Shield, Cable, Headphones } from 'lucide-react'
 import Link from 'next/link'
@@ -24,8 +24,11 @@ export default function CategoryPage({ params }) {
 
   const PRODUCTS_PER_PAGE = 12
 
+  // Unwrap params Promise using React.use()
+  const resolvedParams = use(params)
+
   // Parse URL slug to extract category and subcategory
-  const { category, subcategory, subSubcategory } = parseSlug(params.slug)
+  const { category, subcategory, subSubcategory } = parseSlug(resolvedParams.slug)
 
   // Configuration des couleurs et icônes par catégorie
   const categoryConfig = {
@@ -74,8 +77,11 @@ export default function CategoryPage({ params }) {
   }
 
   useEffect(() => {
+    // Debug: afficher les valeurs parsées
+    console.log('Parsed values:', { category, subcategory, subSubcategory })
+
     // Validate the category path
-    if (!validateCategoryPath(category, subcategory, subSubcategory)) {
+    if (!category) {
       router.push('/products')
       return
     }
@@ -108,25 +114,28 @@ export default function CategoryPage({ params }) {
   const applyFilters = () => {
     let filtered = [...products]
 
+    console.log('Total products:', products.length)
+    console.log('Filtering with:', { category, subcategory, subSubcategory })
+
     // Filter by main category
     if (category) {
       filtered = filtered.filter(product => product.category === category)
+      console.log('After category filter:', filtered.length)
     }
 
-    // Filter by subcategory using exact matching
-    if (subcategory) {
-      const subcategoryName = CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.name || subcategory
-      filtered = filtered.filter(product =>
-        product.subcategory === subcategoryName
-      )
-    }
-
-    // Filter by sub-subcategory if applicable
+    // Filter by subcategory or sub-subcategory
     if (subSubcategory) {
-      const subSubcategoryName = CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.subSubcategories?.[subSubcategory]?.name || subSubcategory
+      // Si on a une sous-sous-catégorie, filtrer sur le champ subSubcategory
       filtered = filtered.filter(product =>
-        product.subcategory === subSubcategoryName
+        product.subSubcategory === subSubcategory
       )
+      console.log(`After subSubcategory filter (${subSubcategory}):`, filtered.length)
+    } else if (subcategory) {
+      // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
+      filtered = filtered.filter(product =>
+        product.subcategory === subcategory
+      )
+      console.log(`After subcategory filter (${subcategory}):`, filtered.length)
     }
 
     // Search filter
@@ -498,34 +507,92 @@ function parseSlug(slug) {
     'accessoires': 'ACCESSOIRES'
   }
 
-  // Map URL slugs to subcategory keys
+  // Helper function to convert slug to proper name
+  const slugToName = (slug) => {
+    return slug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+      .replace(/d /g, "d'")
+      .replace(/l /g, "l'")
+  }
+
+  // Direct mapping from slug to database values
   const subcategoryMap = {
-    'ordinateurs-portables': 'ORDINATEURS_PORTABLES',
-    'ordinateurs-bureau': 'ORDINATEURS_BUREAU',
-    'serveurs': 'SERVEURS',
-    'stockage': 'STOCKAGE',
-    'moniteurs': 'MONITEURS',
-    'imprimantes': 'IMPRIMANTES',
-    'scanners': 'SCANNERS',
-    'projecteurs': 'PROJECTEURS',
-    'videosurveillance': 'VIDEOSURVEILLANCE',
-    'controle-acces': 'CONTROLE_ACCES',
-    'detecteurs': 'DETECTEURS',
-    'equipements-actifs': 'EQUIPEMENTS_ACTIFS',
-    'cables-connectique': 'CABLES_CONNECTIQUE',
-    'wifi': 'WIFI',
-    'cables-donnees': 'CABLES_DONNEES',
-    'adaptateurs': 'ADAPTATEURS',
-    'multiprises': 'MULTIPRISES',
-    'souris-claviers': 'SOURIS_CLAVIERS',
-    'audio': 'AUDIO',
-    'protection': 'PROTECTION'
+    // Informatique
+    'pc-portable': 'PC Portable',
+    'pc-de-bureau': 'PC de Bureau',
+    'logiciels': 'Logiciels',
+    'stockage': 'Stockage',
+
+    // Sécurité
+    'camera-de-surveillance': 'Caméra de surveillance',
+    'controle-d-acces': "Controle d'accès",
+    'detecteur': 'Detecteur',
+    'systeme-d-alarme': "Système d'alarme",
+
+    // Réseau & Serveur
+    'switch': 'Switch',
+    'routeur': 'Routeur',
+    'point-d-acces-wifi': "Point d'accès WiFi",
+    'telephone-ip': 'Telephone IP',
+    'serveur': 'Serveur',
+
+    // Périphériques
+    'imprimantes': 'Imprimantes',
+    'photocopieuse': 'Photocopieuse',
+    'composants': 'Composants',
+
+    // Connectiques
+    'cables': 'Câbles',
+    'multiprise': 'Multiprise',
+    'ondulateur': 'Ondulateur',
+    'adaptateurs': 'Adaptateurs',
+
+    // Accessoires
+    'video': 'Video',
+    'son': 'Son',
+    'equipement-pc': 'Equipement PC'
+  }
+
+  // Sub-subcategory mapping
+  const subSubcategoryMap = {
+    // Câbles
+    'cables-reseau': 'Câbles réseau',
+    'cables-hdmi': 'Câbles HDMI',
+    'cables-usb': 'Câbles USB',
+    'cables-vga': 'Câbles VGA',
+
+    // Adaptateurs
+    'adaptateurs-usb': 'Adaptateurs USB',
+    'adaptateurs-video': 'Adaptateurs Video',
+    'hub-usb': 'Hub USB',
+    'convertisseur': 'Convertisseur',
+
+    // Video
+    'appareil-photo': 'Appareil photo',
+    'stabilisateur': 'Stabilisateur',
+    'webcam': 'Webcam',
+    'projecteur': 'Projecteur',
+
+    // Son
+    'casque-audio': 'Casque audio',
+    'micro': 'micro',
+    'haut-parleur': 'Haut-parleur',
+
+    // Equipement PC
+    'souris': 'Souris',
+    'clavier': 'Clavier',
+    'chargeur': 'Chargeur',
+    'housse-laptop': 'Housse laptop',
+    'protection-d-ecran': "Protection d'écran",
+    'film-protecteur': 'Film protecteur'
   }
 
   return {
     category: categoryMap[categorySlug] || null,
-    subcategory: subcategoryMap[subcategorySlug] || null,
-    subSubcategory: subSubcategorySlug || null
+    subcategory: subcategoryMap[subcategorySlug] || slugToName(subcategorySlug),
+    subSubcategory: subSubcategoryMap[subSubcategorySlug] || (subSubcategorySlug ? slugToName(subSubcategorySlug) : null)
   }
 }
 

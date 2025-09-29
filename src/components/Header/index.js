@@ -97,7 +97,6 @@ export default function Header() {
     name: 'Connectiques',
     dbCategory: 'CONNECTIQUES',
     subcategories: [
-      { name: 'Câbles', subcategory: 'Câbles' },
       {
         name: 'Câbles',
         subcategory: 'Câbles',
@@ -114,7 +113,7 @@ export default function Header() {
         name: 'Adaptateurs',
         subcategory: 'Adaptateurs',
         subSubcategories: [
-          { name: 'Adaptateurs USB', subcategory: ' Adaptateurs USB' },
+          { name: 'Adaptateurs USB', subcategory: 'Adaptateurs USB' },
           { name: 'Adaptateurs Video', subcategory: 'Adaptateurs Video' },
           { name: 'Hub USB', subcategory: 'Hub USB' },
           { name: 'Convertisseur', subcategory: 'Convertisseur' }
@@ -309,7 +308,7 @@ export default function Header() {
                               {sub.subSubcategories.map((subSub, subSubIndex) => (
                                 <Link
                                   key={subSubIndex}
-                                  href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(subSub.subcategory)}`}
+                                  href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(sub.subcategory)}/${getSubcategorySlug(subSub.subcategory)}`}
                                   className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors text-sm"
                                 >
                                   {subSub.name}
@@ -380,7 +379,7 @@ export default function Header() {
                                 {sub.subSubcategories.map((subSub, subSubIndex) => (
                                   <Link
                                     key={subSubIndex}
-                                    href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(subSub.subcategory)}`}
+                                    href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(sub.subcategory)}/${getSubcategorySlug(subSub.subcategory)}`}
                                     className="block py-1.5 text-sm text-gray-500 hover:text-blue-600"
                                   >
                                     {subSub.name}
