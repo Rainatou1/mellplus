@@ -19,22 +19,21 @@ const SUBCATEGORIES_BY_CATEGORY = {
   'INFORMATIQUE': [
     { value: 'PC portable', label: 'PC portable' },
     { value: 'PC de bureau', label: 'PC de bureau' },
-    { value: 'Serveur', label: 'Serveur' },
+    { value: 'Moniteur', label: 'Moniteur' },
     { value: 'Logiciels', label: 'Logiciels' },
     { value: 'Stockage', label: 'Stockage' }
   ],
   'PERIPHERIQUES': [
     { value: 'Imprimante', label: 'Imprimante' },
-    { value: 'Scanner', label: 'Scanner' },
-    { value: 'Moniteur', label: 'Moniteur' },
-    { value: 'Projecteur', label: 'Projecteur' }
+    { value: 'Photocopieuse', label: 'Photocopieuse' },
+    //{ value: 'Projecteur', label: 'Projecteur' }
   ],
   'RESEAUX_SERVEUR': [
     { value: 'Switch', label: 'Switch' },
     { value: 'Routeur', label: 'Routeur' },
     { value: 'Point d\'accès WiFi', label: 'Point d\'accès WiFi' },
     { value: 'Téléphone IP', label: 'Téléphone IP' },
-    { value: 'Serveur réseau', label: 'Serveur réseau' }
+    { value: 'Serveur', label: 'Serveur' }
   ],
   'SECURITE': [
     { value: 'Caméra de surveillance', label: 'Caméra de surveillance' },
@@ -51,33 +50,31 @@ const SUBCATEGORIES_BY_CATEGORY = {
   'ACCESSOIRES': [
     { value: 'Vidéo', label: 'Vidéo' },
     { value: 'Son', label: 'Son' },
-    { value: 'Souris', label: 'Souris' },
-    { value: 'Clavier', label: 'Clavier' },
-    { value: 'Protection', label: 'Protection' },
+    { value: 'Equipement PC', label: 'Souris' },
+    { value: 'Stockage', label: 'Stockage' },
     { value: 'Support', label: 'Support' }
   ]
 }
 
 const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
   // INFORMATIQUE
-  'PC portable': [
+ /* 'PC portable': [
     { value: 'Laptop Business', label: 'Laptop Business' },
     { value: 'Laptop Gaming', label: 'Laptop Gaming' },
     { value: 'Ultrabook', label: 'Ultrabook' },
-    { value: 'Workstation portable', label: 'Workstation portable' }
-  ],
+  ],*/
   'PC de bureau': [
     { value: 'PC complet', label: 'PC complet' },
     { value: 'Unité centrale', label: 'Unité centrale' },
-    { value: 'All-in-One', label: 'All-in-One' },
-    { value: 'Mini PC', label: 'Mini PC' }
+    { value: 'All-in-One', label: 'All-in-One' }
   ],
-  'Serveur': [
-    { value: 'Serveur tour', label: 'Serveur tour' },
-    { value: 'Serveur rack', label: 'Serveur rack' },
-    { value: 'Serveur lame', label: 'Serveur lame' },
-    { value: 'NAS', label: 'NAS/Stockage' }
+  'Moniteur': [
+    { value: 'Moniteur LCD', label: 'Moniteur LCD' },
+    { value: 'Moniteur LED', label: 'Moniteur LED' },
+    { value: 'Moniteur 4K', label: 'Moniteur 4K' },
+    { value: 'Moniteur Gaming', label: 'Moniteur Gaming' }
   ],
+
   'Logiciels': [
     { value: 'Système d\'exploitation', label: 'Système d\'exploitation' },
     { value: 'Suite bureautique', label: 'Suite bureautique' },
@@ -85,7 +82,7 @@ const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
     { value: 'Logiciel métier', label: 'Logiciel métier' }
   ],
   'Stockage': [
-    { value: 'Disque dur', label: 'Disque dur' },
+    { value: 'Disque dur HDD', label: 'Disque dur HDD' },
     { value: 'SSD', label: 'SSD' },
     { value: 'Disque externe', label: 'Disque externe' },
     { value: 'Clé USB', label: 'Clé USB' }
@@ -98,29 +95,15 @@ const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
     { value: 'Multifonction', label: 'Multifonction' },
     { value: 'Plotter', label: 'Plotter' }
   ],
-  'Scanner': [
-    { value: 'Scanner à plat', label: 'Scanner à plat' },
-    { value: 'Scanner de document', label: 'Scanner de document' },
-    { value: 'Scanner portable', label: 'Scanner portable' }
-  ],
-  'Moniteur': [
-    { value: 'Moniteur LCD', label: 'Moniteur LCD' },
-    { value: 'Moniteur LED', label: 'Moniteur LED' },
-    { value: 'Moniteur 4K', label: 'Moniteur 4K' },
-    { value: 'Moniteur Gaming', label: 'Moniteur Gaming' }
-  ],
-  'Projecteur': [
+  
+  /*'Projecteur': [
     { value: 'Projecteur bureau', label: 'Projecteur bureau' },
     { value: 'Projecteur portable', label: 'Projecteur portable' },
     { value: 'Vidéoprojecteur', label: 'Vidéoprojecteur' }
-  ],
+  ],*/
 
   // RESEAUX_SERVEUR
-  'Switch': [
-    { value: 'Switch manageable', label: 'Switch manageable' },
-    { value: 'Switch non manageable', label: 'Switch non manageable' },
-    { value: 'Switch PoE', label: 'Switch PoE' }
-  ],
+
   'Routeur': [
     { value: 'Routeur WiFi', label: 'Routeur WiFi' },
     { value: 'Routeur professionnel', label: 'Routeur professionnel' },
@@ -133,18 +116,18 @@ const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
   ],
 
   // SECURITE
-  'Caméra de surveillance': [
+  /*'Caméra de surveillance': [
     { value: 'Caméra IP', label: 'Caméra IP' },
     { value: 'Caméra analogique', label: 'Caméra analogique' },
     { value: 'Caméra PTZ', label: 'Caméra PTZ' },
     { value: 'Enregistreur DVR/NVR', label: 'Enregistreur DVR/NVR' }
-  ],
-  'Contrôle d\'accès': [
+  ],*/
+  /*'Contrôle d\'accès': [
     { value: 'Lecteur de badge', label: 'Lecteur de badge' },
     { value: 'Serrure électronique', label: 'Serrure électronique' },
     { value: 'Interphone', label: 'Interphone' },
     { value: 'Portier vidéo', label: 'Portier vidéo' }
-  ],
+  ],*/
   'Détecteur': [
     { value: 'Détecteur de mouvement', label: 'Détecteur de mouvement' },
     { value: 'Détecteur de fumée', label: 'Détecteur de fumée' },
@@ -169,39 +152,34 @@ const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
   'Vidéo': [
     { value: 'Appareil photo', label: 'Appareil photo' },
     { value: 'Webcam', label: 'Webcam' },
-    { value: 'Caméscope', label: 'Caméscope' },
+    { value: 'Projecteur', label: 'Projecteur' },
     { value: 'Stabilisateur', label: 'Stabilisateur' }
   ],
   'Son': [
     { value: 'Casque audio', label: 'Casque audio' },
     { value: 'Micro', label: 'Micro' },
-    { value: 'Haut-parleur', label: 'Haut-parleur' },
-    { value: 'Écouteurs', label: 'Écouteurs' }
+    { value: 'Haut-parleur', label: 'Haut-parleur' }
   ],
-  'Souris': [
-    { value: 'Souris filaire', label: 'Souris filaire' },
-    { value: 'Souris sans fil', label: 'Souris sans fil' },
-    { value: 'Souris gaming', label: 'Souris gaming' },
-    { value: 'Trackball', label: 'Trackball' }
-  ],
-  'Clavier': [
-    { value: 'Clavier filaire', label: 'Clavier filaire' },
-    { value: 'Clavier sans fil', label: 'Clavier sans fil' },
-    { value: 'Clavier mécanique', label: 'Clavier mécanique' },
-    { value: 'Clavier gaming', label: 'Clavier gaming' }
-  ],
-  'Protection': [
+  'Equipement PC': [
+    { value: 'Souris', label: 'Souris' },
+    { value: 'Clavier', label: 'Clavier' },
+    { value: 'Chargeur', label: 'Chargeur' },
     { value: 'Housse laptop', label: 'Housse laptop' },
     { value: 'Protection d\'écran', label: 'Protection d\'écran' },
-    { value: 'Étui téléphone', label: 'Étui téléphone' },
     { value: 'Film protecteur', label: 'Film protecteur' }
   ],
-  'Support': [
+  'Stockage': [
+    { value: 'Disque dur HDD', label: 'Disque dur HDD' },
+    { value: 'SSD', label: 'SSD' },
+    { value: 'Disque externe', label: 'Disque externe' },
+    { value: 'Clé USB', label: 'Clé USB' }
+  ]
+ /* 'Support': [
     { value: 'Support laptop', label: 'Support laptop' },
     { value: 'Support moniteur', label: 'Support moniteur' },
     { value: 'Support tablette', label: 'Support tablette' },
     { value: 'Bras articulé', label: 'Bras articulé' }
-  ]
+  ]*/
 }
 
 export default function AdminProductsPage() {

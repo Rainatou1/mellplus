@@ -34,12 +34,12 @@ export default function Header() {
       .replace(/^-+|-+$/g, '')
   }
  const categoriy = [
-    { name: 'Informatique', subcategories: ['Ordinateurs Portables', 'Ordinateurs de Bureau', 'Accéssoires', 'Logiciels'] },
-    { name: 'Sécurité', subcategories: ['Videosurveillance', 'Incendie', 'Controle Accès'] },
-    { name: 'Reseau&Serveur', subcategories: ['Switch', 'Telephone IP'] },
-    { name: 'Peripheriques', subcategories: ['Imprimantes', 'Scanners', 'Composants'] },
-    { name: 'Connectiques', subcategories: ['Cables', 'Multiprise', 'Fournitures'] },
-    { name: 'Accessoires', subcategories: ['Image', 'Son', 'Fournitures'] },
+    { name: 'Informatique', subcategories: ['PC Portable', 'PC de Bureau', 'Logiciels', 'Stockage'] },
+    { name: 'Sécurité', subcategories: ['Caméra de surveillance', 'Controle d\'accès','Detecteur','Système d\'alarme'] },
+    { name: 'Reseau&Serveur', subcategories: ['Switch','Routeur','Point d\'accès WiFi', 'Telephone IP','Serveur'] },
+    { name: 'Peripheriques', subcategories: ['Imprimante', 'Photocopieuse', 'Moniteur'] },
+    { name: 'Connectiques', subcategories: ['Câbles', 'Multiprise', 'Ondulateur','Adaptateurs'] },
+    { name: 'Accessoires', subcategories: ['Video', 'Son','Equipement PC', 'Stockage','Support'] },
     { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
   ];  
   // Mapping des catégories de l'interface vers la base de données
@@ -57,19 +57,20 @@ export default function Header() {
     name: 'Informatique',
     dbCategory: 'INFORMATIQUE',
     subcategories: [
-      { name: 'Ordinateurs Portables', subcategory: 'Portables' },
-      { name: 'Ordinateurs de Bureau', subcategory: 'Bureau' },
-      { name: 'Accessoires', subcategory: 'Accessoires' },
-      { name: 'Logiciels', subcategory: 'Logiciels' }
+      { name: 'PC Portable', subcategory: 'PC Portable' },
+      { name: 'PC de Bureau', subcategory: 'PC de Bureau' },
+      { name: 'Logiciels', subcategory: 'Logiciels' },
+      { name: 'Stockage', subcategory: 'Stockage' }
     ]
   },
   {
     name: 'Sécurité',
     dbCategory: 'SECURITE',
     subcategories: [
-      { name: 'Videosurveillance', subcategory: 'Videosurveillance' },
-      { name: 'Incendie', subcategory: 'Incendie' },
-      { name: 'Controle d\'accès', subcategory: 'Controle d\'accès' }
+      { name: 'Caméra de surveillance', subcategory: 'Caméra de surveillance' },
+      { name: 'Controle d\'accès', subcategory: 'Controle d\'accès' },
+      { name: 'Detecteur', subcategory: 'Detecteur' },
+      { name: 'Système d\'alarme', subcategory: 'Système d\'alarme' }
     ]
   },
   {
@@ -77,8 +78,10 @@ export default function Header() {
     dbCategory: 'RESEAUX_SERVEUR',
     subcategories: [
       { name: 'Switch', subcategory: 'Switch' },
+      { name: 'Routeur', subcategory: 'Routeur' },
+      { name: 'Point d\'accès WiFi', subcategory: 'Point d\'accès WiFi' },
       { name: 'Telephone IP', subcategory: 'Telephone IP' },
-      { name: 'Serveurs', subcategory: 'Serveurs' }
+      { name: 'Serveur', subcategory: 'Serveur' }
     ]
   },
   {
@@ -86,7 +89,7 @@ export default function Header() {
     dbCategory: 'PERIPHERIQUES',
     subcategories: [
       { name: 'Imprimantes', subcategory: 'Imprimantes' },
-      { name: 'Scanners', subcategory: 'Scanners' },
+      { name: 'Photocopieuse', subcategory: 'Photocopieuse' },
       { name: 'Composants', subcategory: 'Composants' }
     ]
   },
@@ -94,9 +97,29 @@ export default function Header() {
     name: 'Connectiques',
     dbCategory: 'CONNECTIQUES',
     subcategories: [
-      { name: 'Cables', subcategory: 'Cables' },
+      { name: 'Câbles', subcategory: 'Câbles' },
+      {
+        name: 'Câbles',
+        subcategory: 'Câbles',
+        subSubcategories: [
+          { name: 'Câbles réseau', subcategory: 'Câbles réseau' },
+          { name: 'Câbles HDMI', subcategory: 'Câbles HDMI' },
+          { name: 'Câbles USB', subcategory: 'Câbles USB' },
+          { name: 'Câbles VGA', subcategory: 'Câbles VGA' }
+        ]
+      },
       { name: 'Multiprise', subcategory: 'Multiprise' },
-      { name: 'Fournitures', subcategory: 'Fournitures' }
+      { name: 'Ondulateur', subcategory: 'Ondulateur' },
+      {
+        name: 'Adaptateurs',
+        subcategory: 'Adaptateurs',
+        subSubcategories: [
+          { name: 'Adaptateurs USB', subcategory: ' Adaptateurs USB' },
+          { name: 'Adaptateurs Video', subcategory: 'Adaptateurs Video' },
+          { name: 'Hub USB', subcategory: 'Hub USB' },
+          { name: 'Convertisseur', subcategory: 'Convertisseur' }
+        ]
+      }
     ]
   },
   {
@@ -108,8 +131,9 @@ export default function Header() {
         subcategory: 'Video',
         subSubcategories: [
           { name: 'Appareil photo', subcategory: 'Appareil photo' },
-          { name: 'Videomaker', subcategory: 'Videomaker' },
-          { name: 'Webcam', subcategory: 'Webcam' }
+          { name: 'Stabilisateur', subcategory: 'Stabilisateur' },
+          { name: 'Webcam', subcategory: 'Webcam' },
+          { name: 'Projecteur', subcategory: 'Projecteur' },
         ]
       },
       {
@@ -117,13 +141,24 @@ export default function Header() {
         subcategory: 'Son',
         subSubcategories: [
           { name: 'Casque audio', subcategory: 'Casque audio' },
-          { name: 'micro', subcategory: 'micro' },
-          { name: 'micro cravate', subcategory: 'micro cravate' }
+          { name: 'Micro', subcategory: 'micro' },
+          { name: 'Haut-parleur', subcategory: 'Haut-parleur' }
         ]
       },
-      { name: 'Audio', subcategory: 'Audio' },
+      {
+        name: 'Equipement PC',
+        subcategory: 'Equipement PC',
+        subSubcategories: [
+          { name: 'Souris', subcategory: 'Souris' },
+          { name: 'Clavier', subcategory: 'Clavier' },
+          { name: 'Chargeur', subcategory: 'Chargeur' },
+          { name: 'Housse laptop', subcategory: 'Housse laptop' },
+          { name: 'Protection d\'écran', subcategory: 'Protection d\'écran' },
+          { name: 'Film protecteur', subcategory: 'Film protecteur' }
+        ]
+      },
       { name: 'Stockage', subcategory: 'Stockage' },
-      { name: 'Divers', subcategory: 'Divers' }
+      { name: 'Support', subcategory: 'Support' }
     ]
   }
 ];
