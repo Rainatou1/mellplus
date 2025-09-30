@@ -313,14 +313,15 @@ const AllServicesPage = () => {
 
             {/* Packages */}
             <div>
-              {/*<div className='bg-gradient-to-r from-purple-600 to-pink-600 text-black w-full text-center mb-8 py-3 px-3 rounded-lg font-semibold transition-all duration-300'>
+              
+              <h3 className="text-2xl font-bold text-white text-center mb-8">
+                Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Formules ?</span>
+              </h3> 
+              <div className='bg-gradient-to-r from-purple-600 to-pink-600 text-black w-full text-center mb-8 py-3 px-3 rounded-lg font-semibold transition-all duration-300'>
                 <Link href='/devis'>
                 <button> Demander un devis</button>
                 </Link>
-              </div>*/}
-              <h3 className="text-2xl font-bold text-white text-center mb-8">
-                Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Formules</span>
-              </h3>
+              </div>{/*
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {currentPackages.map((pkg, index) => (
                   <div key={index} className={`bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-purple-500/50 transition-all duration-300 text-center ${
@@ -345,7 +346,7 @@ const AllServicesPage = () => {
                     </button>
                   </div>
                 ))}
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>

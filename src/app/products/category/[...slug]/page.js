@@ -283,7 +283,26 @@ export default function CategoryPage({ params }) {
             {subcategory && (
               <>
                 <span>/</span>
-                <span className="font-medium text-blue-600">{currentCategoryName}</span>
+                {subSubcategory ? (
+                  <Link
+                    href={`/products/category/${category.toLowerCase()}/${subcategory.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '-')}`}
+                    className="hover:text-blue-600"
+                  >
+                    {CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.name || subcategory}
+                  </Link>
+                ) : (
+                  <span className="font-medium text-blue-600">
+                    {CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.name || subcategory}
+                  </span>
+                )}
+              </>
+            )}
+            {subSubcategory && (
+              <>
+                <span>/</span>
+                <span className="font-medium text-blue-600">
+                  {CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.subSubcategories?.[subSubcategory]?.name || subSubcategory}
+                </span>
               </>
             )}
           </nav>
