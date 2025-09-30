@@ -416,11 +416,15 @@ const MellPlusNiger = () => {
                 <div key={product.id} className="bg-white border-1 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative">
                     <Image
-                      width={500}
-                      height={500}
                       src={product.image || '/images/ordi.jpg'}
                       alt={product.name}
+                      width={300}
+                      height={200}
+                      unoptimized
                       className="w-full h-40 md:h-48 object-cover"
+                      onError={(e) => {
+                        e.target.src = '/images/ordi.jpg'
+                      }}
                     />
                     {/* Best Seller Badge */}
                     <span className="absolute top-2 left-2 text-white px-2 py-1 rounded text-xs md:text-sm font-bold">

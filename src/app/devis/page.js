@@ -321,7 +321,7 @@ const ContactDevisPage = () => {
                     <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-sm">Réponse rapide</h4>
-                      <p className="text-gray-600 text-sm">Réponse garantie sous 48h</p>
+                      <p className="text-gray-600 text-sm">Réponse garantie sous 12h</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">

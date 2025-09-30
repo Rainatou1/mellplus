@@ -377,7 +377,7 @@ export default function CategoryPage({ params }) {
           {/* Main Content */}
           <div className="flex-1">
             {/* En-tête avec compteur */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            {/*<div className="bg-white rounded-lg shadow-sm p-6 mb-6">
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   {currentCategoryName}
@@ -389,7 +389,7 @@ export default function CategoryPage({ params }) {
                   }
                 </p>
               </div>
-            </div>
+            </div>*/}
 
             {/* Search and filters */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
@@ -538,12 +538,22 @@ function parseSlug(slug) {
 
   // Helper function to convert slug to proper name
   const slugToName = (slug) => {
+    if (!slug) return null
+
     return slug
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
-      .replace(/d /g, "d'")
-      .replace(/l /g, "l'")
+      .replace(/\bD\s/g, "d'")
+      .replace(/\bL\s/g, "l'")
+      .replace(/\bDe\s/g, "de ")
+      .replace(/\bDecran\b/g, "d'écran")
+      .replace(/\bDacces\b/g, "d'accès")
+      .replace(/\bDalarme\b/g, "d'alarme")
+      .replace(/\bDacces\s+WiFi\b/g, "d'accès WiFi")
+      .replace(/\bSysteme\s+D\s/g, "Système d'")
+      .replace(/\bControle\s+D\s/g, "Contrôle d'")
+      .replace(/\bPoint\s+D\s/g, "Point d'")
   }
 
   // Direct mapping from slug to database values
@@ -556,7 +566,7 @@ function parseSlug(slug) {
 
     // Sécurité
     'camera-de-surveillance': 'Caméra de surveillance',
-    'controle-d-acces': "Controle d'accès",
+    'controle-d-acces': "Contrôle d'accès",
     'detecteur': 'Detecteur',
     'systeme-d-alarme': "Système d'alarme",
 
