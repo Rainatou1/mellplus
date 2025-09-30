@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Filter, ShoppingCart, Eye, Star, Heart, Percent, Clock, TrendingDown } from 'lucide-react'
+import { Search, Filter, ShoppingCart, Eye, Star, Heart, Percent, Clock, TrendingDown, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -274,19 +274,19 @@ export default function PromotionsPage() {
               </div>
             </div>
 
-            {/* Loyalty Program Banner */}
-            <div className="bg-gradient-to-br from-blue-400 to-blue-800 p-4 text-white text-center rounded-lg shadow-lg">
-              <div className="text-3xl mb-2">💎</div>
-              <h3 className="text-lg font-bold mb-2">Programme Fidélité</h3>
-              <p className="text-xs opacity-90 mb-3">Plus d&apos;achats, plus d&apos;avantages</p>
-              <div className="space-y-2 text-xs">
-                <div>✓ Réductions cumulées</div>
-                <div>✓ Offres exclusives</div>
-                <div>✓ Points de fidélité</div>
-              </div>
-              <Link href="/contact" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
-                En savoir plus
-              </Link>
+             {/* Contact Banner */}
+                      <div className="bg-white p-4 text-gray text-center">
+                          <div className="text-3xl mb-2">💬</div>
+                          <h3 className="text-lg font-bold mb-2">Besoin d&apos;aide ?</h3>
+                          <p className="text-xs opacity-90 mb-3">Nos experts vous conseillent</p>
+                          <div className="space-y-2 text-xs">
+                            <div>✓ Conseil personnalisé</div>
+                            <div>✓ Devis gratuit</div>
+                            <div>✓ Support technique</div>
+                          </div>
+                          <Link href="/contact" className="mt-3 bg-blue text-white px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                            Nous contacter
+                          </Link>
             </div>
           </div>
 
@@ -360,9 +360,10 @@ export default function PromotionsPage() {
             {/* Reset */}
             <button
               onClick={resetFilters}
-              className="px-4 py-3 text-red-600 hover:text-red-800 font-medium"
+              className="px-4 py-3 text-red-600 hover:text-red-800 font-medium flex items-center gap-2"
+              title="Réinitialiser les filtres"
             >
-              Reset
+              <RotateCcw size={20} />
             </button>
           </div>
         </div>

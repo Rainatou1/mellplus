@@ -280,12 +280,12 @@ export default function Header() {
                   {activeCategory === index && (
                     <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1">
                       {/* Lien vers toute la catégorie */}
-                      <Link
+                      {/* <Link
                         href={`/products/category/${getCategorySlug(category.dbCategory)}`}
                         className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded transition-colors font-medium border-b mb-2"
                       >
                         Voir tous les {category.name}
-                      </Link>
+                      </Link>*/}
                       {/* Liens vers les sous-catégories */}
                       {category.subcategories.map((sub, subIndex) => (
                         <div

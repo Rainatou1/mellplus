@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, Filter, ShoppingCart, Eye, Star, Heart, ArrowLeft, Zap, Award, TrendingUp, Monitor, Printer, Router as RouterIcon, Shield, Cable, Headphones } from 'lucide-react'
+import { Search, Filter, ShoppingCart, Eye, Star, Heart, ArrowLeft, Zap, Award, TrendingUp, Monitor, Printer, Router as RouterIcon, Shield, Cable, Headphones, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { matchSubcategory, getCategoryDisplayName } from '@/lib/categoryMapping'
@@ -418,9 +418,10 @@ export default function CategoryPage({ params }) {
                 {/* Reset */}
                 <button
                   onClick={resetFilters}
-                  className="px-4 py-3 text-blue-600 hover:text-blue-800 font-medium"
+                  className="px-4 py-3 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+                  title="Réinitialiser les filtres"
                 >
-                  Reset
+                  <RotateCcw size={20} />
                 </button>
               </div>
             </div>
@@ -499,7 +500,6 @@ export default function CategoryPage({ params }) {
   )
 }
 
-// Helper function to parse URL slug
 function parseSlug(slug) {
   if (!slug || slug.length === 0) {
     return { category: null, subcategory: null, subSubcategory: null }
@@ -679,7 +679,7 @@ function CategoryProductCard({ product }) {
       <div className="p-4">
         {/* Catégorie */}
         <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
-          {product.category}
+          {getCategoryDisplayName(product.category)}
         </div>
 
         {/* Nom du produit */}
@@ -697,7 +697,7 @@ function CategoryProductCard({ product }) {
           {product.discount ? (
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <div className="text-lg font-bold text-red-600">
+                <div className="text-base font-bold text-red-600">
                   {formatPrice(discountedPrice)}
                 </div>
                 <div className="text-sm text-gray-500 line-through">

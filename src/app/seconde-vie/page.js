@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Filter, ShoppingCart, Eye, Star, Heart, Recycle, Leaf, Award } from 'lucide-react'
+import { Search, Filter, ShoppingCart, Eye, Star, Heart, Recycle, Leaf, Award, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -242,9 +242,10 @@ export default function SecondeViePage() {
                 {/* Reset */}
                 <button
                   onClick={resetFilters}
-                  className="px-4 py-3 text-green-600 hover:text-green-800 font-medium"
+                  className="px-4 py-3 text-green-600 hover:text-green-800 font-medium flex items-center gap-2"
+                  title="Réinitialiser les filtres"
                 >
-                  Reset
+                  <RotateCcw size={20} />
                 </button>
               </div>
             </div>

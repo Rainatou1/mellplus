@@ -4,6 +4,7 @@ import { Search, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { getCategoryDisplayName } from '@/lib/categoryMapping';
 
 export default function SearchBar({ isMobile = false, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -128,7 +129,7 @@ export default function SearchBar({ isMobile = false, onClose }) {
                       {product.name}
                     </p>
                     <p className="text-xs text-gray-500 truncate">
-                      {product.brand} {product.category && `• ${product.category}`}
+                      {product.brand} {product.category && `• ${getCategoryDisplayName(product.category)}`}
                     </p>
                     {product.price && (
                       <p className="text-sm font-semibold text-blue-600">

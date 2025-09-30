@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Filter, ShoppingCart, Eye, Star, Heart, TrendingUp, Award, Zap } from 'lucide-react'
+import { Search, Filter, ShoppingCart, Eye, Star, Heart, TrendingUp, Award, Zap, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -262,9 +262,10 @@ export default function BestSellersPage() {
                 {/* Reset */}
                 <button
                   onClick={resetFilters}
-                  className="px-4 py-3 text-yellow-600 hover:text-yellow-800 font-medium"
+                  className="px-4 py-3 text-yellow-600 hover:text-yellow-800 font-medium flex items-center gap-2"
+                  title="Réinitialiser les filtres"
                 >
-                  Reset
+                  <RotateCcw size={20} />
                 </button>
               </div>
             </div>

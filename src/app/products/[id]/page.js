@@ -31,6 +31,7 @@ import {
   Tag
 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { getCategoryDisplayName } from '@/lib/categoryMapping'
 
 export default function ProductDetailPage() {
   const params = useParams()
@@ -224,7 +225,7 @@ export default function ProductDetailPage() {
               href={`/products?category=${product.category}`}
               className="hover:text-blue-600"
             >
-              {product.category}
+              {getCategoryDisplayName(product.category)}
             </Link>
             <span>/</span>
             <span className="font-medium text-blue-600">{product.name}</span>
@@ -325,7 +326,7 @@ export default function ProductDetailPage() {
             <div>
               <div className="flex items-start justify-between mb-2">
                 <div className="text-sm text-blue-600 font-semibold uppercase tracking-wide">
-                  {product.category}
+                  {getCategoryDisplayName(product.category)}
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -626,7 +627,7 @@ function RelatedProductCard({ product }) {
 
         <div className="p-4">
           <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-1">
-            {product.category}
+            {getCategoryDisplayName(product.category)}
           </div>
           <h3 className="font-medium text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
             {product.name}

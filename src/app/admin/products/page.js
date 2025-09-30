@@ -5,6 +5,7 @@ import { Plus, Search, Edit, Trash2, Eye, X, Upload, Save } from 'lucide-react'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import ImageUpload from '@/components/admin/ImageUpload'
+import { getCategoryDisplayName } from '@/lib/categoryMapping'
 
 const PRODUCT_CATEGORIES = [
   { value: 'INFORMATIQUE', label: 'Informatique' },
@@ -81,20 +82,20 @@ const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
     { value: 'Antivirus', label: 'Antivirus' },
     { value: 'Logiciel métier', label: 'Logiciel métier' }
   ],
-  'Stockage': [
+  /*'Stockage': [
     { value: 'Disque dur HDD', label: 'Disque dur HDD' },
     { value: 'SSD', label: 'SSD' },
     { value: 'Disque externe', label: 'Disque externe' },
     { value: 'Clé USB', label: 'Clé USB' }
-  ],
+  ],*/
 
   // PERIPHERIQUES
-  'Imprimante': [
+ /* 'Imprimante': [
     { value: 'Imprimante laser', label: 'Imprimante laser' },
     { value: 'Imprimante jet d\'encre', label: 'Imprimante jet d\'encre' },
     { value: 'Multifonction', label: 'Multifonction' },
     { value: 'Plotter', label: 'Plotter' }
-  ],
+  ],*/
   
   /*'Projecteur': [
     { value: 'Projecteur bureau', label: 'Projecteur bureau' },
@@ -406,7 +407,7 @@ export default function AdminProductsPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                          {product.category}
+                          {getCategoryDisplayName(product.category)}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
