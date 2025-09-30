@@ -371,13 +371,13 @@ export default function AdminLayout({ children }) {
                 <Bell className="w-8 h-8 text-yellow-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Session sur le point d'expirer
+                Session sur le point d&apos;expirer
               </h3>
               <p className="text-gray-600 mb-4">
-                Votre session va expirer dans <span className="font-bold text-red-600">{Math.floor(warningCountdown / 60)}:{(warningCountdown % 60).toString().padStart(2, '0')}</span> en raison d'inactivité.
+                Votre session va expirer dans <span className="font-bold text-red-600">{Math.floor(warningCountdown / 60)}:{(warningCountdown % 60).toString().padStart(2, '0')}</span> en raison d&apos;inactivité.
               </p>
               <p className="text-sm text-gray-500 mb-6">
-                Cliquez sur "Rester connecté" pour prolonger votre session.
+                Cliquez sur &quot;Rester connecté&quot; pour prolonger votre session.
               </p>
               <div className="flex gap-3">
                 <button
