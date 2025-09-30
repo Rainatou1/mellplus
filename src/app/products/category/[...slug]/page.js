@@ -77,9 +77,6 @@ export default function CategoryPage({ params }) {
   }
 
   useEffect(() => {
-    // Debug: afficher les valeurs parsées
-    console.log('Parsed values:', { category, subcategory, subSubcategory })
-
     // Validate the category path
     if (!category) {
       router.push('/products')
@@ -114,13 +111,9 @@ export default function CategoryPage({ params }) {
   const applyFilters = () => {
     let filtered = [...products]
 
-    console.log('Total products:', products.length)
-    console.log('Filtering with:', { category, subcategory, subSubcategory })
-
     // Filter by main category
     if (category) {
       filtered = filtered.filter(product => product.category === category)
-      console.log('After category filter:', filtered.length)
     }
 
     // Filter by subcategory or sub-subcategory
@@ -129,13 +122,30 @@ export default function CategoryPage({ params }) {
       filtered = filtered.filter(product =>
         product.subSubcategory === subSubcategory
       )
-      console.log(`After subSubcategory filter (${subSubcategory}):`, filtered.length)
     } else if (subcategory) {
       // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
-      filtered = filtered.filter(product =>
-        product.subcategory === subcategory
-      )
-      console.log(`After subcategory filter (${subcategory}):`, filtered.length)
+      // Gérer les variations de format (majuscules/minuscules, singulier/pluriel)
+      filtered = filtered.filter(product => {
+        if (!product.subcategory) return false
+
+        const productSubcat = product.subcategory.toLowerCase()
+        const targetSubcat = subcategory.toLowerCase()
+
+        // Correspondance exacte
+        if (productSubcat === targetSubcat) return true
+
+        // Correspondance avec variations communes
+        const variations = {
+          'imprimantes': ['imprimante', 'imprimantes'],
+          'imprimante': ['imprimante', 'imprimantes']
+        }
+
+        if (variations[targetSubcat]) {
+          return variations[targetSubcat].some(v => productSubcat === v)
+        }
+
+        return false
+      })
     }
 
     // Search filter
