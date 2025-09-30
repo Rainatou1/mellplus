@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter, usePathname } from 'next/navigation'
+import useIdleTimer from '@/hooks/useIdleTimer'
 import {
   LayoutDashboard,
   Package,
@@ -104,6 +105,46 @@ export default function AdminLayout({ children }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [notifications, setNotifications] = useState(8)
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0)
+  const [showWarning, setShowWarning] = useState(false)
+  const [warningCountdown, setWarningCountdown] = useState(0)
+
+  // Gestion de la déconnexion automatique après inactivité
+  const handleIdleLogout = async () => {
+    if (session) {
+      setShowWarning(false)
+      await signOut({ redirect: true, callbackUrl: '/admin/login' })
+    }
+  }
+
+  // Avertissement 2 minutes avant la déconnexion
+  const handleIdleWarning = () => {
+    if (session) {
+      setShowWarning(true)
+      setWarningCountdown(120) // 2 minutes
+
+      // Décompte
+      const countdownInterval = setInterval(() => {
+        setWarningCountdown(prev => {
+          if (prev <= 1) {
+            clearInterval(countdownInterval)
+            handleIdleLogout()
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+    }
+  }
+
+  // Hook pour détecter l'inactivité (13 minutes pour l'avertissement, puis 2 minutes de plus)
+  const { restart: restartIdleTimer } = useIdleTimer(handleIdleWarning, 13 * 60 * 1000)
+
+  // Fonction pour prolonger la session
+  const extendSession = () => {
+    setShowWarning(false)
+    setWarningCountdown(0)
+    restartIdleTimer()
+  }
 
   // Fetch unread messages count
   const fetchUnreadMessagesCount = async () => {
@@ -317,9 +358,45 @@ export default function AdminLayout({ children }) {
         <main className="p-6">
           {children}
         </main>
-        
+
         <Toaster position="top-right" />
       </div>
+
+      {/* Modal d'avertissement de déconnexion */}
+      {showWarning && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 bg-yellow-100 rounded-full flex items-center justify-center">
+                <Bell className="w-8 h-8 text-yellow-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Session sur le point d'expirer
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Votre session va expirer dans <span className="font-bold text-red-600">{Math.floor(warningCountdown / 60)}:{(warningCountdown % 60).toString().padStart(2, '0')}</span> en raison d'inactivité.
+              </p>
+              <p className="text-sm text-gray-500 mb-6">
+                Cliquez sur "Rester connecté" pour prolonger votre session.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleIdleLogout}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Se déconnecter
+                </button>
+                <button
+                  onClick={extendSession}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Rester connecté
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
