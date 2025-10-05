@@ -220,22 +220,31 @@ const MellPlusNiger = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 min-h-screen bg-gray-50">
-      <div className="pt-2 md:pt-5"></div>
-      {/* Hero Carousel */}
-      <section className="relative h-96 md:h-[500px] lg:h-[600px]">
-        {/* Slides */}
-        <div className="relative h-full">
+    <div className="min-h-screen bg-gray-50">
+      {/*<div className="max-w-7xl mx-auto px-4 bg-blue-300">
+        
+      </div>*/}
+      <div className="pt-2 md:pt-5 bg-blue-300"></div>
+
+      {/* Hero Carousel avec bandes latérales */}
+      <section className="relative h-90 md:h-96 lg:h-[500px] bg-blue-300 flex gap-2">
+        {/* Bande gauche */}
+        <div className="w-1/6 bg-blue-300 rounded-lg border-1 shadow flex-shrink-0"></div>
+
+        {/* Carrousel principal */}
+        <div className="flex-1 relative overflow-hidden">
+          {/* Slides */}
+          <div className="relative w-full h-full">
           {slides.map((slide, index) => (
             <div
               key={slide.id}
               className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
-                index === currentSlide ? 'translate-x-0' : 
+                index === currentSlide ? 'translate-x-0' :
                 index < currentSlide ? '-translate-x-full' : 'translate-x-full'
               }`}
             >
               <div className={`h-full bg-gradient-to-r ${slide.bgGradient} text-white`}>
-                <div className="max-w-7xl mx-auto px-4 h-full">
+                <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1">
                       <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
@@ -273,9 +282,9 @@ const MellPlusNiger = () => {
               </div>
             </div>
           ))}
-        </div>
+          </div>
 
-        {/* Navigation Arrows */}
+          {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 border-white border-1 hover:bg-white hover:text-black text-white p-2 md:p-3 rounded-full transition-all z-20"
@@ -307,20 +316,27 @@ const MellPlusNiger = () => {
           ))}
         </div>
 
-        {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-white bg-opacity-20">
-          <div 
-            className="h-full bg-white transition-all duration-100 ease-linear"
-            style={{ 
-              width: `${((currentSlide + 1) / slides.length) * 100}%` 
-            }}
-          />
+          {/* Progress Bar */}
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-white bg-opacity-20">
+            <div
+              className="h-full bg-white transition-all duration-100 ease-linear"
+              style={{
+                width: `${((currentSlide + 1) / slides.length) * 100}%`
+              }}
+            />
+          </div>
         </div>
-      </section>
 
-      {/* Advantages Section */}
-      <section className="py-8 md:py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+        {/* Bande droite */}
+        <div className="w-1/6 bg-blue-300 rounded-lg border-1 flex-shrink-0"></div>
+      </section>
+      <div className="pt-2 md:pt-5 bg-blue-300"></div>
+
+      <div className="max-w-7xl mx-auto px-4">
+
+        {/* Advantages Section */}
+        <section className="py-8 md:py-12 bg-white">
+          <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Les avantages Mell Plus Niger</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {advantages.map((advantage, index) => (
@@ -333,12 +349,12 @@ const MellPlusNiger = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Featured Products with Banners */}
-      <div className="py-8 md:py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+        {/* Featured Products with Banners */}
+        <div className="py-8 md:py-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Left Banners - Hidden on small screens */}
             <div className="hidden lg:block lg:w-1/4 space-y-4">
@@ -514,8 +530,8 @@ const MellPlusNiger = () => {
           )}
             </section>
           </div>
+          </div>
         </div>
-      </div>
 
       {/* Promotions Section with Banner */}
       <div className="py-8 md:py-12 bg-gray-50">
@@ -697,8 +713,8 @@ const MellPlusNiger = () => {
               )}
             </section>
           </div>
+          </div>
         </div>
-      </div>
 
       {/* À Découvrir Section */}
       <section className="py-8 md:py-12 bg-white">
@@ -860,7 +876,8 @@ const MellPlusNiger = () => {
           </Link>
         </div>
       </section>
-      <div className="py-4 md:py-4"></div>
+        <div className="py-4 md:py-4"></div>
+      </div>
     </div>
   );
 };

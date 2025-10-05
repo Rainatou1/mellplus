@@ -221,7 +221,7 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold text-white">Notre Mission</h2>
             </div>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              Accompagner les entreprises dans leur transformation digitale en leurs proposants des solutions qualitative, performantes et évolutives.
+              Accompagner les clients dans leur transformation digitale en leurs proposants des solutions qualitative, performantes et évolutives.
             </p>
             <p className="text-gray-300 leading-relaxed">
               Nous croyons que chaque projet mérite une attention particulière et une approche personnalisée pour garantir le succès de nos clients.
