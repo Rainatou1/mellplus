@@ -250,7 +250,7 @@ const ContactDevisPage = () => {
                     <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-sm">Réponse rapide</h4>
-                      <p className="text-gray-600 text-sm">Réponse garantie sous 48h</p>
+                      <p className="text-gray-600 text-sm">Réponse garantie sous 12h</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -307,7 +307,7 @@ const ContactDevisPage = () => {
                   className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>+227 96 12 34 56</span>
+                  <span>+227 99 86 01 01</span>
                 </a>
               </div>
             </div>

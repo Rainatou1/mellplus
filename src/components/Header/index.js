@@ -191,13 +191,13 @@ export default function Header() {
       </div>
             {/* Main Header */}
 
-    <header className="bg-blue-400 shadow-lg sticky top-0 z-50">
+    <header className="bg-blue-300 shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between py-2 md:py-3">
             {/* Logo */}
             <div className="flex items-center flex-shrink-0">
               <Link href="/#">
-              <div className="bg-blue-400 text-white p-1 md:p-2 rounded-lg mr-2 md:mr-3">
+              <div className="bg-blue-300 text-white p-1 md:p-2 rounded-lg mr-2 md:mr-3">
                 <Image
                 width={900}
                 height={900}

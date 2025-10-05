@@ -378,7 +378,7 @@ const ContactDevisPage = () => {
                   className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>+227 96 12 34 56</span>
+                  <span>+227 99 86 01 01</span>
                 </a>
               </div>
             </div>

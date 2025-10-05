@@ -24,7 +24,7 @@ const MellPlusNiger = () => {
       image: "/images/logo.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Nos services",
-      bgGradient: "from-blue-600 to-blue-800"
+      bgGradient: "from-blue-300 to-blue-600"
     },
     {
       id: 2,
@@ -68,8 +68,8 @@ const MellPlusNiger = () => {
     },
     {
       id: 6,
-      title: "dernieres demarque",
-      subtitle: "scanner, Imprimante sharp, HP Pavilion",
+      title: "Derniere démarque",
+      subtitle: "Scanner, Imprimante sharp, HP Pavilion",
       description: "Découvrez la nouvelle gamme de periphériques avec des offres exclusives et un service après-vente premium",
       image: "/images/carroussel.PNG",
       ctaPrimary: "Voir les produits",
@@ -78,17 +78,17 @@ const MellPlusNiger = () => {
     },
     {
       id: 7,
-      title: "economisez 10%",
+      title: "Economisez 10%",
       subtitle: "Arldo",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
       image: "/images/carroussel.PNG",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Voir catalogue",
-      bgGradient: "from-blue-600 to-teal-700"
+      bgGradient: "from-blue-400 to-teal-700"
     },
     {
       id: 8,
-      title: "solde d'été",
+      title: "Solde d'été",
       subtitle: "Jusqu'à -30% sur une sélection",
       description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
       image: "/images/hp-removebg.PNG",
@@ -223,7 +223,7 @@ const MellPlusNiger = () => {
     <div className="max-w-7xl mx-auto px-4 min-h-screen bg-gray-50">
       <div className="pt-2 md:pt-5"></div>
       {/* Hero Carousel */}
-      <section className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
+      <section className="relative h-96 md:h-[500px] lg:h-[600px]">
         {/* Slides */}
         <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -264,7 +264,7 @@ const MellPlusNiger = () => {
                         height={450}
                         src={slide.image}
                         alt={slide.title}
-                        className="w-full max-w-md lg:max-w-full mx-auto rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300"
+                        className="w-full max-w-md lg:max-w-full mx-auto rounded-lg transform hover:scale-105 transition-transform duration-300"
                         priority={index === 0}
                       />
                     </div>

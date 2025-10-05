@@ -221,7 +221,7 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold text-white">Notre Mission</h2>
             </div>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              Accompagner les entreprises dans leur transformation digitale en créant des solutions web et mobile sur mesure, performantes et évolutives.
+              Accompagner les entreprises dans leur transformation digitale en leurs proposants des solutions qualitative, performantes et évolutives.
             </p>
             <p className="text-gray-300 leading-relaxed">
               Nous croyons que chaque projet mérite une attention particulière et une approche personnalisée pour garantir le succès de nos clients.
@@ -251,10 +251,12 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Valeurs</span>
+              Nous avons des 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Valeurs</span> dans nos démarches
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Les principes qui guident notre travail et nos relations avec nos clients
+              Apporter des solutions adequates aux besoins Informatiques.
+              Le dynamisme et le respect des exigences de la Clientèles est le moteur de notre engagement.
             </p>
           </div>
 
@@ -278,32 +280,10 @@ const AboutPage = () => {
         </div>
       </div>
 
-      {/* Achievements */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Réalisations</span>
-          </h2>
-          <p className="text-xl text-gray-300">Quelques chiffres qui illustrent notre parcours</p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {achievements.map((achievement, index) => (
-            <div key={index} className="text-center group">
-              <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <achievement.icon className="w-10 h-10 text-white" />
-              </div>
-              <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">
-                {achievement.number}
-              </div>
-              <div className="text-gray-300 font-medium">{achievement.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+      
 
       {/* Timeline */}
-      <div className="bg-gradient-to-r from-slate-800/50 to-purple-800/50 py-20">
+      {/*<div className="bg-gradient-to-r from-slate-800/50 to-purple-800/50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
@@ -312,8 +292,8 @@ const AboutPage = () => {
             <p className="text-xl text-gray-300">Le parcours de Mell Plus depuis sa création</p>
           </div>
 
-          <div className="relative">
-            {/* Timeline line */}
+          <div className="relative">*/}
+            {/* Timeline line */}{/* 
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-purple-600 to-pink-600 hidden lg:block"></div>
 
             <div className="space-y-12">
@@ -334,7 +314,7 @@ const AboutPage = () => {
                     </div>
                   </div>
                   
-                  {/* Timeline dot */}
+                  {/* Timeline dot */}{/*
                   <div className="hidden lg:flex w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full items-center justify-center flex-shrink-0">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
                   </div>
@@ -345,7 +325,7 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>*/}
 
       {/* Team Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -354,7 +334,7 @@ const AboutPage = () => {
             Notre <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Équipe</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Des experts passionnés qui donnent vie à vos projets digitaux
+            Des experts devoués qui donnent vie à vos projets
           </p>
         </div>
 
@@ -404,6 +384,30 @@ const AboutPage = () => {
         </div>
       </div>
 
+      {/* Achievements */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-white mb-4">
+            Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Réalisations</span>
+          </h2>
+          <p className="text-xl text-gray-300">Quelques chiffres qui illustrent notre parcours</p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {achievements.map((achievement, index) => (
+            <div key={index} className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <achievement.icon className="w-10 h-10 text-white" />
+              </div>
+              <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">
+                {achievement.number}
+              </div>
+              <div className="text-gray-300 font-medium">{achievement.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Services Overview */}
       <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -443,11 +447,11 @@ const AboutPage = () => {
               <Mail className="w-5 h-5" />
               <span>Contactez-nous</span>
             </button>
-            </Link>
+            </Link>{/*
             <button className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2">
               <Phone className="w-5 h-5" />
               <span>Planifier un appel</span>
-            </button>
+            </button>*/}
           </div>
         </div>
       </div>
