@@ -227,14 +227,14 @@ const MellPlusNiger = () => {
       <div className="pt-2 md:pt-5 bg-blue-300"></div>
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-90 md:h-96 lg:h-[500px] bg-blue-300 flex gap-2">
+      <section className="relative h-80 md:h-96 lg:h-[500px] bg-blue-300 flex gap-2">
         {/* Bande gauche */}
-        <div className="w-1/6 bg-blue-300 rounded-lg border-1 shadow flex-shrink-0"></div>
+        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-300 rounded-lg border-1 shadow flex-shrink-0"></div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 relative overflow-hidden">
+        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative bg-blue-300 overflow-hidden">
           {/* Slides */}
-          <div className="relative w-full h-full">
+          <div className="relative h-full">
           {slides.map((slide, index) => (
             <div
               key={slide.id}
@@ -269,8 +269,8 @@ const MellPlusNiger = () => {
                     </div>
                     <div className="text-center order-1 lg:order-2">
                       <Image 
-                        width={600}
-                        height={450}
+                        width={500}
+                        height={350}
                         src={slide.image}
                         alt={slide.title}
                         className="w-full max-w-md lg:max-w-full mx-auto rounded-lg transform hover:scale-105 transition-transform duration-300"
@@ -326,11 +326,15 @@ const MellPlusNiger = () => {
             />
           </div>
         </div>
+        <div className="pt-2 md:pt-5 bg-blue-300"></div>
 
         {/* Bande droite */}
-        <div className="w-1/6 bg-blue-300 rounded-lg border-1 flex-shrink-0"></div>
-      </section>
+        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-300 rounded-lg border-1 flex-shrink-0"></div>
       <div className="pt-2 md:pt-5 bg-blue-300"></div>
+      </section>
+
+      
+     
 
       <div className="max-w-7xl mx-auto px-4">
 
@@ -764,9 +768,11 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Best sellers</h4>
                     <p className="text-sm opacity-90">PC et accessoires</p>
                   </div>
+                  <Link href="/bestsellers">
                   <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -810,9 +816,11 @@ const MellPlusNiger = () => {
                     <h4 className="text-2xl md:text-3xl font-bold mb-2">Nos services</h4>
                     <p className="text-sm md:text-base opacity-90">Solutions sur mesures pour vos entreprises</p>
                   </div>
+                  <Link href="/service">
                   <button className=" bg-opacity-20 border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
                     VOIR ›
                   </button>
+                  </Link>
                 </div>
               </div>
             </div>

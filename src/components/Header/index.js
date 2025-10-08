@@ -203,7 +203,7 @@ export default function Header() {
                 height={900}
                 src="/images/logo.png"
                 alt="logo" 
-                className="w-12 h-12 md:w-28 md:h-19" />
+                className="w-15 h-15 md:w-28 md:h-19" />
               </div>
               </Link>
               <div>
@@ -236,7 +236,7 @@ export default function Header() {
               {/* Promotions Button */}
               <Link 
                 href="/promotions"
-                className="flex items-center space-x-1 md:space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 md:px-4 py-2 rounded-lg hover:from-red-600 hover:to-pink-600 transition-all shadow-md"
+                className="flex items-center hidden space-x-1 md:space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 md:px-4 py-2 rounded-lg hover:from-red-600 hover:to-pink-600 transition-all shadow-md"
               >
                 <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="text-sm md:text-base font-semibold">PROMOS</span>
@@ -349,12 +349,12 @@ export default function Header() {
                     {activeCategory === index && (
                       <div className="pl-4 space-y-2 mt-2">
                         {/* Lien vers toute la catégorie */}
-                        <Link
+                        {/*<Link
                           href={`/products/category/${getCategorySlug(category.dbCategory)}`}
                           className="block py-2 text-gray-600 hover:text-blue-600 font-medium"
                         >
                           Voir tous les {category.name}
-                        </Link>
+                        </Link>*/}
                         {/* Liens vers les sous-catégories */}
                         {category.subcategories.map((sub, subIndex) => (
                           <div key={subIndex}>
@@ -394,7 +394,7 @@ export default function Header() {
                   </div>
                 ))}
                 <Link href="/products" className="block text-gray-700 hover:text-blue-600 py-2">Produits</Link>
-                <Link href="/promotions" className="block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1">
+                <Link href="/promotions" className="hidden block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1">
                   🔥 Promotions
                 </Link>
                 <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
@@ -402,12 +402,12 @@ export default function Header() {
                 <a href="/about" className="block text-gray-700 hover:text-gray-900 py-2">A propos</a>
                 
                 {/* Mobile Account Link */}
-                <a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-3">
+                {/*<a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-3">
                   <div className="flex items-center space-x-2">
                     <User className="w-5 h-5" />
                     <span>Mon Compte</span>
                   </div>
-                </a>
+                </a>*/}
               </div>
             </nav>
           )}
