@@ -393,8 +393,8 @@ export default function Header() {
                     )}
                   </div>
                 ))}
-                <Link href="/products" className="block text-gray-700 hover:text-blue-600 py-2">Produits</Link>
-                <Link href="/promotions" className="hidden block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1">
+                {/*<Link href="/products" className="block text-gray-700 hover:text-blue-600 py-2">Produits</Link>
+                */}<Link href="/promotions" className="block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1">
                   🔥 Promotions
                 </Link>
                 <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>

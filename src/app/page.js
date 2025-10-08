@@ -232,7 +232,7 @@ const MellPlusNiger = () => {
         <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-300 rounded-lg border-1 shadow flex-shrink-0"></div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative bg-blue-300 overflow-hidden">
+        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative bg-blue-300 ">
           {/* Slides */}
           <div className="relative h-full">
           {slides.map((slide, index) => (
