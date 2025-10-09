@@ -793,9 +793,11 @@ const MellPlusNiger = () => {
                     <h4 className="text-xl md:text-2xl font-bold mb-2">Accessoires</h4>
                     <p className="text-sm opacity-90">Offrez vous ce qu&apos;il y a de meilleur</p>
                   </div>
-                  <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
-                    VOIR ›
-                  </button>
+                  <Link href="/products/category/accessoires">
+                    <button className="border border-white border-opacity-30 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-300 transition-all w-fit">
+                      VOIR ›
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

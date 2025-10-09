@@ -40,20 +40,22 @@ export default function LocationMap() {
               <span>{location.fullAddress}</span>
             </div>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-1 sm:space-x-2">
             <button
               onClick={handleGetDirections}
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+              className="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
             >
-              <Navigation className="w-4 h-4 mr-1" />
-              Itinéraire
+              <Navigation className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+              <span className="hidden xs:inline">Itinéraire</span>
+              <span className="xs:hidden">GPS</span>
             </button>
             <button
               onClick={handleViewOnMaps}
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium text-gray-600 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <ExternalLink className="w-4 h-4 mr-1" />
-              Voir sur Maps
+              <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+              <span className="hidden xs:inline">Voir sur Maps</span>
+              <span className="xs:hidden">Maps</span>
             </button>
           </div>
         </div>

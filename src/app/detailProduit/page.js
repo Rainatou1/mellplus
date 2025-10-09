@@ -338,7 +338,7 @@ const ProductDetailPage = () => {
                 <span>Ajouter au panier</span>
               </button>
               
-              <button
+              {/*<button
                 onClick={() => setIsWishlisted(!isWishlisted)}
                 className={`p-4 rounded-lg border transition-all duration-300 ${
                   isWishlisted
@@ -347,7 +347,7 @@ const ProductDetailPage = () => {
                 }`}
               >
                 <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
-              </button>
+              </button>*/}
               
               <button className="p-4 rounded-lg border border-white/20 bg-white/10 text-gray hover:border-purple-500/50 transition-colors">
                 <Share2 className="w-5 h-5" />
