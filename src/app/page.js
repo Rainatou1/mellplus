@@ -854,11 +854,11 @@ const MellPlusNiger = () => {
           </div>
         </div>
       </section>
-      {/* Partners Section */}
+      {/* Partners Section */}{/*
       <section className="py-8 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Nos partenaires</h3>
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 items-center">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center">
             {partners.map((partner, index) => (
               <div key={index} className="flex justify-center">
                 <Image 
@@ -872,7 +872,7 @@ const MellPlusNiger = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg">
