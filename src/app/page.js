@@ -224,15 +224,15 @@ const MellPlusNiger = () => {
       {/*<div className="max-w-7xl mx-auto px-4 bg-blue-300">
         
       </div>*/}
-      <div className="pt-2 md:pt-5 bg-blue-300"></div>
+      <div className="pt-2 md:pt-5 bg-blue-400"></div>
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-80 md:h-96 lg:h-[500px] bg-blue-300 flex gap-2">
+      <section className="relative h-80 md:h-96 lg:h-[500px] bg-blue-400 flex gap-2">
         {/* Bande gauche */}
-        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-300 rounded-lg border-1 shadow flex-shrink-0"></div>
+        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400 rounded-lg border-1 shadow flex-shrink-0"></div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative overflow-hidden bg-blue-300 ">
+        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative overflow-hidden bg-blue-400 ">
           {/* Slides */}
           <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -326,11 +326,11 @@ const MellPlusNiger = () => {
             />
           </div>
         </div>
-        <div className="pt-2 md:pt-5 bg-blue-300"></div>
+        <div className="pt-2 md:pt-5 bg-blue-400"></div>
 
         {/* Bande droite */}
-        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-300 rounded-lg border-1 flex-shrink-0"></div>
-      <div className="pt-2 md:pt-5 bg-blue-300"></div>
+        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400 rounded-lg border-1 flex-shrink-0"></div>
+      <div className="pt-2 md:pt-5 bg-blue-400"></div>
       </section>
 
       
