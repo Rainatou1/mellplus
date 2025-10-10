@@ -24,7 +24,7 @@ const MellPlusNiger = () => {
       image: "/images/logo.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Nos services",
-      bgGradient: "from-blue-300 to-blue-600"
+      bgGradient: "from-gray-300 to-gray-600"
     },
     {
       id: 2,
@@ -317,9 +317,9 @@ const MellPlusNiger = () => {
         </div>
 
           {/* Progress Bar */}
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-white bg-opacity-20">
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-blue bg-opacity-20">
             <div
-              className="h-full bg-white transition-all duration-100 ease-linear"
+              className="h-full bg-blue transition-all duration-100 ease-linear"
               style={{
                 width: `${((currentSlide + 1) / slides.length) * 100}%`
               }}
@@ -332,6 +332,8 @@ const MellPlusNiger = () => {
         <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400 rounded-lg border-1 flex-shrink-0"></div>
       <div className="pt-2 md:pt-5 bg-blue-400"></div>
       </section>
+      <section>      <div className="pt-2 md:pt-5 bg-blue-400"></div>
+</section>
 
       
      
@@ -852,7 +854,7 @@ const MellPlusNiger = () => {
           </div>
         </div>
       </section>
-      {/* Partners Section */}{/*
+      {/* Partners Section */}
       <section className="py-8 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Nos partenaires</h3>
@@ -870,7 +872,7 @@ const MellPlusNiger = () => {
             ))}
           </div>
         </div>
-      </section>*/}
+      </section>
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg">
