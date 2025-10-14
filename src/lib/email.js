@@ -106,7 +106,7 @@ export async function sendContactNotification(contactData) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'rainatouboubacars@gmail.com', // Email de destination
+      to: 'mellplus@mellplusniger.com', // Email de destination
       subject: `🔔 Nouveau message de contact: ${contactData.subject}`,
       html: createContactEmailTemplate(contactData),
       // Version texte pour les clients qui ne supportent pas HTML

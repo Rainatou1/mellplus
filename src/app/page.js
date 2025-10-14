@@ -224,15 +224,27 @@ const MellPlusNiger = () => {
       {/*<div className="max-w-7xl mx-auto px-4 bg-blue-300">
         
       </div>*/}
-      <div className="pt-2 md:pt-5 bg-blue-400"></div>
+      <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-80 md:h-96 lg:h-[500px] bg-blue-400 flex gap-2">
+      <section className="relative h-80 md:h-96 lg:h-[500px] bg-blue-400/80 flex gap-2">
         {/* Bande gauche */}
-        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400 rounded-lg border-1 shadow flex-shrink-0"></div>
+        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-white rounded-lg border-1 shadow flex-shrink-0 relative overflow-hidden">
+          <Image
+            src="/images/large1.jpg"
+            alt="Offres spéciales"
+            width={300}
+            height={500}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+            <h3 className="text-white font-bold text-sm md:text-base mb-1">Offres Spéciales</h3>
+            <p className="text-white/90 text-xs md:text-sm">Jusqu'à -50%</p>
+          </div>
+        </div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative overflow-hidden bg-blue-400 ">
+        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative overflow-hidden bg-blue-400/80 ">
           {/* Slides */}
           <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -326,13 +338,25 @@ const MellPlusNiger = () => {
             />
           </div>
         </div>
-        <div className="pt-2 md:pt-5 bg-blue-400"></div>
+        <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
 
         {/* Bande droite */}
-        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400 rounded-lg border-1 flex-shrink-0"></div>
-      <div className="pt-2 md:pt-5 bg-blue-400"></div>
+        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400/80 rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
+          <Image
+            src="/images/accessories.jpg"
+            alt="Nouveautés"
+            width={300}
+            height={500}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent flex flex-col justify-end p-4">
+            <h3 className="text-white font-bold text-sm md:text-base mb-1">Nouveautés</h3>
+            <p className="text-white/90 text-xs md:text-sm">Découvrez-les</p>
+          </div>
+        </div>
+      <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
       </section>
-      <section>      <div className="pt-2 md:pt-5 bg-blue-400"></div>
+      <section>      <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
 </section>
 
       
