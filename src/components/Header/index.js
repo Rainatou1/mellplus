@@ -197,13 +197,13 @@ export default function Header() {
             {/* Logo */}
             <div className="flex items-center flex-shrink-0">
               <Link href="/#">
-              <div className=" bg-blue-400/80text-white p-1 md:p-2 rounded-lg mr-2 md:mr-3">
+              <div className="text-white p-1 md:p-2 mr-2 md:mr-3">
                 <Image
                 width={900}
                 height={900}
                 src="/images/logo.png"
                 alt="logo"
-                className="w-15 h-15 md:w-28 md:h-19" />
+                className="w-20 h-20 md:w-28 md:h-19" />
               </div>
               </Link>
               <div>
@@ -234,9 +234,9 @@ export default function Header() {
               </button>*/}
 
               {/* Promotions Button */}
-              <Link 
+              <Link
                 href="/promotions"
-                className="flex items-center hidden space-x-1 md:space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 md:px-4 py-2 rounded-lg hover:from-red-600 hover:to-pink-600 transition-all shadow-md"
+                className="hidden md:flex items-center space-x-1 md:space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 md:px-4 py-2 rounded-lg hover:from-red-600 hover:to-pink-600 transition-all shadow-md"
               >
                 <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="text-sm md:text-base font-semibold">PROMOS</span>
@@ -327,6 +327,7 @@ export default function Header() {
                 🔥 Promotions
               </Link>*/}
               <a href="/service" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Services</a>
+              <Link href="/avis" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Avis clients</Link>
               <Link href="/contact" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Contact</Link>
               <a href="/about" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">A propos</a>
             </div>
@@ -398,6 +399,7 @@ export default function Header() {
                   🔥 Promotions
                 </Link>
                 <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
+                <Link href="/avis" className="block text-gray-700 hover:text-blue-600 py-2">Avis clients</Link>
                 <a href="/contact" className="block text-gray-700 hover:text-blue-600 py-2">Contact</a>
                 <a href="/about" className="block text-gray-700 hover:text-gray-900 py-2">A propos</a>
                 

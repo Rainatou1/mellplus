@@ -259,10 +259,10 @@ const MellPlusNiger = () => {
                 <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1">
-                      <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
+                      <h2 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
                         {slide.title}
                       </h2>
-                      <p className="text-lg md:text-xl lg:text-2xl mb-4 font-medium text-blue-100">
+                      <p className="text-base md:text-xl lg:text-2xl mb-4 font-medium text-blue-100">
                         {slide.subtitle}
                       </p>
                       <p className="text-base md:text-lg mb-6 md:mb-8 text-blue-50 leading-relaxed">
@@ -367,14 +367,14 @@ const MellPlusNiger = () => {
         {/* Advantages Section */}
         <section className="py-8 md:py-12 bg-white">
           <div className="max-w-7xl mx-auto px-4">
-          <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Les avantages Mell Plus Niger</h3>
+          <h3 className="text-xl md:text-2xl font-bold text-center text-gray-900 mb-6 md:mb-8">Les avantages Mell Plus Niger</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {advantages.map((advantage, index) => (
               <div key={index} className="text-center p-4 md:p-6 rounded-lg border hover:shadow-lg transition-shadow">
                 <div className="flex justify-center mb-3 md:mb-4">
                   {advantage.icon}
                 </div>
-                <h4 className="font-semibold text-base md:text-lg mb-2">{advantage.title}</h4>
+                <h4 className="font-semibold text-gray-800 text-base md:text-lg mb-2">{advantage.title}</h4>
                 <p className="text-sm md:text-base text-gray-600">{advantage.description}</p>
               </div>
             ))}
@@ -899,7 +899,7 @@ const MellPlusNiger = () => {
       </section>*/}
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-lg">
         <div className="max-w-7xl mx-auto px-4 text-center ">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">

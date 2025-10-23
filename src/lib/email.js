@@ -2,12 +2,17 @@ import nodemailer from 'nodemailer'
 
 // Configuration du service email
 const createTransporter = () => {
-  // Pour Gmail ou tout autre service SMTP
+  // Configuration SMTP plus robuste
   return nodemailer.createTransporter({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true pour 465, false pour les autres ports
     auth: {
       user: process.env.EMAIL_USER, // Email utilisé pour envoyer
       pass: process.env.EMAIL_PASSWORD // Mot de passe d'application Gmail
+    },
+    tls: {
+      rejectUnauthorized: false
     }
   })
 }
@@ -91,7 +96,7 @@ const createContactEmailTemplate = (contactData) => {
         <div class="footer">
           <p><strong>Mell Plus Niger</strong></p>
           <p>MELL PLUS Informatique, Blvd Mali Bero, Niamey</p>
-          <p>📞 +227 20 35 23 23 | 📧 mellplus@mellplusniger.com</p>
+          <p>📞 +227 20 35 23 23 | 📧 binome296@gmail.com</p>
         </div>
       </div>
     </body>
@@ -106,7 +111,7 @@ export async function sendContactNotification(contactData) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'mellplus@mellplusniger.com', // Email de destination
+      to: 'binome296@gmail.com', // Email de destination
       subject: `🔔 Nouveau message de contact: ${contactData.subject}`,
       html: createContactEmailTemplate(contactData),
       // Version texte pour les clients qui ne supportent pas HTML
@@ -184,7 +189,7 @@ export async function sendContactConfirmation(contactData) {
           <div class="footer">
             <p><strong>Mell Plus Niger</strong></p>
             <p>Votre partenaire IT au Niger</p>
-            <p>📞 +227 20 35 23 23 | 📧 mellplus@mellplusniger.com</p>
+            <p>📞 +227 20 35 23 23 | 📧 binome296@gmail.com</p>
           </div>
         </div>
       </body>
