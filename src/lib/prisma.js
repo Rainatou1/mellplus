@@ -7,7 +7,7 @@ let prisma
 
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient({
-    log: ['error'],
+    log: ['query', 'error', 'warn'],
     errorFormat: 'pretty',
     datasourceUrl: process.env.DATABASE_URL,
   })
