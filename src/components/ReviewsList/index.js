@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Star, Calendar, Building, ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function ReviewsList({
@@ -16,7 +16,7 @@ export default function ReviewsList({
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
-  const fetchReviews = async (page = 1) => {
+  const fetchReviews = useCallback(async (page = 1) => {
     try {
       setLoading(true)
       const params = new URLSearchParams({
@@ -43,11 +43,11 @@ export default function ReviewsList({
     } finally {
       setLoading(false)
     }
-  }
+  }, [productId, serviceId, featuredOnly, limit])
 
   useEffect(() => {
     fetchReviews(1)
-  }, [productId, serviceId, featuredOnly])
+  }, [fetchReviews])
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {

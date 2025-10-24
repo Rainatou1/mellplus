@@ -239,7 +239,7 @@ const MellPlusNiger = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
             <h3 className="text-white font-bold text-sm md:text-base mb-1">Offres Spéciales</h3>
-            <p className="text-white/90 text-xs md:text-sm">Jusqu'à -50%</p>
+            <p className="text-white/90 text-xs md:text-sm">Jusqu&apos;à -50%</p>
           </div>
         </div>
 
@@ -259,13 +259,13 @@ const MellPlusNiger = () => {
                 <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1">
-                      <h2 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
+                      <h2 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
                         {slide.title}
                       </h2>
                       <p className="text-base md:text-xl lg:text-2xl mb-4 font-medium text-blue-100">
                         {slide.subtitle}
                       </p>
-                      <p className="text-base md:text-lg mb-6 md:mb-8 text-blue-50 leading-relaxed">
+                      <p className="text-sm md:text-lg mb-6 md:mb-8 text-blue-50 leading-relaxed">
                         {slide.description}
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -281,8 +281,8 @@ const MellPlusNiger = () => {
                     </div>
                     <div className="text-center order-1 lg:order-2">
                       <Image 
-                        width={500}
-                        height={350}
+                        width={300}
+                        height={300}
                         src={slide.image}
                         alt={slide.title}
                         className="w-full max-w-md lg:max-w-full mx-auto rounded-lg transform hover:scale-105 transition-transform duration-300"
@@ -438,7 +438,7 @@ const MellPlusNiger = () => {
             <section className="flex-1">
               <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-2">🏆 Produits en vedette</h3>
+                  <h3 className="text-xl text-gray-800 md:text-2xl font-bold mb-2">🏆 Produits en vedette</h3>
                   <p className="text-gray-600 text-sm md:text-base">Nos produits les plus populaires</p>
                 </div>
                 <Link href="/bestsellers" className="text-blue-600 hover:text-blue-700 font-semibold">
@@ -493,7 +493,7 @@ const MellPlusNiger = () => {
                     </div>
                   </div>
                   <div className="p-3 md:p-4">
-                    <h4 className="font-semibold mb-2 text-sm md:text-base overflow-hidden" style={{
+                    <h4 className="font-semibold mb-2 text-gray-900 text-sm md:text-base overflow-hidden" style={{
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical'
@@ -603,7 +603,7 @@ const MellPlusNiger = () => {
             <section className="flex-1">
               <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-2">🔥 Promotions</h3>
+                  <h3 className="text-xl md:text-2xl text-gray-800 font-bold mb-2">🔥 Promotions</h3>
                   <p className="text-gray-600 text-sm md:text-base">Ne ratez pas nos offres exceptionnelles</p>
                 </div>
                 <Link
@@ -750,7 +750,7 @@ const MellPlusNiger = () => {
       <section className="py-8 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-6 md:mb-8">
-            <h3 className="text-xl md:text-2xl font-bold mb-2">DÉCOUVRIR</h3>
+            <h3 className="text-xl md:text-2xl text-gray-800 font-bold mb-2">DÉCOUVRIR</h3>
             <p className="text-gray-600 text-sm md:text-base">Offres exceptionnelles, qualité</p>
           </div>
           
@@ -828,9 +828,9 @@ const MellPlusNiger = () => {
               </div>
             </div>
 
-            {/* Services - Large card bottom */}
+            {/* Services */}
             <div className="md:col-span-1 lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-blue-300 relative">
                 <Image
                   width={900}
                   height={600} 

@@ -62,7 +62,7 @@ export default function ReviewsSection() {
                   Partagez votre expérience
                 </h3>
                 <p className="text-gray-600 mb-6">
-                  Votre avis nous aide à améliorer nos services et guide d'autres clients.
+                  Votre avis nous aide à améliorer nos services et guide d&apos;autres clients.
                 </p>
                 <button
                   onClick={() => setShowForm(true)}

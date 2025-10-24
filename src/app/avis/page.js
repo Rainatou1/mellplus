@@ -19,7 +19,7 @@ export default function ReviewsPage() {
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Découvrez ce que nos clients pensent de nos produits et services.
-              Votre avis nous aide à nous améliorer et guide d'autres clients dans leurs choix.
+              Votre avis nous aide à nous améliorer et guide d&apos;autres clients dans leurs choix.
             </p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function ReviewsPage() {
                   Partagez votre expérience
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Votre avis compte ! Aidez d'autres clients et améliorez nos services.
+                  Votre avis compte ! Aidez d&apos;autres clients et améliorez nos services.
                 </p>
                 <button
                   onClick={() => setShowForm(true)}

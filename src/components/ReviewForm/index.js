@@ -198,7 +198,7 @@ export default function ReviewForm({ productId = null, serviceId = null, onClose
         {/* Titre de l'avis */}
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-            Titre de l'avis (optionnel)
+            Titre de l&apos;avis (optionnel)
           </label>
           <input
             type="text"
