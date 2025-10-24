@@ -855,7 +855,7 @@ const MellPlusNiger = () => {
 
             {/* Soldes */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-w-4 aspect-h-3 bg-cyan-400 relative">
+              <div className="aspect-w-4 aspect-h-3  bg-gradient-to-r from-[#10162f] to-[#202a44] relative">
                 <Image
                   width={600}
                   height={600} 
