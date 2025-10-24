@@ -203,7 +203,7 @@ export default function Header() {
                 height={900}
                 src="/images/logo.png"
                 alt="logo"
-                className="w-20 h-20 md:w-28 md:h-19" />
+                className="w-22 h-20 md:w-28 md:h-19" />
               </div>
               </Link>
               <div>
@@ -222,7 +222,7 @@ export default function Header() {
               {/* Mobile Search Button */}
               <button 
                 onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-                className="md:hidden p-2 text-gray-700 hover:text-blue-600"
+                className="md:hidden p-2 text-white hover:text-blue-600"
               >
                 <Search className="w-5 h-5" />
               </button>

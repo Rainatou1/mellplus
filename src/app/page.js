@@ -257,7 +257,7 @@ const MellPlusNiger = () => {
             >
               <div className={`h-full bg-gradient-to-r ${slide.bgGradient} text-white`}>
                 <div className="px-4 h-full">
-                  <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center h-full py-8 md:py-16">
+                  <div className="grid lg:grid-cols-2 gap-2 md:gap-8 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1">
                       <h2 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
                         {slide.title}
@@ -855,7 +855,7 @@ const MellPlusNiger = () => {
 
             {/* Soldes */}
             <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-br from-blue-500 to-cyan-600 relative">
+              <div className="aspect-w-4 aspect-h-3 bg-cyan-400 relative">
                 <Image
                   width={600}
                   height={600} 
@@ -899,7 +899,7 @@ const MellPlusNiger = () => {
       </section>*/}
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-lg">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-[#0e1320] to-[#1a1f35] text-white rounded-lg">
         <div className="max-w-7xl mx-auto px-4 text-center ">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">Besoin d&apos;un devis personnalisé ?</h3>
           <p className="text-lg md:text-xl mb-6 md:mb-8">

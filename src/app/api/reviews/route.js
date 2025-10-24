@@ -96,6 +96,14 @@ export async function POST(request) {
       )
     }
 
+    // Erreur de connexion à la base de données
+    if (error?.code === 'P1001') {
+      return NextResponse.json(
+        { error: 'Impossible de se connecter à la base de données. Veuillez réessayer plus tard.' },
+        { status: 503 }
+      )
+    }
+
     // Erreur générique
     return NextResponse.json(
       { error: 'Une erreur est survenue lors de la soumission de l\'avis' },
@@ -158,6 +166,15 @@ export async function GET(request) {
 
   } catch (error) {
     console.error('Erreur lors de la récupération des avis:', error)
+
+    // Erreur de connexion à la base de données
+    if (error.code === 'P1001') {
+      return NextResponse.json(
+        { error: 'Impossible de se connecter à la base de données' },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json(
       { error: 'Erreur lors de la récupération des avis' },
       { status: 500 }

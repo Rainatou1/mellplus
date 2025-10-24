@@ -47,10 +47,12 @@ export default function ReviewForm({ productId = null, serviceId = null, onClose
 
     try {
       const submitData = {
-        ...formData,
-        productId,
-        serviceId
+        ...formData
       }
+
+      // N'ajouter productId et serviceId que s'ils ne sont pas null
+      if (productId) submitData.productId = productId
+      if (serviceId) submitData.serviceId = serviceId
 
       const response = await fetch('/api/reviews', {
         method: 'POST',
