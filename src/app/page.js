@@ -31,7 +31,7 @@ const MellPlusNiger = () => {
       title: "Dernières technologies HP",
       subtitle: "HP Pavilion",
       description: "Découvrez la nouvelle gamme HP avec des offres exclusives et un service après-vente premium",
-      image: "/images/carroussel.PNG",
+      image: "/images/hp-removebg.PNG",
       ctaPrimary: "Voir les produits",
       ctaSecondary: "En savoir plus",
       bgGradient: "from-gray-800 to-gray-900"
@@ -41,7 +41,7 @@ const MellPlusNiger = () => {
       title: "Camera Surveillance",
       subtitle: "Vision de nuit",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      image: "/images/carroussel.PNG",
+      image: "/images/camera.PNG",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Voir catalogue",
       bgGradient: "from-green-600 to-teal-700"
@@ -51,7 +51,7 @@ const MellPlusNiger = () => {
       title: "Promotions exceptionnelles",
       subtitle: "Jusqu'à -30% sur une sélection",
       description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      image: "/images/carroussel.PNG",
+      image: "/images/hp.PNG",
       ctaPrimary: "Voir les promos",
       ctaSecondary: "Tous les produits",
       bgGradient: "from-red-600 to-pink-700"
@@ -71,7 +71,7 @@ const MellPlusNiger = () => {
       title: "Derniere démarque",
       subtitle: "Scanner, Imprimante sharp, HP Pavilion",
       description: "Découvrez la nouvelle gamme de periphériques avec des offres exclusives et un service après-vente premium",
-      image: "/images/carroussel.PNG",
+      image: "/images/imprimante.PNG",
       ctaPrimary: "Voir les produits",
       ctaSecondary: "En savoir plus",
       bgGradient: "from-gray-800 to-black-900"
@@ -81,7 +81,7 @@ const MellPlusNiger = () => {
       title: "Economisez 10%",
       subtitle: "Arldo",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      image: "/images/carroussel.PNG",
+      image: "/images/camera.PNG",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Voir catalogue",
       bgGradient: "from-blue-400 to-teal-700"
@@ -224,12 +224,12 @@ const MellPlusNiger = () => {
       {/*<div className="max-w-7xl mx-auto px-4 bg-blue-300">
         
       </div>*/}
-      <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
+      <div className="pt-2 md:pt-6 bg-blue-400/80"></div>
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-80 md:h-96 lg:h-[500px] bg-blue-400/80 flex gap-2">
+      <section className="relative h-96 md:h-[420px] lg:h-[540px] bg-blue-400/80 flex gap-4 md:gap-6 py-4 md:py-6">
         {/* Bande gauche */}
-        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-white rounded-lg border-1 shadow flex-shrink-0 relative overflow-hidden">
+        <div className="w-1/5 h-full bg-white rounded-lg border-1 shadow gap-3 flex-shrink-0 relative overflow-hidden">
           <Image
             src="/images/large1.jpg"
             alt="Offres spéciales"
@@ -237,14 +237,14 @@ const MellPlusNiger = () => {
             height={500}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
-            <h3 className="text-white font-bold text-sm md:text-base mb-1">Offres Spéciales</h3>
-            <p className="text-white/90 text-xs md:text-sm">Jusqu&apos;à -50%</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-3 md:p-4">
+            <Link href="/promotions"><h3 className="text-white font-bold text-sm md:text-base mb-1">Offres Spéciales</h3>
+            <p className="text-white/90 text-xs md:text-sm">Jusqu&apos;à -50%</p></Link>
           </div>
         </div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 h-80 md:h-96 lg:h-[505px] relative overflow-hidden bg-blue-400/80 ">
+        <div className="flex-1 h-full relative overflow-hidden bg-blue-400/80 ">
           {/* Slides */}
           <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -270,24 +270,26 @@ const MellPlusNiger = () => {
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <Link href="/contact">
-                        <button className="bg-white text-gray-800 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
+                        <button className="bg-white text-gray-800 px-6 md:px-6 py-3 md:py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
                           {slide.ctaPrimary}
                         </button>
                         </Link>
-                        <button className="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-colors">
+                        <button className="border-2 border-white text-white px-6 md:px-8 py-3 md:py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-colors">
                           {slide.ctaSecondary}
                         </button>
                       </div>
                     </div>
-                    <div className="text-center order-1 lg:order-2">
-                      <Image 
-                        width={300}
-                        height={300}
-                        src={slide.image}
-                        alt={slide.title}
-                        className="w-full max-w-md lg:max-w-full mx-auto rounded-lg transform hover:scale-105 transition-transform duration-300"
-                        priority={index === 0}
-                      />
+                    <div className="flex items-center justify-center order-1 lg:order-2">
+                      <div className="relative w-35 h-35 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80">
+                        <Image
+                          width={320}
+                          height={320}
+                          src={slide.image}
+                          alt={slide.title}
+                          className="w-full h-full object-contain rounded-lg transform hover:scale-105 transition-transform duration-300"
+                          priority={index === 0}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -338,10 +340,9 @@ const MellPlusNiger = () => {
             />
           </div>
         </div>
-        <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
 
         {/* Bande droite */}
-        <div className="w-1/5 h-80 md:h-96 lg:h-[500px] bg-blue-400/80 rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
+        <div className="w-1/5 h-full bg-blue-400/80 rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
           <Image
             src="/images/accessories.jpg"
             alt="Nouveautés"
@@ -349,14 +350,14 @@ const MellPlusNiger = () => {
             height={500}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent flex flex-col justify-end p-4">
-            <h3 className="text-white font-bold text-sm md:text-base mb-1">Nouveautés</h3>
-            <p className="text-white/90 text-xs md:text-sm">Découvrez-les</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent flex flex-col justify-end p-3 md:p-4">
+            <Link href="/seconde-vie"><h3 className="text-white font-bold text-sm md:text-base mb-1">Nouveautés</h3>
+            <p className="text-white/90 text-xs md:text-sm">Découvrez-les</p></Link>
           </div>
         </div>
       <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
       </section>
-      <section>      <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
+      <section>      <div className="pt-2 md:pt-6 bg-blue-400/80"></div>
 </section>
 
       
