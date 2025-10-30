@@ -43,7 +43,7 @@ const MellPlusNiger = () => {
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
       image: "/images/camera.PNG",
       ctaPrimary: "Demander un devis",
-      ctaSecondary: "Voir catalogue",
+      ctaSecondary: "Catalogue",
       bgGradient: "from-green-600 to-teal-700"
     },
     {
@@ -83,7 +83,7 @@ const MellPlusNiger = () => {
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
       image: "/images/camera.PNG",
       ctaPrimary: "Demander un devis",
-      ctaSecondary: "Voir catalogue",
+      ctaSecondary: "Catalogue",
       bgGradient: "from-blue-400 to-teal-700"
     },
     {
@@ -259,13 +259,13 @@ const MellPlusNiger = () => {
                 <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-1 md:gap-8 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1">
-                      <h2 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
+                      <h2 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-4 leading-tight">
                         {slide.title}
                       </h2>
-                      <p className="text-base md:text-xl lg:text-2xl mb-4 font-medium text-blue-100">
+                      <p className="text-base md:text-xl lg:text-2xl mb-1 md:mb-4 font-medium text-blue-100">
                         {slide.subtitle}
                       </p>
-                      <p className="text-sm md:text-lg mb-6 md:mb-8 text-blue-50 leading-relaxed">
+                      <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed">
                         {slide.description}
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
