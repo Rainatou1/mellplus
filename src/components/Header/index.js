@@ -166,7 +166,7 @@ export default function Header() {
     <div>
             {/* Header Top - Hidden on mobile */}
 
-    <div className="hidden lg:block bg-gray-800 text-white text-sm py-2">
+    <div style={{ backgroundColor: '#016bb6' }} className="hidden lg:block bg-blue-800 text-white text-sm py-2">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-4 xl:space-x-6">
             <div className="flex items-center space-x-2">
@@ -191,7 +191,7 @@ export default function Header() {
       </div>
             {/* Main Header */}
 
-    <header className="bg-blue-400/80 sticky top-0 z-50">
+    <header className="bg-white sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between py-2 md:py-3">
             {/* Logo */}
@@ -203,17 +203,17 @@ export default function Header() {
                 height={900}
                 src="/images/logo.png"
                 alt="logo"
-                className="w-22 h-20 md:w-28 md:h-19" />
+                className="w-24 h-22 md:w-30 md:h-22" />
               </div>
               </Link>
               <div>
-                <h1 className="text-lg md:text-2xl font-bold text-white">Mell Plus Niger</h1>
-                <p className="text-xs md:text-sm text-white hidden sm:block">Votre partenaire IT au Niger</p>
+                <h1 className="text-lg md:text-2xl font-bold" style={{ color: '#016bb6' }}>Mell Plus Niger</h1>
+                <p className="text-xs md:text-sm hidden sm:block" style={{ color: '#016bb6' }}>Votre partenaire IT au Niger</p>
               </div>
             </div>
 
             {/* Desktop Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-xl lg:max-w-2xl mx-4 lg:mx-8 bg-white rounded-lg">
+            <div className="hidden md:flex flex-1 max-w-md lg:max-w-xl mx-4 lg:mx-8 bg-blue-100 rounded-full">
               <SearchBar />
             </div>
 
@@ -271,7 +271,7 @@ export default function Header() {
                   onMouseEnter={() => setActiveCategory(index)}
                   onMouseLeave={() => setActiveCategory(null)}
                 >
-                  <button className="flex items-center space-x-1 text-white hover:text-gray-200 py-2 whitespace-nowrap">
+                  <button className="flex items-center space-x-1 text-blue hover:text-gray-200 py-2 whitespace-nowrap">
                     <span>{category.name}</span>
                     <ChevronDown className="w-4 h-4" />
                   </button>
@@ -326,10 +326,10 @@ export default function Header() {
               <Link href="/promotions" className="text-red-600 hover:text-red-700 py-2 font-semibold whitespace-nowrap flex items-center gap-1">
                 🔥 Promotions
               </Link>*/}
-              <a href="/service" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Services</a>
-              <Link href="/avis" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Avis clients</Link>
-              <Link href="/contact" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">Contact</Link>
-              <a href="/about" className="text-white hover:text-gray-200 py-2 whitespace-nowrap">A propos</a>
+              <a href="/service" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Services</a>
+              <Link href="/avis" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Avis clients</Link>
+              <Link href="/contact" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Contact</Link>
+              <a href="/about" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">A propos</a>
             </div>
           </nav>
 

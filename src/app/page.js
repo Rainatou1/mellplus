@@ -224,10 +224,10 @@ const MellPlusNiger = () => {
       {/*<div className="max-w-7xl mx-auto px-4 bg-blue-300">
         
       </div>*/}
-      <div className="pt-2 md:pt-6 bg-blue-400/80"></div>
+      {/*<div className="pt-2 md:pt-6 "></div>*/}
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-96 md:h-[420px] lg:h-[540px] bg-blue-400/80 flex gap-4 md:gap-6 py-4 md:py-6">
+      <section className="relative h-96 md:h-[420px] lg:h-[540px] flex gap-4 md:gap-6 py-4 md:py-6">
         {/* Bande gauche */}
         <div className="w-1/5 h-full bg-white rounded-lg border-1 shadow gap-3 flex-shrink-0 relative overflow-hidden">
           <Image
@@ -244,7 +244,7 @@ const MellPlusNiger = () => {
         </div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 h-full relative overflow-hidden bg-blue-400/80 ">
+        <div className="flex-1 h-full relative overflow-hidden">
           {/* Slides */}
           <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -342,7 +342,7 @@ const MellPlusNiger = () => {
         </div>
 
         {/* Bande droite */}
-        <div className="w-1/5 h-full bg-blue-400/80 rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
+        <div className="w-1/5 h-full rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
           <Image
             src="/images/accessories.jpg"
             alt="Nouveautés"
@@ -355,10 +355,10 @@ const MellPlusNiger = () => {
             <p className="text-white/90 text-xs md:text-sm">Découvrez-les</p></Link>
           </div>
         </div>
-      <div className="pt-2 md:pt-5 bg-blue-400/80"></div>
+      {/*<div className="pt-2 md:pt-5"></div>*/}
       </section>
-      <section>      <div className="pt-2 md:pt-6 bg-blue-400/80"></div>
-</section>
+      {/*<section>      <div className="pt-2 md:pt-6"></div>
+</section>*/}
 
       
      

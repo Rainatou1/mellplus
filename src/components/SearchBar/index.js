@@ -89,11 +89,13 @@ export default function SearchBar({ isMobile = false, onClose }) {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Rechercher un produit..."
-          className={`w-full px-4 ${isMobile ? 'py-3' : 'py-2 lg:py-3'} border border-gray-300 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          className={`w-full px-4 ${isMobile ? 'py-3 pr-16' : 'py-2 lg:py-3 pr-14 lg:pr-16'} border border-gray-300 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          style={{ backgroundColor: '#dae3ff' }}
         />
         <button
           type="submit"
-          className={`absolute right-3 ${isMobile ? 'top-3' : 'top-2 lg:top-3'} text-white hover:text-gray-600`}
+          className={`absolute inset-y-0 right-0 ${isMobile ? 'px-8' : 'px-6 lg:px-8'} hover:opacity-80 text-white rounded-r-full flex items-center justify-center`}
+          style={{ backgroundColor: '#016bb6' }}
         >
           <Search className={`${isMobile ? 'w-6 h-6' : 'w-5 h-5 lg:w-6 lg:h-6'}`} />
         </button>
