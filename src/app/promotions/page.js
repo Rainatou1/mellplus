@@ -240,7 +240,7 @@ export default function PromotionsPage() {
                   <div>✓ Developpement logiciel</div>
                   <div>✓ Support technique</div>
                 </div>
-                <Link href="/services" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                <Link href="/service" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
                   Découvrir
                 </Link>
               </div>
@@ -254,9 +254,10 @@ export default function PromotionsPage() {
                 <div>✓ Qualité garantie</div>
                 <div>✓ Stock disponible</div>
               </div>
+              <Link href="/bestsellers">
               <div className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block cursor-pointer">
                 Découvrir maintenant
-              </div>
+              </div></Link>
             </div>
 
             {/* Flash Sales Banner */}
@@ -269,9 +270,11 @@ export default function PromotionsPage() {
                 <div>✓ Réductions exceptionnelles</div>
                 <div>✓ Durée limitée</div>
               </div>
+              <Link href="/promotions">
               <div className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block cursor-pointer">
                 Voir les offres
               </div>
+              </Link>
             </div>
 
              {/* Contact Banner */}
@@ -284,7 +287,7 @@ export default function PromotionsPage() {
                             <div>✓ Devis gratuit</div>
                             <div>✓ Support technique</div>
                           </div>
-                          <Link href="/contact" className="mt-3 bg-blue text-white px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                          <Link href="/contact" className="mt-3 text-white bg-blue-500 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
                             Nous contacter
                           </Link>
             </div>

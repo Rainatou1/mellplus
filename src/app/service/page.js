@@ -63,7 +63,7 @@ const AllServicesPage = () => {
     energy: {
       title: 'Énergie & Électricité',
       icon: Zap,
-      color: 'from-yellow-500 to-orange-500',
+      color: 'from-yellow-600 to-orange-800',
       services: [
         {
           title: 'Installation Électrique',
@@ -199,21 +199,21 @@ const AllServicesPage = () => {
 
   const testimonials = [
     {
-      name: 'Ibrahim Hamidou',
+      name: 'Anonyme',
       company: 'Entreprise BTP',
       text: 'Installation électrique complète de nos bureaux. Travail impeccable, équipe professionnelle.',
       service: 'Électricité',
       rating: 5
     },
     {
-      name: 'Maimouna Doudou',
+      name: 'Anonyme',
       company: 'Boutique en ligne',
       text: 'Site e-commerce et app mobile parfaits. Nos ventes ont explosé depuis le lancement !',
       service: 'Digital',
       rating: 5
     },
     {
-      name: 'Farida Boubacar',
+      name: 'Anonyme',
       company: 'Cabinet médical',
       text: 'Système de surveillance et logiciel de gestion sur mesure. Excellente prestation.',
       service: 'Sécurité & Logiciel',

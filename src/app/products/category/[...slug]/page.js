@@ -351,7 +351,7 @@ export default function CategoryPage({ params }) {
                 <div>✓ Devis gratuit</div>
                 <div>✓ Support technique</div>
               </div>
-              <Link href="/contact" className="mt-3 bg-blue text-white px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+              <Link href="/contact" className="mt-3 bg-blue-500 text-white px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
                 Nous contacter
               </Link>
             </div>

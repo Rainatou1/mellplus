@@ -171,8 +171,8 @@ export default function Header() {
           <div className="flex items-center space-x-4 xl:space-x-6">
             <div className="flex items-center space-x-2">
               <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">+227 20 35 23 23</span>
-              <span className="xl:hidden">+227 20 35 23 23</span>
+              <span className="hidden xl:inline">+227 20 35 23 23/ +227 99 86 01 01</span>
+              <span className="xl:hidden">+227 20 35 23 23 / +227 99 86 01 01</span>
             </div>
             <div className="flex items-center space-x-2">
               <Mail className="w-4 h-4" />
@@ -263,7 +263,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:block border-t border-blue-100 relative">
             <div className="flex items-center space-x-4 lg:space-x-8 py-2 ">
-              <Link href="/#" className="text-gray-600 hover:text-white py-2 whitespace-nowrap">Acceuil</Link>
+              <Link href="/#" className="text-blue-600 hover:text-blue-500 py-2 whitespace-nowrap">Acceuil</Link>
               {categories.map((category, index) => (
                 <div
                   key={index}

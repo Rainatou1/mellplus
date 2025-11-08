@@ -20,10 +20,11 @@ export default function Footer() {
                       height={90}
                       src="/images/logo.png"
                       alt="logo" 
-                      className="w-6 h-6 md:w-18 md:h-14" />
+                      className="w-6 h-6 md:w-38 md:h-34" />
                 </div>
-                <h4 className="text-lg md:text-xl font-bold">Mell Plus Niger</h4>
+            
               </div>
+              <h4 className="text-lg md:text-xl font-bold">Mell Plus Niger</h4>
               <p className="text-gray-400 mb-4 text-sm md:text-base">
                 Votre partenaire de confiance pour tous vos besoins en matériel informatique et électronique au Niger.
               </p>
@@ -32,38 +33,38 @@ export default function Footer() {
             <div>
               <h5 className="font-semibold mb-4 text-base md:text-lg">Informatique</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><a href="#" className="hover:text-white">PC Portable</a></li>
-                <li><a href="#" className="hover:text-white">PC de Bureau</a></li>
-                <li><a href="#" className="hover:text-white">Logiciels</a></li>
-                <li><a href="#" className="hover:text-white">Stockage</a></li>
+                <li><Link href="/produits?category=INFORMATIQUE&subcategory=PC_Portable" className="hover:text-white">PC Portable</Link></li>
+                <li><Link href="/produits?category=INFORMATIQUE&subcategory=PC_Bureau" className="hover:text-white">PC de Bureau</Link></li>
+                <li><Link href="/produits?category=INFORMATIQUE&subcategory=Logiciels" className="hover:text-white">Logiciels</Link></li>
+                <li><Link href="/produits?category=INFORMATIQUE&subcategory=Stockage" className="hover:text-white">Stockage</Link></li>
 
               </ul>
               <h5 className="font-semibold mb-4 text-base md:text-lg">Sécurité</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><a href="#" className="hover:text-white">Caméra de surveillance</a></li>
-                <li><a href="#" className="hover:text-white">Controle d&lsquo;accès</a></li>
-                <li><a href="#" className="hover:text-white">Detecteur</a></li>
-                <li><a href="#" className="hover:text-white">Système d&lsquo;alarme</a></li>
+                <li><Link href="/produits?category=SECURITE&subcategory=Camera_Surveillance" className="hover:text-white">Caméra de surveillance</Link></li>
+                <li><Link href="/produits?category=SECURITE&subcategory=Controle_Acces" className="hover:text-white">Controle d&lsquo;accès</Link></li>
+                <li><Link href="/produits?category=SECURITE&subcategory=Detecteur" className="hover:text-white">Detecteur</Link></li>
+                <li><Link href="/produits?category=SECURITE&subcategory=Systeme_Alarme" className="hover:text-white">Système d&lsquo;alarme</Link></li>
 
               </ul>
               <Link href="/promotions"><h5 className="font-semibold mb-4 text-base md:text-base">Nos Promos</h5></Link>
-              
+
             </div>
             <div>
               <h5 className="font-semibold mb-4 text-base md:text-lg">Réseau & Serveur</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><a href="#" className="hover:text-white">Switch</a></li>
-                <li><a href="#" className="hover:text-white">Routeur</a></li>
-                <li><a href="#" className="hover:text-white">Point d&lsquo;accès WiFi</a></li>
-                <li><a href="#" className="hover:text-white">Telephone IP</a></li>
-                <li><a href="#" className="hover:text-white">Serveur</a></li>
+                <li><Link href="/produits?category=RESEAUX_SERVEUR&subcategory=Switch" className="hover:text-white">Switch</Link></li>
+                <li><Link href="/produits?category=RESEAUX_SERVEUR&subcategory=Routeur" className="hover:text-white">Routeur</Link></li>
+                <li><Link href="/produits?category=RESEAUX_SERVEUR&subcategory=Point_Acces_WiFi" className="hover:text-white">Point d&lsquo;accès WiFi</Link></li>
+                <li><Link href="/produits?category=RESEAUX_SERVEUR&subcategory=Telephone_IP" className="hover:text-white">Telephone IP</Link></li>
+                <li><Link href="/produits?category=RESEAUX_SERVEUR&subcategory=Serveur" className="hover:text-white">Serveur</Link></li>
 
               </ul>
               <h5 className="font-semibold mb-4 text-base md:text-lg">Peripheriques</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><a href="#" className="hover:text-white">Imprimante</a></li>
-                <li><a href="#" className="hover:text-white">Photocopieuse</a></li>
-                <li><a href="#" className="hover:text-white">Composants</a></li>
+                <li><Link href="/produits?category=PERIPHERIQUES&subcategory=Imprimante" className="hover:text-white">Imprimante</Link></li>
+                <li><Link href="/produits?category=PERIPHERIQUES&subcategory=Photocopieuse" className="hover:text-white">Photocopieuse</Link></li>
+                <li><Link href="/produits?category=PERIPHERIQUES&subcategory=Composants" className="hover:text-white">Composants</Link></li>
 
               </ul>
               <Link href="/service"><h5 className="font-semibold mb-4 text-base md:text-base">Nos Services</h5></Link>
@@ -72,19 +73,19 @@ export default function Footer() {
             <div>
               <h5 className="font-semibold mb-3 text-base md:text-lg">Connectiques</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><a href="#" className="hover:text-white">Cables</a></li>
-                <li><a href="#" className="hover:text-white">Multiprise</a></li>
-                <li><a href="#" className="hover:text-white">Ondulateurs</a></li>
-                <li><a href="#" className="hover:text-white">Adaptateurs</a></li>
+                <li><Link href="/produits?category=CONNECTIQUES&subcategory=Cables" className="hover:text-white">Cables</Link></li>
+                <li><Link href="/produits?category=CONNECTIQUES&subcategory=Multiprise" className="hover:text-white">Multiprise</Link></li>
+                <li><Link href="/produits?category=CONNECTIQUES&subcategory=Ondulateurs" className="hover:text-white">Ondulateurs</Link></li>
+                <li><Link href="/produits?category=CONNECTIQUES&subcategory=Adaptateurs" className="hover:text-white">Adaptateurs</Link></li>
 
               </ul>
               <h5 className="font-semibold mb-3 text-base md:text-lg">Accessoires</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><a href="#" className="hover:text-white">Video</a></li>
-                <li><a href="#" className="hover:text-white">Son</a></li>
-                <li><a href="#" className="hover:text-white">Equipements PC</a></li>
-                <li><a href="#" className="hover:text-white">Stockage</a></li>
-                <li><a href="#" className="hover:text-white">Support</a></li>
+                <li><Link href="/produits?category=ACCESSOIRES&subcategory=Video" className="hover:text-white">Video</Link></li>
+                <li><Link href="/produits?category=ACCESSOIRES&subcategory=Son" className="hover:text-white">Son</Link></li>
+                <li><Link href="/produits?category=ACCESSOIRES&subcategory=Equipements_PC" className="hover:text-white">Equipements PC</Link></li>
+                <li><Link href="/produits?category=ACCESSOIRES&subcategory=Stockage" className="hover:text-white">Stockage</Link></li>
+                <li><Link href="/produits?category=ACCESSOIRES&subcategory=Support" className="hover:text-white">Support</Link></li>
 
               </ul>
 

@@ -227,7 +227,7 @@ const MellPlusNiger = () => {
       {/*<div className="pt-2 md:pt-6 "></div>*/}
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-96 md:h-[420px] lg:h-[540px] flex gap-4 md:gap-6 py-4 md:py-6">
+      <section className="relative h-[500px] md:h-[420px] lg:h-[540px] flex gap-4 md:gap-6 py-4 md:py-6">
         {/* Bande gauche */}
         <div className="w-1/5 h-full bg-white rounded-lg border-1 shadow gap-3 flex-shrink-0 relative overflow-hidden">
           <Image
@@ -268,13 +268,13 @@ const MellPlusNiger = () => {
                       <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed">
                         {slide.description}
                       </p>
-                      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                      <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center lg:justify-start">
                         <Link href="/contact">
-                        <button className="bg-white text-gray-800 px-6 md:px-6 py-3 md:py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
+                        <button className="bg-white text-gray-800 px-3 md:px-6 py-1.5 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-gray-100 transition-colors shadow-lg">
                           {slide.ctaPrimary}
                         </button>
                         </Link>
-                        <button className="border-2 border-white text-white px-6 md:px-8 py-3 md:py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition-colors">
+                        <button className="border-2 border-white text-white px-3 md:px-8 py-1.5 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-white hover:text-gray-800 transition-colors">
                           {slide.ctaSecondary}
                         </button>
                       </div>
