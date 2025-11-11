@@ -43,6 +43,9 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1)
   const [isFavorite, setIsFavorite] = useState(false)
   const [activeTab, setActiveTab] = useState('description')
+  const [comments, setComments] = useState([])
+  const [commentForm, setCommentForm] = useState({ name: '', content: '' })
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false)
 
   const fetchProductDetails = useCallback(async () => {
     try {
@@ -134,6 +137,68 @@ export default function ProductDetailPage() {
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite)
     toast.success(isFavorite ? 'Retiré des favoris' : 'Ajouté aux favoris')
+  }
+
+  const fetchComments = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/products/${params.id}/comments`)
+      if (response.ok) {
+        const data = await response.json()
+        setComments(data.comments || [])
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des commentaires:', error)
+    }
+  }, [params.id])
+
+  useEffect(() => {
+    if (params.id && product) {
+      fetchComments()
+    }
+  }, [params.id, product, fetchComments])
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!commentForm.content.trim()) {
+      toast.error('Veuillez écrire un commentaire')
+      return
+    }
+
+    if (commentForm.content.trim().length < 3) {
+      toast.error('Le commentaire doit contenir au moins 3 caractères')
+      return
+    }
+
+    setIsSubmittingComment(true)
+
+    try {
+      const response = await fetch(`/api/products/${params.id}/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: commentForm.name.trim() || 'Anonyme',
+          content: commentForm.content.trim()
+        })
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        toast.success('Commentaire ajouté avec succès')
+        setCommentForm({ name: '', content: '' })
+        fetchComments()
+      } else {
+        throw new Error(result.error || 'Erreur lors de l\'ajout du commentaire')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+      toast.error(error.message || 'Une erreur est survenue')
+    } finally {
+      setIsSubmittingComment(false)
+    }
   }
 
   if (loading) {
@@ -503,7 +568,7 @@ export default function ProductDetailPage() {
               {[
                 { id: 'description', label: 'Description', icon: Info },
                 { id: 'specifications', label: 'Caractéristiques', icon: Package },
-                { id: 'reviews', label: 'Avis', icon: Star }
+                { id: 'comments', label: 'Commentaires', icon: MessageSquare }
               ].map((tab) => {
                 const Icon = tab.icon
                 return (
@@ -556,11 +621,116 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {activeTab === 'reviews' && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h3 className="text-lg font-semibold mb-4">Avis clients</h3>
-                <div className="text-gray-500 text-center py-8">
-                  Aucun avis pour le moment. Soyez le premier à laisser un avis !
+            {activeTab === 'comments' && (
+              <div className="space-y-6">
+                {/* Formulaire de commentaire */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold mb-4">Laisser un commentaire</h3>
+                  <form onSubmit={handleCommentSubmit} className="space-y-4">
+                    <div>
+                      <label htmlFor="comment-name" className="block text-sm font-medium text-gray-700 mb-2">
+                        Nom (optionnel)
+                      </label>
+                      <input
+                        type="text"
+                        id="comment-name"
+                        value={commentForm.name}
+                        onChange={(e) => setCommentForm({ ...commentForm, name: e.target.value })}
+                        placeholder="Votre nom ou laissez vide pour être anonyme"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        maxLength={50}
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Si vous ne renseignez pas votre nom, vous apparaîtrez comme "Anonyme"
+                      </p>
+                    </div>
+
+                    <div>
+                      <label htmlFor="comment-content" className="block text-sm font-medium text-gray-700 mb-2">
+                        Commentaire <span className="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        id="comment-content"
+                        value={commentForm.content}
+                        onChange={(e) => setCommentForm({ ...commentForm, content: e.target.value })}
+                        placeholder="Partagez votre avis sur ce produit..."
+                        required
+                        rows={4}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+                        minLength={3}
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Minimum 3 caractères ({commentForm.content.length}/3)
+                      </p>
+                    </div>
+
+                    <div className="flex justify-end">
+                      <button
+                        type="submit"
+                        disabled={isSubmittingComment || commentForm.content.trim().length < 3}
+                        className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                      >
+                        {isSubmittingComment ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                            <span>Envoi en cours...</span>
+                          </>
+                        ) : (
+                          <>
+                            <MessageSquare className="w-4 h-4" />
+                            <span>Publier le commentaire</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                {/* Liste des commentaires */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold mb-4">
+                    Commentaires ({comments.length})
+                  </h3>
+
+                  {comments.length === 0 ? (
+                    <div className="text-gray-500 text-center py-8">
+                      Aucun commentaire pour le moment. Soyez le premier à laisser un commentaire !
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {comments.map((comment) => (
+                        <div
+                          key={comment.id}
+                          className="border-b border-gray-100 pb-4 last:border-b-0 last:pb-0"
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                {(comment.name || 'A')[0].toUpperCase()}
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-900">
+                                  {comment.name || 'Anonyme'}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  {new Date(comment.createdAt).toLocaleDateString('fr-FR', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                  })}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-gray-700 leading-relaxed pl-10">
+                            {comment.content}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

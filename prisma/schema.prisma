@@ -58,7 +58,8 @@ model Product {
   // Relations
   quotes      QuoteItem[]
   reviews     Review[]
-  
+  comments    Comment[]
+
   @@index([category])
   @@index([slug])
 }
@@ -482,4 +483,26 @@ enum ReviewStatus {
   APPROVED   // Approuvé et visible
   REJECTED   // Rejeté (insultes, spam, etc.)
   FLAGGED    // Signalé pour révision
+}
+
+// Commentaires sur les produits
+model Comment {
+  id        String   @id @default(cuid())
+
+  // Informations du visiteur
+  name      String?  // Optionnel - "Anonyme" si non fourni
+
+  // Contenu du commentaire
+  content   String   @db.Text
+
+  // Lié au produit
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // Métadonnées
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([createdAt])
 }

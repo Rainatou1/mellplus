@@ -366,7 +366,7 @@ export default function CategoryPage({ params }) {
                 <div>✓ Développement logiciel</div>
                 <div>✓ Support technique</div>
               </div>
-              <Link href="/services" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+              <Link href="/service" className="mt-3 bg-white text-blue-600 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
                 Découvrir
               </Link>
             </div>
