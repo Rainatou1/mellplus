@@ -641,7 +641,7 @@ export default function ProductDetailPage() {
                         maxLength={50}
                       />
                       <p className="text-xs text-gray-500 mt-1">
-                        Si vous ne renseignez pas votre nom, vous apparaîtrez comme "Anonyme"
+                        Si vous ne renseignez pas votre nom, vous apparaîtrez comme &quot;Anonyme&quot;
                       </p>
                     </div>
 

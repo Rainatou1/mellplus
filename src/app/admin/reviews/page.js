@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import {
   Star,
@@ -36,7 +36,7 @@ export default function ReviewsAdminPage() {
     search: ''
   })
 
-  const fetchReviews = async (page = 1) => {
+  const fetchReviews = useCallback(async (page = 1) => {
     try {
       setLoading(true)
       const params = new URLSearchParams({
@@ -64,11 +64,11 @@ export default function ReviewsAdminPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [filters])
 
   useEffect(() => {
     fetchReviews(1)
-  }, [filters])
+  }, [fetchReviews])
 
   const handleModeration = async (reviewId, status, moderationNote = '') => {
     try {

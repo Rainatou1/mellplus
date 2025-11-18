@@ -148,18 +148,29 @@ export default function ReviewsList({
           </div>
 
           {/* Distribution des notes */}
-          <div className="grid grid-cols-5 gap-2 text-sm">
+          <div className="space-y-2">
             {Object.entries(getRatingDistribution())
               .reverse()
-              .map(([rating, count]) => (
-                <div key={rating} className="text-center">
-                  <div className="flex items-center justify-center mb-1">
-                    <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                    <span className="ml-1">{rating}</span>
+              .map(([rating, count]) => {
+                const percentage = reviews.length > 0 ? (count / reviews.length) * 100 : 0
+                return (
+                  <div key={rating} className="flex items-center gap-3">
+                    <div className="flex items-center gap-1 min-w-[50px]">
+                      <span className="text-sm font-medium text-gray-700">{rating}</span>
+                      <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
+                    </div>
+                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500 transition-all duration-300"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                    <span className="text-xs text-gray-600 min-w-[60px] text-right">
+                      {count} avis ({percentage.toFixed(0)}%)
+                    </span>
                   </div>
-                  <div className="text-xs text-gray-600">{count}</div>
-                </div>
-              ))}
+                )
+              })}
           </div>
         </div>
       )}
