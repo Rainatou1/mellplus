@@ -257,33 +257,33 @@ const MellPlusNiger = () => {
             >
               <div className={`h-full bg-gradient-to-r ${slide.bgGradient} text-white`}>
                 <div className="px-4 h-full">
-                  <div className="grid lg:grid-cols-2 gap-1 md:gap-8 items-center h-full py-8 md:py-16">
-                    <div className="text-center lg:text-left order-2 lg:order-1">
-                      <h2 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-4 leading-tight">
-                        {slide.title}
+                  <div className="grid lg:grid-cols-2 gap-1 md:gap-4 items-center h-full py-8 md:py-16">
+                    <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center lg:pr-4">
+                      <h2 className="text-lg md:text-2xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-4 leading-tight h-[3.5rem] md:h-[5.5rem] lg:h-[7rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                        <span className="line-clamp-2">{slide.title}</span>
                       </h2>
-                      <p className="text-base md:text-xl lg:text-2xl mb-1 md:mb-4 font-medium text-blue-100">
-                        {slide.subtitle}
+                      <p className="text-base md:text-xl lg:text-2xl mb-1 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                        <span className="line-clamp-2">{slide.subtitle}</span>
                       </p>
-                      <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed">
-                        {slide.description}
+                      <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed h-[3rem] md:h-[4.5rem] lg:h-[5rem] overflow-hidden">
+                        <span className="line-clamp-2 md:line-clamp-3">{slide.description}</span>
                       </p>
                       <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center lg:justify-start">
-                        <Link href="/contact">
-                        <button className="bg-white text-gray-800 px-3 md:px-6 py-1.5 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-gray-100 transition-colors shadow-lg">
+                        <Link href="/contact" className="w-full sm:w-auto">
+                        <button className="w-full sm:w-auto bg-white text-gray-800 px-4 md:px-6 py-2 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-gray-100 transition-colors shadow-lg whitespace-nowrap">
                           {slide.ctaPrimary}
                         </button>
                         </Link>
-                        <button className="border-2 border-white text-white px-3 md:px-8 py-1.5 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-white hover:text-gray-800 transition-colors">
+                        <button className="w-full sm:w-auto border-2 border-white text-white px-4 md:px-6 py-2 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-white hover:text-gray-800 transition-colors whitespace-nowrap">
                           {slide.ctaSecondary}
                         </button>
                       </div>
                     </div>
                     <div className="flex items-center justify-center order-1 lg:order-2">
-                      <div className="relative w-35 h-35 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80">
+                      <div className="relative w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-68 lg:h-68">
                         <Image
-                          width={320}
-                          height={320}
+                          width={256}
+                          height={256}
                           src={slide.image}
                           alt={slide.title}
                           className="w-full h-full object-contain rounded-lg transform hover:scale-105 transition-transform duration-300"
@@ -494,11 +494,11 @@ const MellPlusNiger = () => {
                     </div>
                   </div>
                   <div className="p-3 md:p-4 flex flex-col flex-grow">
-                    <h4 className="font-semibold mb-2 text-gray-900 text-sm md:text-base h-10 md:h-12 overflow-hidden" style={{
+                    <h3 className="font-semibold mb-2 text-gray-900 text-sm md:text-base h-8 md:h-10 overflow-hidden" style={{
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical'
-                    }}>{product.name}</h4>
+                    }}>{product.name}</h3>
 
                     {/* Category */}
                     {/*<div className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-2">
@@ -509,7 +509,7 @@ const MellPlusNiger = () => {
                       <div>
                         {product.discount ? (
                           <>
-                            <span className="text-lg md:text-xl font-bold text-red-600">
+                            <span className="text-lg md:text-lg font-bold text-red-600">
                               {formatPrice(product.price * (1 - product.discount / 100))}
                             </span>
                             <div className="text-xs md:text-sm text-gray-500 line-through">
@@ -517,7 +517,7 @@ const MellPlusNiger = () => {
                             </div>
                           </>
                         ) : (
-                          <span className="text-lg md:text-xl font-bold text-gray-900">
+                          <span className="text-lg md:text-lg font-bold text-gray-900">
                             {formatPrice(product.price)}
                           </span>
                         )}
@@ -672,7 +672,7 @@ const MellPlusNiger = () => {
                     </div>*/}
 
                     {/* Nom du produit */}
-                    <h3 className="font-bold text-gray-900 mb-2 h-12 overflow-hidden group-hover:text-red-600 transition-colors" style={{
+                    <h3 className="font-bold text-gray-900 mb-2 h-8 overflow-hidden group-hover:text-red-600 transition-colors" style={{
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical'
