@@ -1,0 +1,508 @@
+// This is your Prisma schema file
+// Copier ce contenu dans prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// MODÈLES POUR LE SITE MELL PLUS NIGER
+// ==========================================
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?  @db.Text
+  price       Decimal? @db.Decimal(10, 2)
+  
+  // Catégories principales de Mell Plus
+  category       ProductCategory
+  subcategory    String?
+  subSubcategory String?
+  
+  // Informations détaillées
+  brand       String?
+  model       String?
+  
+  // Images et médias
+  image       String?  // Image principale
+  images      String[] // Galerie d'images
+  
+  // Spécifications techniques
+  specifications Json?  // Stockage flexible des specs
+  
+  // Gestion du stock
+  inStock     Boolean  @default(true)
+  quantity    Int      @default(0)
+  lowStock    Int      @default(5) // Seuil d'alerte
+  
+  // Marketing et visibilité
+  featured    Boolean  @default(false)
+  bestSeller  Boolean  @default(false)
+  refurbished Boolean  @default(false)
+  isNew       Boolean  @default(true)
+  discount    Int?     // Pourcentage de réduction
+  
+  // Métadonnées
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+  
+  // Relations
+  quotes      QuoteItem[]
+  reviews     Review[]
+  comments    Comment[]
+
+  @@index([category])
+  @@index([slug])
+}
+
+enum ProductCategory {
+  INFORMATIQUE
+  SECURITE
+  RESEAUX_SERVEUR
+  PERIPHERIQUES
+  CONNECTIQUES
+  ACCESSOIRES
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  shortDesc   String?  // Description courte pour les cards
+  
+  // Catégorie de service
+  category    ServiceCategory
+  
+  // Détails du service
+  features    String[] // Points clés du service
+  benefits    String[] // Avantages pour le client
+  process     String[] // Étapes du processus
+  
+  // Tarification
+  pricing     PricingType @default(CUSTOM)
+  basePrice   Decimal?    @db.Decimal(10, 2)
+  priceNote   String?     // Ex: "À partir de", "Sur devis"
+  
+  // Images et icônes
+  icon        String?
+  image       String?
+  gallery     String[]
+  
+  // Visibilité
+  featured    Boolean  @default(false)
+  active      Boolean  @default(true)
+  order       Int      @default(0) // Pour l'ordre d'affichage
+  
+  // Métadonnées
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  quotes      QuoteRequest[]
+  reviews     Review[]
+  
+  @@index([category])
+  @@index([slug])
+}
+
+enum ServiceCategory {
+  VENTE_MATERIEL
+  INSTALLATION
+  MAINTENANCE
+  FORMATION
+  CONSEIL
+  DEVELOPPEMENT
+  RESEAU
+  SECURITE
+}
+
+enum PricingType {
+  FIXED     // Prix fixe
+  HOURLY    // Tarif horaire
+  CUSTOM    // Sur devis
+  PACKAGE   // Forfait
+}
+
+model QuoteRequest {
+  id          String      @id @default(cuid())
+  
+  // Informations client
+  name        String
+  email       String
+  phone       String
+  company     String?
+  address     String?
+  city        String?
+  
+  // Détails de la demande
+  subject     String
+  message     String      @db.Text
+  budget      String?     // Budget estimé
+  deadline    DateTime?   // Date souhaitée
+  
+  // Type de demande
+  type        QuoteType   @default(SERVICE)
+  serviceId   String?
+  service     Service?    @relation(fields: [serviceId], references: [id])
+  
+  // Items du devis (pour produits)
+  items       QuoteItem[]
+  
+  // Statut et suivi
+  status      QuoteStatus @default(PENDING)
+  priority    Priority    @default(NORMAL)
+  assignedTo  String?     // ID de l'admin assigné
+  
+  // Réponse
+  responseAt  DateTime?
+  response    String?     @db.Text
+  quotePdf    String?     // Lien vers le PDF du devis
+  validUntil  DateTime?   // Validité du devis
+  
+  // Tracking
+  source      String?     // D'où vient le lead
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@index([status])
+  @@index([email])
+}
+
+model QuoteItem {
+  id          String   @id @default(cuid())
+  quoteId     String
+  quote       QuoteRequest @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id])
+  
+  // Si produit personnalisé (non en catalogue)
+  customItem  String?
+  description String?
+  
+  quantity    Int      @default(1)
+  unitPrice   Decimal? @db.Decimal(10, 2)
+  totalPrice  Decimal? @db.Decimal(10, 2)
+  
+  createdAt   DateTime @default(now())
+}
+
+enum QuoteType {
+  PRODUCT
+  SERVICE
+  MIXED
+}
+
+enum QuoteStatus {
+  PENDING    // En attente
+  REVIEWING  // En cours d'examen
+  QUOTED     // Devis envoyé
+  ACCEPTED   // Accepté
+  REJECTED   // Refusé
+  EXPIRED    // Expiré
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model Contact {
+  id          String   @id @default(cuid())
+  
+  // Informations de contact
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  
+  // Message
+  subject     String
+  message     String   @db.Text
+  
+  // Tracking
+  source      String?  // Page d'où vient le message
+  ip          String?
+  userAgent   String?
+  
+  // Statut
+  read        Boolean  @default(false)
+  replied     Boolean  @default(false)
+  starred     Boolean  @default(false)
+  archived    Boolean  @default(false)
+  
+  // Notes internes
+  notes       String?  @db.Text
+  assignedTo  String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([email])
+  @@index([read])
+}
+
+model Admin {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  
+  // Informations personnelles
+  firstName   String
+  lastName    String
+  phone       String?
+  avatar      String?
+  
+  // Rôle et permissions
+  role        AdminRole @default(MODERATOR)
+  permissions String[]  // Permissions spécifiques
+  
+  // Statut
+  active      Boolean  @default(true)
+  emailVerified Boolean @default(false)
+  
+  // Sécurité
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+  lastLogin   DateTime?
+  lastIp      String?
+  
+  // Tokens
+  resetToken  String?
+  resetExpiry DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  sessions    Session[]
+  activities  AdminActivity[]
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  MODERATOR
+  SUPPORT
+}
+
+model Session {
+  id          String   @id @default(cuid())
+  adminId     String
+  admin       Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  
+  token       String   @unique
+  userAgent   String?
+  ip          String?
+  
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  
+  @@index([token])
+  @@index([adminId])
+}
+
+model AdminActivity {
+  id          String   @id @default(cuid())
+  adminId     String
+  admin       Admin    @relation(fields: [adminId], references: [id])
+  
+  action      String   // Ex: "CREATE_PRODUCT", "UPDATE_SERVICE", "DELETE_QUOTE"
+  entity      String   // Ex: "product", "service", "quote"
+  entityId    String?  // ID de l'entité concernée
+  details     Json?    // Détails supplémentaires
+  
+  ip          String?
+  userAgent   String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([adminId])
+  @@index([entity])
+}
+
+// Configuration du site
+model SiteSettings {
+  id          String   @id @default("main")
+  
+  // Informations générales
+  siteName    String   @default("Mell Plus Niger")
+  tagline     String?
+  description String?  @db.Text
+  
+  // Contact
+  email       String?
+  phone       String?
+  whatsapp    String?
+  address     String?
+  city        String?
+  country     String?
+  
+  // Réseaux sociaux
+  facebook    String?
+  twitter     String?
+  instagram   String?
+  linkedin    String?
+  youtube     String?
+  
+  // Horaires d'ouverture
+  openingHours Json?
+  
+  // SEO
+  metaTitle   String?
+  metaDescription String? @db.Text
+  metaKeywords String[]
+  
+  // Configurations
+  maintenanceMode Boolean @default(false)
+  maintenanceMessage String? @db.Text
+  
+  // Analytics
+  googleAnalytics String?
+  facebookPixel String?
+  
+  updatedAt   DateTime @updatedAt
+}
+
+// Newsletter et marketing
+model Newsletter {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  
+  subscribed  Boolean  @default(true)
+  verified    Boolean  @default(false)
+  
+  source      String?  // D'où vient l'inscription
+  ip          String?
+  
+  unsubscribeToken String? @unique
+  verifyToken String?     @unique
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+}
+
+// Carousel pour la page d'accueil
+model Carousel {
+  id          String   @id @default(cuid())
+
+  // Contenu de la slide
+  title       String
+  subtitle    String?
+  description String?  @db.Text
+  image       String   // URL de l'image
+
+  // Actions (boutons)
+  ctaPrimary  String?  // Texte du bouton principal
+  ctaSecondary String? // Texte du bouton secondaire
+  linkPrimary String?  // Lien du bouton principal
+  linkSecondary String? // Lien du bouton secondaire
+
+  // Style et apparence
+  bgGradient  String   @default("from-blue-600 to-blue-800") // Classes Tailwind
+  textColor   String   @default("text-white") // Couleur du texte
+
+  // Gestion et ordre
+  active      Boolean  @default(true)
+  order       Int      @default(0) // Ordre d'affichage
+  featured    Boolean  @default(false) // Mise en avant
+
+  // Métadonnées
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations (optionnel: créé par quel admin)
+  createdBy   String?
+
+  @@index([active])
+  @@index([order])
+}
+
+// Système d'avis clients
+model Review {
+  id          String   @id @default(cuid())
+
+  // Informations du client (sans compte obligatoire)
+  name        String
+  email       String
+  company     String?
+
+  // Contenu de l'avis
+  rating      Int      // Note de 1 à 5 étoiles
+  title       String?  // Titre optionnel de l'avis
+  content     String   @db.Text
+
+  // Optionnel: avis lié à un produit/service spécifique
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id])
+  serviceId   String?
+  service     Service? @relation(fields: [serviceId], references: [id])
+
+  // Modération et statut
+  status      ReviewStatus @default(PENDING)
+  moderatedBy String?      // ID de l'admin qui a modéré
+  moderatedAt DateTime?
+  moderationNote String?   // Note interne de modération
+
+  // Visibilité
+  featured    Boolean  @default(false) // Avis mis en avant
+  visible     Boolean  @default(false) // Visible sur le site
+
+  // Tracking
+  ip          String?
+  userAgent   String?
+  source      String?  // Page d'où vient l'avis
+
+  // Métadonnées
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+  @@index([rating])
+  @@index([visible])
+  @@index([email])
+}
+
+enum ReviewStatus {
+  PENDING    // En attente de modération
+  APPROVED   // Approuvé et visible
+  REJECTED   // Rejeté (insultes, spam, etc.)
+  FLAGGED    // Signalé pour révision
+}
+
+// Commentaires sur les produits
+model Comment {
+  id        String   @id @default(cuid())
+
+  // Informations du visiteur
+  name      String?  // Optionnel - "Anonyme" si non fourni
+
+  // Contenu du commentaire
+  content   String   @db.Text
+
+  // Lié au produit
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // Métadonnées
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([createdAt])
+}
