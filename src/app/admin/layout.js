@@ -24,7 +24,8 @@ import {
   Mail,
   TrendingUp,
   MonitorPlay,
-  Star
+  Star,
+  MessageCircle
 } from 'lucide-react'
 import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
@@ -70,6 +71,12 @@ const getMenuItems = (unreadMessagesCount) => [
     href: '/admin/reviews',
     label: 'Avis clients',
     icon: Star,
+    badge: null
+  },
+  {
+    href: '/admin/comments',
+    label: 'Commentaires',
+    icon: MessageCircle,
     badge: null
   },
   {

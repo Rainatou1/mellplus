@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 // GET - Récupérer tous les commentaires d'un produit
 export async function GET(request, { params }) {
   try {
-    const { id } = params
+    const { id } = await params
 
     // Vérifier si le produit existe
     const product = await prisma.product.findUnique({
@@ -51,7 +51,7 @@ export async function GET(request, { params }) {
 // POST - Créer un nouveau commentaire
 export async function POST(request, { params }) {
   try {
-    const { id } = params
+    const { id } = await params
     const body = await request.json()
     const { name, content } = body
 
