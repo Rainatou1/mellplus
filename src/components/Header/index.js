@@ -12,6 +12,13 @@ export default function Header() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
 
+  // Fonction pour fermer le menu mobile
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+    setActiveCategory(null);
+    setActiveSubcategory(null);
+  };
+
   // Helper functions to convert database categories to URL slugs
   const getCategorySlug = (dbCategory) => {
     const slugMap = {
@@ -89,7 +96,8 @@ export default function Header() {
     dbCategory: 'PERIPHERIQUES',
     subcategories: [
       { name: 'Imprimantes', subcategory: 'Imprimantes' },
-      { name: 'Photocopieuse', subcategory: 'Photocopieuse' },
+      { name: 'Photocopieuses', subcategory: 'Photocopieuses' },
+      { name: 'Scanners', subcategory: 'Scanners' },
       { name: 'Composants', subcategory: 'Composants' }
     ]
   },
@@ -366,6 +374,7 @@ export default function Header() {
                               <Link
                                 href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(sub.subcategory)}`}
                                 className="flex-1"
+                                onClick={closeMobileMenu}
                               >
                                 {sub.name}
                               </Link>
@@ -382,6 +391,7 @@ export default function Header() {
                                     key={subSubIndex}
                                     href={`/products/category/${getCategorySlug(category.dbCategory)}/${getSubcategorySlug(sub.subcategory)}/${getSubcategorySlug(subSub.subcategory)}`}
                                     className="block py-1.5 text-sm text-gray-500 hover:text-blue-600"
+                                    onClick={closeMobileMenu}
                                   >
                                     {subSub.name}
                                   </Link>
@@ -395,13 +405,13 @@ export default function Header() {
                   </div>
                 ))}
                 {/*<Link href="/products" className="block text-gray-700 hover:text-blue-600 py-2">Produits</Link>
-                */}<Link href="/promotions" className="block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1">
+                */}<Link href="/promotions" className="block text-red-600 hover:text-red-700 py-2 font-semibold flex items-center gap-1" onClick={closeMobileMenu}>
                   🔥 Promotions
                 </Link>
-                <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2">Services</a>
-                <Link href="/avis" className="block text-gray-700 hover:text-blue-600 py-2">Avis clients</Link>
-                <a href="/contact" className="block text-gray-700 hover:text-blue-600 py-2">Contact</a>
-                <a href="/about" className="block text-gray-700 hover:text-gray-900 py-2">A propos</a>
+                <a href="/service" className="block text-gray-700 hover:text-blue-600 py-2" onClick={closeMobileMenu}>Services</a>
+                <Link href="/avis" className="block text-gray-700 hover:text-blue-600 py-2" onClick={closeMobileMenu}>Avis clients</Link>
+                <a href="/contact" className="block text-gray-700 hover:text-blue-600 py-2" onClick={closeMobileMenu}>Contact</a>
+                <a href="/about" className="block text-gray-700 hover:text-gray-900 py-2" onClick={closeMobileMenu}>A propos</a>
                 
                 {/* Mobile Account Link */}
                 {/*<a href="#" className="block text-gray-700 hover:text-blue-600 py-2 border-t pt-3">

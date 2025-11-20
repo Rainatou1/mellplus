@@ -31,7 +31,7 @@ const MellPlusNiger = () => {
       title: "Dernières technologies HP",
       subtitle: "HP Pavilion",
       description: "Découvrez la nouvelle gamme HP avec des offres exclusives et un service après-vente premium",
-      image: "/images/hp-removebg.PNG",
+      image: "/images/hp-removebg.png",
       ctaPrimary: "Voir les produits",
       ctaSecondary: "En savoir plus",
       bgGradient: "from-gray-800 to-gray-900"
@@ -41,7 +41,7 @@ const MellPlusNiger = () => {
       title: "Camera Surveillance",
       subtitle: "Vision de nuit",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      image: "/images/camera.PNG",
+      image: "/images/camera.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Catalogue",
       bgGradient: "from-green-600 to-teal-700"
@@ -51,7 +51,7 @@ const MellPlusNiger = () => {
       title: "Promotions exceptionnelles",
       subtitle: "Jusqu'à -30% sur une sélection",
       description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      image: "/images/hp.PNG",
+      image: "/images/hp.png",
       ctaPrimary: "Voir les promos",
       ctaSecondary: "Tous les produits",
       bgGradient: "from-red-600 to-pink-700"
@@ -61,7 +61,7 @@ const MellPlusNiger = () => {
       title: "Promotion PC portable",
       subtitle: "Une offre évolutive avec plus de 15 000 références",
       description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
-      image: "/images/hp-removebg.PNG",
+      image: "/images/hp-removebg.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Nos services",
       bgGradient: "from-pink-600 to-blue-800"
@@ -71,7 +71,7 @@ const MellPlusNiger = () => {
       title: "Derniere démarque",
       subtitle: "Scanner, Imprimante sharp, HP Pavilion",
       description: "Découvrez la nouvelle gamme de periphériques avec des offres exclusives et un service après-vente premium",
-      image: "/images/imprimante.PNG",
+      image: "/images/imprimante.png",
       ctaPrimary: "Voir les produits",
       ctaSecondary: "En savoir plus",
       bgGradient: "from-gray-800 to-black-900"
@@ -81,7 +81,7 @@ const MellPlusNiger = () => {
       title: "Economisez 10%",
       subtitle: "Arldo",
       description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      image: "/images/camera.PNG",
+      image: "/images/camera.png",
       ctaPrimary: "Demander un devis",
       ctaSecondary: "Catalogue",
       bgGradient: "from-blue-400 to-teal-700"
@@ -91,7 +91,7 @@ const MellPlusNiger = () => {
       title: "Solde d'été",
       subtitle: "Jusqu'à -30% sur une sélection",
       description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      image: "/images/hp-removebg.PNG",
+      image: "/images/hp-removebg.png",
       ctaPrimary: "Voir les promos",
       ctaSecondary: "Tous les produits",
       bgGradient: "from-purple-600 to-pink-700"
