@@ -494,7 +494,7 @@ const MellPlusNiger = () => {
                     </div>
                   </div>
                   <div className="p-3 md:p-4 flex flex-col flex-grow">
-                    <h3 className="font-semibold mb-2 text-gray-900 text-sm md:text-base h-8 md:h-10 overflow-hidden" style={{
+                    <h3 className="font-semibold mb-2 text-gray-900 text-sm md:text-base h-8 md:h-11 overflow-hidden" style={{
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical'
