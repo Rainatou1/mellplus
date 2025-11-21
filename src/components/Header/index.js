@@ -61,7 +61,7 @@ export default function Header() {
 
   const categories = [
   {
-    name: 'Informatique',
+    name: 'Ordi/Serveur',
     dbCategory: 'INFORMATIQUE',
     subcategories: [
       { name: 'PC Portable', subcategory: 'PC Portable' },
@@ -71,7 +71,7 @@ export default function Header() {
     ]
   },
   {
-    name: 'Sécurité',
+    name: 'Energie',
     dbCategory: 'SECURITE',
     subcategories: [
       { name: 'Caméra de surveillance', subcategory: 'Caméra de surveillance' },
@@ -81,7 +81,7 @@ export default function Header() {
     ]
   },
   {
-    name: 'Reseau&Serveur',
+    name: 'Reseau/Sécurité',
     dbCategory: 'RESEAUX_SERVEUR',
     subcategories: [
       { name: 'Switch', subcategory: 'Switch' },
@@ -92,7 +92,7 @@ export default function Header() {
     ]
   },
   {
-    name: 'Peripheriques',
+    name: 'Imprimante',
     dbCategory: 'PERIPHERIQUES',
     subcategories: [
       { name: 'Imprimantes', subcategory: 'Imprimantes' },
