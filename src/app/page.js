@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import FloatingButtons from '@/components/FloatingButtons';
 
 const MellPlusNiger = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -227,9 +228,9 @@ const MellPlusNiger = () => {
       {/*<div className="pt-2 md:pt-6 "></div>*/}
 
       {/* Hero Carousel avec bandes latérales */}
-      <section className="relative h-[500px] md:h-[420px] lg:h-[540px] flex gap-4 md:gap-6 py-4 md:py-6">
+      <section className="relative flex flex-col lg:flex-row gap-4 md:gap-6 py-4 md:py-6">
         {/* Bande gauche */}
-        <div className="w-1/5 h-full bg-white rounded-lg border-1 shadow gap-3 flex-shrink-0 relative overflow-hidden">
+        <div className="w-full lg:w-1/5 h-32 md:h-40 lg:h-[540px] bg-white rounded-lg border-1 shadow gap-3 flex-shrink-0 relative overflow-hidden">
           <Image
             src="/images/large1.jpg"
             alt="Offres spéciales"
@@ -244,7 +245,7 @@ const MellPlusNiger = () => {
         </div>
 
         {/* Carrousel principal */}
-        <div className="flex-1 h-full relative overflow-hidden">
+        <div className="w-full lg:flex-1 h-[500px] md:h-[520px] lg:h-[540px] relative overflow-hidden rounded-lg">
           {/* Slides */}
           <div className="relative h-full">
           {slides.map((slide, index) => (
@@ -259,11 +260,11 @@ const MellPlusNiger = () => {
                 <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-1 md:gap-4 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center lg:pr-4">
-                      <h2 className="text-lg md:text-2xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-4 leading-tight h-[3.5rem] md:h-[5.5rem] lg:h-[7rem] overflow-hidden flex items-center justify-center lg:justify-start">
-                        <span className="line-clamp-2">{slide.title}</span>
+                      <h2 className="text-lg md:text-2xl lg:text-4xl xl:text-5xl font-bold mb-0 md:mb-4 leading-tight h-[3.5rem] md:h-[5.5rem] lg:h-[7rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                        <span className="line-clamp-1">{slide.title}</span>
                       </h2>
-                      <p className="text-base md:text-xl lg:text-2xl mb-1 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
-                        <span className="line-clamp-2">{slide.subtitle}</span>
+                      <p className="text-base md:text-xl lg:text-2xl mb-0 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                        <span className="line-clamp-1">{slide.subtitle}</span>
                       </p>
                       <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed h-[3rem] md:h-[4.5rem] lg:h-[5rem] overflow-hidden">
                         <span className="line-clamp-2 md:line-clamp-3">{slide.description}</span>
@@ -342,7 +343,7 @@ const MellPlusNiger = () => {
         </div>
 
         {/* Bande droite */}
-        <div className="w-1/5 h-full rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
+        <div className="w-full lg:w-1/5 h-32 md:h-40 lg:h-[540px] rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
           <Image
             src="/images/accessories.jpg"
             alt="Nouveautés"
@@ -923,6 +924,9 @@ const MellPlusNiger = () => {
       </section>
         <div className="py-4 md:py-4"></div>
       </div>
+
+      {/* Floating Buttons */}
+      <FloatingButtons />
     </div>
   );
 };

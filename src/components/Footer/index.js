@@ -20,7 +20,7 @@ export default function Footer() {
                       height={90}
                       src="/images/logo.png"
                       alt="logo" 
-                      className="w-6 h-6 md:w-38 md:h-34" />
+                      className="w-28 h-22 md:w-44 md:h-34" />
                 </div>
             
               </div>

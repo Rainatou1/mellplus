@@ -211,11 +211,11 @@ export default function Header() {
                 height={900}
                 src="/images/logo.png"
                 alt="logo"
-                className="w-24 h-22 md:w-30 md:h-22" />
+                className="w-28 h-22 md:w-30 md:h-22" />
               </div>
               </Link>
               <div>
-                <h1 className="text-lg md:text-2xl font-bold" style={{ color: '#016bb6' }}>Mell Plus Niger</h1>
+                <h1 className="text-xl md:text-2xl font-bold" style={{ color: '#016bb6' }}>Mell Plus Niger</h1>
                 <p className="text-xs md:text-sm hidden sm:block" style={{ color: '#016bb6' }}>Votre partenaire IT au Niger</p>
               </div>
             </div>
@@ -335,8 +335,8 @@ export default function Header() {
                 🔥 Promotions
               </Link>*/}
               <a href="/service" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Services</a>
-              <Link href="/avis" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Avis clients</Link>
-              <Link href="/contact" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Contact</Link>
+              {/*<Link href="/avis" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Avis clients</Link>
+              <Link href="/contact" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">Contact</Link>*/}
               <a href="/about" className="text-blue hover:text-gray-200 py-2 whitespace-nowrap">A propos</a>
             </div>
           </nav>
