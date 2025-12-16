@@ -8,180 +8,44 @@ import ImageUpload from '@/components/admin/ImageUpload'
 import { getCategoryDisplayName } from '@/lib/categoryMapping'
 
 const PRODUCT_CATEGORIES = [
-  { value: 'INFORMATIQUE', label: 'Informatique' },
-  { value: 'PERIPHERIQUES', label: 'Périphériques' },
-  { value: 'RESEAUX_SERVEUR', label: 'Réseaux & Serveur' },
-  { value: 'SECURITE', label: 'Sécurité' },
-  { value: 'CONNECTIQUES', label: 'Connectiques' },
+  { value: 'ORDI_SERVEUR', label: 'Ordi&Serveur' },
+  { value: 'RESEAUX_SECURITE', label: 'Reseaux&Sécurité' },
+  { value: 'IMPRIMANTE_COPIEUR', label: 'Imprimante/Copieur' },
   { value: 'ACCESSOIRES', label: 'Accessoires' }
 ]
 
 const SUBCATEGORIES_BY_CATEGORY = {
-  'INFORMATIQUE': [
-    { value: 'PC portable', label: 'PC portable' },
-    { value: 'PC de bureau', label: 'PC de bureau' },
-    { value: 'Moniteur', label: 'Moniteur' },
-    { value: 'Logiciels', label: 'Logiciels' },
-    { value: 'Stockage', label: 'Stockage' }
+  'ORDI_SERVEUR': [
+    { value: 'PC Portable', label: 'PC Portable' },
+    { value: 'PC de Bureau', label: 'PC de Bureau' },
+    { value: 'Serveur', label: 'Serveur' },
+    { value: 'All in one', label: 'All in one' }
   ],
-  'PERIPHERIQUES': [
-    { value: 'Imprimante', label: 'Imprimante' },
-    { value: 'Photocopieuse', label: 'Photocopieuse' },
-    //{ value: 'Projecteur', label: 'Projecteur' }
-  ],
-  'RESEAUX_SERVEUR': [
-    { value: 'Switch', label: 'Switch' },
-    { value: 'Routeur', label: 'Routeur' },
-    { value: 'Point d\'accès WiFi', label: 'Point d\'accès WiFi' },
-    { value: 'Téléphone IP', label: 'Téléphone IP' },
-    { value: 'Serveur', label: 'Serveur' }
-  ],
-  'SECURITE': [
+  'RESEAUX_SECURITE': [
     { value: 'Caméra de surveillance', label: 'Caméra de surveillance' },
-    { value: 'Contrôle d\'accès', label: 'Contrôle d\'accès' },
-    { value: 'Détecteur', label: 'Détecteur' },
-    { value: 'Système d\'alarme', label: 'Système d\'alarme' }
+    { value: 'Gache', label: 'Gache' },
+    { value: 'Sécurité incendie', label: 'Sécurité incendie' },
+    { value: 'Réseaux cuivre', label: 'Réseaux cuivre' },
+    { value: 'Réseaux fibre', label: 'Réseaux fibre' }
   ],
-  'CONNECTIQUES': [
-    { value: 'Câbles', label: 'Câbles' },
-    { value: 'Multiprise', label: 'Multiprise' },
-    { value: 'Onduleur', label: 'Onduleur' },
-    { value: 'Adaptateurs', label: 'Adaptateurs' }
+  'IMPRIMANTE_COPIEUR': [
+    { value: 'Imprimantes', label: 'Imprimantes' },
+    { value: 'Scanneur', label: 'Scanneur' },
+    { value: 'Copieur', label: 'Copieur' }
   ],
   'ACCESSOIRES': [
-    { value: 'Vidéo', label: 'Vidéo' },
-    { value: 'Son', label: 'Son' },
-    { value: 'Equipement PC', label: 'Souris' },
+    { value: 'Connectique', label: 'Connectique' },
     { value: 'Stockage', label: 'Stockage' },
-    { value: 'Support', label: 'Support' }
+    { value: 'Multimedia', label: 'Multimedia' },
+    { value: 'Consommable', label: 'Consommable' },
+    { value: 'Composants', label: 'Composants' },
+    { value: 'Energie', label: 'Energie' },
+    { value: 'Bureautique', label: 'Bureautique' }
   ]
 }
 
-const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {
-  // INFORMATIQUE
- /* 'PC portable': [
-    { value: 'Laptop Business', label: 'Laptop Business' },
-    { value: 'Laptop Gaming', label: 'Laptop Gaming' },
-    { value: 'Ultrabook', label: 'Ultrabook' },
-  ],*/
-  'PC de bureau': [
-    { value: 'PC complet', label: 'PC complet' },
-    { value: 'Unité centrale', label: 'Unité centrale' },
-    { value: 'All-in-One', label: 'All-in-One' }
-  ],
-  'Moniteur': [
-    { value: 'Moniteur LCD', label: 'Moniteur LCD' },
-    { value: 'Moniteur LED', label: 'Moniteur LED' },
-    { value: 'Moniteur 4K', label: 'Moniteur 4K' },
-    { value: 'Moniteur Gaming', label: 'Moniteur Gaming' }
-  ],
-
-  'Logiciels': [
-    { value: 'Système d\'exploitation', label: 'Système d\'exploitation' },
-    { value: 'Suite bureautique', label: 'Suite bureautique' },
-    { value: 'Antivirus', label: 'Antivirus' },
-    { value: 'Logiciel métier', label: 'Logiciel métier' }
-  ],
-  /*'Stockage': [
-    { value: 'Disque dur HDD', label: 'Disque dur HDD' },
-    { value: 'SSD', label: 'SSD' },
-    { value: 'Disque externe', label: 'Disque externe' },
-    { value: 'Clé USB', label: 'Clé USB' }
-  ],*/
-
-  // PERIPHERIQUES
- /* 'Imprimante': [
-    { value: 'Imprimante laser', label: 'Imprimante laser' },
-    { value: 'Imprimante jet d\'encre', label: 'Imprimante jet d\'encre' },
-    { value: 'Multifonction', label: 'Multifonction' },
-    { value: 'Plotter', label: 'Plotter' }
-  ],*/
-  
-  /*'Projecteur': [
-    { value: 'Projecteur bureau', label: 'Projecteur bureau' },
-    { value: 'Projecteur portable', label: 'Projecteur portable' },
-    { value: 'Vidéoprojecteur', label: 'Vidéoprojecteur' }
-  ],*/
-
-  // RESEAUX_SERVEUR
-
-  'Routeur': [
-    { value: 'Routeur WiFi', label: 'Routeur WiFi' },
-    { value: 'Routeur professionnel', label: 'Routeur professionnel' },
-    { value: 'Routeur 4G/5G', label: 'Routeur 4G/5G' }
-  ],
-  'Point d\'accès WiFi': [
-    { value: 'Point d\'accès intérieur', label: 'Point d\'accès intérieur' },
-    { value: 'Point d\'accès extérieur', label: 'Point d\'accès extérieur' },
-    { value: 'Contrôleur WiFi', label: 'Contrôleur WiFi' }
-  ],
-
-  // SECURITE
-  /*'Caméra de surveillance': [
-    { value: 'Caméra IP', label: 'Caméra IP' },
-    { value: 'Caméra analogique', label: 'Caméra analogique' },
-    { value: 'Caméra PTZ', label: 'Caméra PTZ' },
-    { value: 'Enregistreur DVR/NVR', label: 'Enregistreur DVR/NVR' }
-  ],*/
-  /*'Contrôle d\'accès': [
-    { value: 'Lecteur de badge', label: 'Lecteur de badge' },
-    { value: 'Serrure électronique', label: 'Serrure électronique' },
-    { value: 'Interphone', label: 'Interphone' },
-    { value: 'Portier vidéo', label: 'Portier vidéo' }
-  ],*/
-  'Détecteur': [
-    { value: 'Détecteur de mouvement', label: 'Détecteur de mouvement' },
-    { value: 'Détecteur de fumée', label: 'Détecteur de fumée' },
-    { value: 'Sirène', label: 'Sirène' }
-  ],
-
-  // CONNECTIQUES
-  'Câbles': [
-    { value: 'Câble réseau', label: 'Câble réseau' },
-    { value: 'Câble HDMI', label: 'Câble HDMI' },
-    { value: 'Câble USB', label: 'Câble USB' },
-    { value: 'Câble VGA', label: 'Câble VGA' }
-  ],
-  'Adaptateurs': [
-    { value: 'Adaptateur USB', label: 'Adaptateur USB' },
-    { value: 'Adaptateur vidéo', label: 'Adaptateur vidéo' },
-    { value: 'Hub USB', label: 'Hub USB' },
-    { value: 'Convertisseur', label: 'Convertisseur' }
-  ],
-
-  // ACCESSOIRES
-  'Vidéo': [
-    { value: 'Appareil photo', label: 'Appareil photo' },
-    { value: 'Webcam', label: 'Webcam' },
-    { value: 'Projecteur', label: 'Projecteur' },
-    { value: 'Stabilisateur', label: 'Stabilisateur' }
-  ],
-  'Son': [
-    { value: 'Casque audio', label: 'Casque audio' },
-    { value: 'Micro', label: 'Micro' },
-    { value: 'Haut-parleur', label: 'Haut-parleur' }
-  ],
-  'Equipement PC': [
-    { value: 'Souris', label: 'Souris' },
-    { value: 'Clavier', label: 'Clavier' },
-    { value: 'Chargeur', label: 'Chargeur' },
-    { value: 'Housse laptop', label: 'Housse laptop' },
-    { value: 'Protection d\'écran', label: 'Protection d\'écran' },
-    { value: 'Film protecteur', label: 'Film protecteur' }
-  ],
-  'Stockage': [
-    { value: 'Disque dur HDD', label: 'Disque dur HDD' },
-    { value: 'SSD', label: 'SSD' },
-    { value: 'Disque externe', label: 'Disque externe' },
-    { value: 'Clé USB', label: 'Clé USB' }
-  ]
- /* 'Support': [
-    { value: 'Support laptop', label: 'Support laptop' },
-    { value: 'Support moniteur', label: 'Support moniteur' },
-    { value: 'Support tablette', label: 'Support tablette' },
-    { value: 'Bras articulé', label: 'Bras articulé' }
-  ]*/
-}
+// Les nouvelles catégories n'utilisent pas de sous-sous-catégories pour le moment
+const SUB_SUBCATEGORIES_BY_SUBCATEGORY = {}
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([])

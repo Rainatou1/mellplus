@@ -32,47 +32,33 @@ export default function CategoryPage({ params }) {
 
   // Configuration des couleurs et icônes par catégorie
   const categoryConfig = {
-    'INFORMATIQUE': {
-      name: 'Informatique',
+    'ORDI_SERVEUR': {
+      name: 'Ordi&Serveur',
       color: 'from-blue-600 to-indigo-600',
       icon: Monitor,
-      description: 'Ordinateurs, composants et matériel informatique',
+      description: 'Ordinateurs portables, de bureau, serveurs et tout-en-un',
       bannerText: 'Solutions informatiques complètes'
     },
-    'PERIPHERIQUES': {
-      name: 'Périphériques',
+    'RESEAUX_SECURITE': {
+      name: 'Reseaux&Sécurité',
+      color: 'from-green-600 to-teal-600',
+      icon: Shield,
+      description: 'Caméras de surveillance, réseaux cuivre et fibre, sécurité incendie',
+      bannerText: 'Infrastructure réseau et sécurité professionnelle'
+    },
+    'IMPRIMANTE_COPIEUR': {
+      name: 'Imprimante/Copieur',
       color: 'from-purple-600 to-pink-600',
       icon: Printer,
-      description: 'Imprimantes, scanners et accessoires',
-      bannerText: 'Équipements périphériques de qualité'
-    },
-    'RESEAUX_SERVEUR': {
-      name: 'Réseaux & Serveur',
-      color: 'from-green-600 to-teal-600',
-      icon: RouterIcon,
-      description: 'Équipements réseau et serveurs',
-      bannerText: 'Infrastructure réseau professionnelle'
-    },
-    'SECURITE': {
-      name: 'Sécurité',
-      color: 'from-red-600 to-orange-600',
-      icon: Shield,
-      description: 'Vidéosurveillance et contrôle d\'accès',
-      bannerText: 'Solutions de sécurité avancées'
-    },
-    'CONNECTIQUES': {
-      name: 'Connectiques',
-      color: 'from-gray-600 to-gray-800',
-      icon: Cable,
-      description: 'Câbles et connectiques',
-      bannerText: 'Connectivité et accessoires'
+      description: 'Imprimantes, scanners et copieurs',
+      bannerText: 'Équipements d\'impression de qualité'
     },
     'ACCESSOIRES': {
       name: 'Accessoires',
       color: 'from-yellow-600 to-orange-600',
       icon: Headphones,
-      description: 'Audio, vidéo et accessoires',
-      bannerText: 'Accessoires et périphériques'
+      description: 'Connectiques, stockage, multimedia et consommables',
+      bannerText: 'Accessoires et périphériques informatiques'
     }
   }
 
@@ -528,11 +514,9 @@ function parseSlug(slug) {
 
   // Map URL slugs to database categories
   const categoryMap = {
-    'informatique': 'INFORMATIQUE',
-    'peripheriques': 'PERIPHERIQUES',
-    'securite': 'SECURITE',
-    'reseaux-serveur': 'RESEAUX_SERVEUR',
-    'connectiques': 'CONNECTIQUES',
+    'ordi-serveur': 'ORDI_SERVEUR',
+    'reseaux-securite': 'RESEAUX_SECURITE',
+    'imprimante-copieur': 'IMPRIMANTE_COPIEUR',
     'accessoires': 'ACCESSOIRES'
   }
 
@@ -558,75 +542,37 @@ function parseSlug(slug) {
 
   // Direct mapping from slug to database values
   const subcategoryMap = {
-    // Informatique
+    // Ordi&Serveur
     'pc-portable': 'PC Portable',
     'pc-de-bureau': 'PC de Bureau',
-    'logiciels': 'Logiciels',
-    'stockage': 'Stockage',
-
-    // Sécurité
-    'camera-de-surveillance': 'Caméra de surveillance',
-    'controle-d-acces': "Contrôle d'accès",
-    'detecteur': 'Detecteur',
-    'systeme-d-alarme': "Système d'alarme",
-
-    // Réseau & Serveur
-    'switch': 'Switch',
-    'routeur': 'Routeur',
-    'point-d-acces-wifi': "Point d'accès WiFi",
-    'telephone-ip': 'Telephone IP',
     'serveur': 'Serveur',
+    'all-in-one': 'All in one',
 
-    // Périphériques
+    // Reseaux&Sécurité
+    'camera-de-surveillance': 'Caméra de surveillance',
+    'gache': 'Gache',
+    'securite-incendie': 'Sécurité incendie',
+    'reseaux-cuivre': 'Réseaux cuivre',
+    'reseaux-fibre': 'Réseaux fibre',
+
+    // Imprimante/Copieur
     'imprimantes': 'Imprimantes',
-    'photocopieuse': 'Photocopieuse',
-    'composants': 'Composants',
-
-    // Connectiques
-    'cables': 'Câbles',
-    'multiprise': 'Multiprise',
-    'ondulateur': 'Ondulateur',
-    'adaptateurs': 'Adaptateurs',
+    'scanneur': 'Scanneur',
+    'copieur': 'Copieur',
 
     // Accessoires
-    'video': 'Video',
-    'son': 'Son',
-    'equipement-pc': 'Equipement PC'
+    'connectique': 'Connectique',
+    'connectiques': 'Connectique',
+    'stockage': 'Stockage',
+    'multimedia': 'Multimedia',
+    'consommable': 'Consommable',
+    'composants': 'Composants',
+    'energie': 'Energie',
+    'bureautique': 'Bureautique'
   }
 
-  // Sub-subcategory mapping
-  const subSubcategoryMap = {
-    // Câbles
-    'cables-reseau': 'Câbles réseau',
-    'cables-hdmi': 'Câbles HDMI',
-    'cables-usb': 'Câbles USB',
-    'cables-vga': 'Câbles VGA',
-
-    // Adaptateurs
-    'adaptateurs-usb': 'Adaptateurs USB',
-    'adaptateurs-video': 'Adaptateurs Video',
-    'hub-usb': 'Hub USB',
-    'convertisseur': 'Convertisseur',
-
-    // Video
-    'appareil-photo': 'Appareil photo',
-    'stabilisateur': 'Stabilisateur',
-    'webcam': 'Webcam',
-    'projecteur': 'Projecteur',
-
-    // Son
-    'casque-audio': 'Casque audio',
-    'micro': 'micro',
-    'haut-parleur': 'Haut-parleur',
-
-    // Equipement PC
-    'souris': 'Souris',
-    'clavier': 'Clavier',
-    'chargeur': 'Chargeur',
-    'housse-laptop': 'Housse laptop',
-    'protection-d-ecran': "Protection d'écran",
-    'film-protecteur': 'Film protecteur'
-  }
+  // Sub-subcategory mapping (currently empty as new categories don't have sub-subcategories)
+  const subSubcategoryMap = {}
 
   return {
     category: categoryMap[categorySlug] || null,

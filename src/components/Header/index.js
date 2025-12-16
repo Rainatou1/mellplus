@@ -22,7 +22,7 @@ export default function Header() {
   // Helper functions to convert database categories to URL slugs
   const getCategorySlug = (dbCategory) => {
     const slugMap = {
-      'INFORMATIQUE': 'informatique',
+      'ORDI': 'informatique',
       'PERIPHERIQUES': 'peripheriques',
       'SECURITE': 'securite',
       'RESEAUX_SERVEUR': 'reseaux-serveur',
@@ -41,131 +41,65 @@ export default function Header() {
       .replace(/^-+|-+$/g, '')
   }
  const categoriy = [
-    { name: 'Informatique', subcategories: ['PC Portable', 'PC de Bureau', 'Logiciels', 'Stockage'] },
-    { name: 'Sécurité', subcategories: ['Caméra de surveillance', 'Controle d\'accès','Detecteur','Système d\'alarme'] },
-    { name: 'Reseau&Serveur', subcategories: ['Switch','Routeur','Point d\'accès WiFi', 'Telephone IP','Serveur'] },
-    { name: 'Peripheriques', subcategories: ['Imprimante', 'Photocopieuse', 'Moniteur'] },
+    { name: 'Ordi&Serveur', subcategories: ['PC Portable', 'PC de Bureau', 'Serveur', 'All in one'] },
+    { name: 'Reseaux&Sécurité', subcategories: ['Caméra de surveillance','Gâche','Sécurité incendie', 'Réseaux cuivre','Réseaux fibre'] },
+    { name: 'Imprimante/Copieur', subcategories: ['Imprimante', 'Scanneur', 'Copieur'] },
     { name: 'Connectiques', subcategories: ['Câbles', 'Multiprise', 'Ondulateur','Adaptateurs'] },
-    { name: 'Accessoires', subcategories: ['Video', 'Son','Equipement PC', 'Stockage','Support'] },
+    { name: 'Accessoires', subcategories: ['Connectiques', 'Stockage','Multimedia', 'Consommable','Composants','Energie','Burautique'] },
     { name: 'Services', subcategories: ['Developpement Web et mobile', 'Maintenance informatique', 'Conseils expert'] }
   ];  
   // Mapping des catégories de l'interface vers la base de données
   const categoryMapping = {
-    'Informatique': 'INFORMATIQUE',
-    'Sécurité': 'SECURITE',
-    'Reseau&Serveur': 'RESEAUX_SERVEUR',
-    'Peripheriques': 'PERIPHERIQUES',
-    'Connectiques': 'CONNECTIQUES',
+    'Ordi&Serveur': 'ORDI_SERVEUR',
+    'Reseaux&Sécurité': 'RESEAUX_SECURITE',
+    'Imprimante/Copieur': 'IMPRIMANTE_COPIEUR',
     'Accessoires': 'ACCESSOIRES'
   }
 
   const categories = [
   {
-    name: 'Ordi/Serveur',
-    dbCategory: 'INFORMATIQUE',
+    name: 'Ordi&Serveur',
+    dbCategory: 'ORDI_SERVEUR',
     subcategories: [
       { name: 'PC Portable', subcategory: 'PC Portable' },
       { name: 'PC de Bureau', subcategory: 'PC de Bureau' },
-      { name: 'Logiciels', subcategory: 'Logiciels' },
-      { name: 'Stockage', subcategory: 'Stockage' }
+      { name: 'Serveur', subcategory: 'Serveur' },
+      { name: 'All in one', subcategory: 'All in one' }
     ]
   },
+
   {
-    name: 'Energie',
-    dbCategory: 'SECURITE',
+    name: 'Reseaux&Sécurité',
+    dbCategory: 'RESEAUX_SECURITE',
     subcategories: [
       { name: 'Caméra de surveillance', subcategory: 'Caméra de surveillance' },
-      { name: 'Controle d\'accès', subcategory: 'Controle d\'accès' },
-      { name: 'Detecteur', subcategory: 'Detecteur' },
-      { name: 'Système d\'alarme', subcategory: 'Système d\'alarme' }
+      { name: 'Gâche', subcategory: 'Gâche' },
+      { name: 'Sécurité incendie', subcategory: 'Sécurité incendie' },
+      { name: 'Réseaux cuivre', subcategory: 'Réseaux cuivre' },
+      { name: 'Réseaux fibre', subcategory: 'Réseaux fibre' }
     ]
   },
   {
-    name: 'Reseau/Sécurité',
-    dbCategory: 'RESEAUX_SERVEUR',
-    subcategories: [
-      { name: 'Switch', subcategory: 'Switch' },
-      { name: 'Routeur', subcategory: 'Routeur' },
-      { name: 'Point d\'accès WiFi', subcategory: 'Point d\'accès WiFi' },
-      { name: 'Telephone IP', subcategory: 'Telephone IP' },
-      { name: 'Serveur', subcategory: 'Serveur' }
-    ]
-  },
-  {
-    name: 'Imprimante',
-    dbCategory: 'PERIPHERIQUES',
+    name: 'Imprimante/Copieur',
+    dbCategory: 'IMPRIMANTE_COPIEUR',
     subcategories: [
       { name: 'Imprimantes', subcategory: 'Imprimantes' },
-      { name: 'Photocopieuses', subcategory: 'Photocopieuses' },
-      { name: 'Scanners', subcategory: 'Scanners' },
-      { name: 'Composants', subcategory: 'Composants' }
-    ]
-  },
-  {
-    name: 'Connectiques',
-    dbCategory: 'CONNECTIQUES',
-    subcategories: [
-      {
-        name: 'Câbles',
-        subcategory: 'Câbles',
-        subSubcategories: [
-          { name: 'Câbles réseau', subcategory: 'Câbles réseau' },
-          { name: 'Câbles HDMI', subcategory: 'Câbles HDMI' },
-          { name: 'Câbles USB', subcategory: 'Câbles USB' },
-          { name: 'Câbles VGA', subcategory: 'Câbles VGA' }
-        ]
-      },
-      { name: 'Multiprise', subcategory: 'Multiprise' },
-      { name: 'Ondulateur', subcategory: 'Ondulateur' },
-      {
-        name: 'Adaptateurs',
-        subcategory: 'Adaptateurs',
-        subSubcategories: [
-          { name: 'Adaptateurs USB', subcategory: 'Adaptateurs USB' },
-          { name: 'Adaptateurs Video', subcategory: 'Adaptateurs Video' },
-          { name: 'Hub USB', subcategory: 'Hub USB' },
-          { name: 'Convertisseur', subcategory: 'Convertisseur' }
-        ]
-      }
+      { name: 'Scanneur', subcategory: 'Scanners' },
+      { name: 'Copieur', subcategory: 'Composants' }
     ]
   },
   {
     name: 'Accessoires',
     dbCategory: 'ACCESSOIRES',
     subcategories: [
-      {
-        name: 'Video',
-        subcategory: 'Video',
-        subSubcategories: [
-          { name: 'Appareil photo', subcategory: 'Appareil photo' },
-          { name: 'Stabilisateur', subcategory: 'Stabilisateur' },
-          { name: 'Webcam', subcategory: 'Webcam' },
-          { name: 'Projecteur', subcategory: 'Projecteur' },
-        ]
-      },
-      {
-        name: 'Son',
-        subcategory: 'Son',
-        subSubcategories: [
-          { name: 'Casque audio', subcategory: 'Casque audio' },
-          { name: 'Micro', subcategory: 'micro' },
-          { name: 'Haut-parleur', subcategory: 'Haut-parleur' }
-        ]
-      },
-      {
-        name: 'Equipement PC',
-        subcategory: 'Equipement PC',
-        subSubcategories: [
-          { name: 'Souris', subcategory: 'Souris' },
-          { name: 'Clavier', subcategory: 'Clavier' },
-          { name: 'Chargeur', subcategory: 'Chargeur' },
-          { name: 'Housse laptop', subcategory: 'Housse laptop' },
-          { name: 'Protection d\'écran', subcategory: 'Protection d\'écran' },
-          { name: 'Film protecteur', subcategory: 'Film protecteur' }
-        ]
-      },
+      
+      { name: 'Connectique', subcategory: 'Connectiques' },
       { name: 'Stockage', subcategory: 'Stockage' },
-      { name: 'Support', subcategory: 'Support' }
+      { name: 'Multimedia', subcategory: 'Multimedia' },
+      { name: 'Consommable', subcategory: 'Consommable' },
+      { name: 'Composants', subcategory: 'Composants' },
+      { name: 'Energie', subcategory: 'Energie' },
+      { name: 'Bureautique', subcategory: 'Bureautique' }
     ]
   }
 ];
@@ -187,10 +121,16 @@ export default function Header() {
               <span className="hidden xl:inline">mellplus@mellplusniger.com</span>
               <span className="xl:hidden">mell@mell...</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <a
+              href="https://maps.app.goo.gl/G6akaNgsJYJyk1zP8?g_st=iw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 hover:text-gray-200 transition-colors cursor-pointer"
+              title="Voir notre localisation sur Google Maps"
+            >
               <MapPin className="w-4 h-4" />
               <span>Niamey, Niger</span>
-            </div>
+            </a>
           </div>
           <div className="hidden xl:flex items-center space-x-4">
             <span>Lun-Ven: 8h-18h | Sam: 8h-16h</span>
@@ -270,7 +210,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:block border-t border-blue-100 relative">
-            <div className="flex items-center space-x-4 lg:space-x-8 py-2 ">
+            <div className="flex items-center justify-center space-x-4 lg:space-x-8 py-2 ">
               <Link href="/#" className="text-blue-600 hover:text-blue-500 py-2 whitespace-nowrap">Acceuil</Link>
               {categories.map((category, index) => (
                 <div

@@ -52,7 +52,7 @@ The application uses PostgreSQL with comprehensive models for:
 
 ### Key Business Logic
 - **Mell Plus Niger**: IT services company in Niger
-- **Product Categories**: INFORMATIQUE, TELEPHONIE, CLIMATISATION, BUREAUTIQUE, GAMING, RESEAU, SECURITE, ENERGIE, ACCESSOIRES
+- **Product Categories**: ORDI_SERVEUR, RESEAUX_SECURITE, IMPRIMANTE_COPIEUR, ACCESSOIRES
 - **Service Categories**: VENTE_MATERIEL, INSTALLATION, MAINTENANCE, FORMATION, CONSEIL, DEVELOPPEMENT, RESEAU, SECURITE
 - **Quote Management**: Complete workflow from request to acceptance/rejection
 - **Inventory Tracking**: Stock levels with low-stock alerts

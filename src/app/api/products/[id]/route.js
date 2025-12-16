@@ -8,7 +8,7 @@ const updateProductSchema = z.object({
   slug: z.string().optional(),
   description: z.string().optional(),
   price: z.number().positive('Le prix doit être positif').optional(),
-  category: z.enum(['INFORMATIQUE', 'PERIPHERIQUES', 'SECURITE', 'RESEAUX_SERVEUR', 'CONNECTIQUES', 'ACCESSOIRES']).optional(),
+  category: z.enum(['ORDI_SERVEUR', 'RESEAUX_SECURITE', 'IMPRIMANTE_COPIEUR', 'ACCESSOIRES']).optional(),
   subcategory: z.string().nullable().optional(),
   subSubcategory: z.string().nullable().optional(),
   brand: z.string().optional(),
