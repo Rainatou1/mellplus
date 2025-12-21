@@ -84,7 +84,7 @@ export default function Header() {
     dbCategory: 'IMPRIMANTE_COPIEUR',
     subcategories: [
       { name: 'Imprimantes', subcategory: 'Imprimantes' },
-      { name: 'Scanneur', subcategory: 'Scanners' },
+      { name: 'Scanners', subcategory: 'Scanners' },
       { name: 'Copieur', subcategory: 'Composants' }
     ]
   },
