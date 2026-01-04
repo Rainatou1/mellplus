@@ -31,65 +31,50 @@ export default function Footer() {
             </div>
             
             <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Informatique</h5>
+              <h5 className="font-semibold mb-4 text-base md:text-lg">Ordi&Serveur</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/informatique/pc-portable" className="hover:text-white">PC Portable</Link></li>
-                <li><Link href="/products/category/informatique/pc-de-bureau" className="hover:text-white">PC de Bureau</Link></li>
-                <li><Link href="/products/category/informatique/logiciels" className="hover:text-white">Logiciels</Link></li>
-                <li><Link href="/products/category/informatique/stockage" className="hover:text-white">Stockage</Link></li>
+                <li><Link href="/products/category/ordi_serveur/pc-portable" className="hover:text-white">PC Portable</Link></li>
+                <li><Link href="/products/category/ORDI_SERVEUR/pc-de-bureau" className="hover:text-white">PC de Bureau</Link></li>
+                <li><Link href="/products/category/informatique/logiciels" className="hover:text-white">Serveur</Link></li>
+                <li><Link href="/products/category/informatique/stockage" className="hover:text-white">All in one</Link></li>
 
               </ul>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Sécurité</h5>
+              <h5 className="font-semibold mb-4 text-base md:text-lg">Réseaux&Sécurité</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
                 <li><Link href="/products/category/securite/camera-de-surveillance" className="hover:text-white">Caméra de surveillance</Link></li>
-                <li><Link href="/products/category/securite/controle-d-acces" className="hover:text-white">Controle d&lsquo;accès</Link></li>
-                <li><Link href="/products/category/securite/detecteur" className="hover:text-white">Detecteur</Link></li>
-                <li><Link href="/products/category/securite/systeme-d-alarme" className="hover:text-white">Système d&lsquo;alarme</Link></li>
+                <li><Link href="/products/category/securite/controle-d-acces" className="hover:text-white">Gache</Link></li>
+                <li><Link href="/products/category/securite/detecteur" className="hover:text-white">Sécurité incendie</Link></li>
+                <li><Link href="/products/category/securite/systeme-d-alarme" className="hover:text-white">Réseaux cuivre</Link></li>
+                <li><Link href="/products/category/securite/systeme-d-alarme" className="hover:text-white">Réseaux fibre</Link></li>
+
 
               </ul>
-              <Link href="/promotions"><h5 className="font-semibold mb-4 text-base md:text-base">Nos Promos</h5></Link>
 
             </div>
             <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Réseau & Serveur</h5>
-              <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/reseaux-serveur/switch" className="hover:text-white">Switch</Link></li>
-                <li><Link href="/products/category/reseaux-serveur/routeur" className="hover:text-white">Routeur</Link></li>
-                <li><Link href="/products/category/reseaux-serveur/point-d-acces-wifi" className="hover:text-white">Point d&lsquo;accès WiFi</Link></li>
-                <li><Link href="/products/category/reseaux-serveur/telephone-ip" className="hover:text-white">Telephone IP</Link></li>
-                <li><Link href="/products/category/reseaux-serveur/serveur" className="hover:text-white">Serveur</Link></li>
-
-              </ul>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Peripheriques</h5>
+             
+              <h5 className="font-semibold mb-4 text-base md:text-lg">Imprimante&Copieur</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
                 <li><Link href="/products/category/peripheriques/imprimantes" className="hover:text-white">Imprimante</Link></li>
-                <li><Link href="/products/category/peripheriques/photocopieuse" className="hover:text-white">Photocopieuse</Link></li>
-                <li><Link href="/products/category/peripheriques/composants" className="hover:text-white">Composants</Link></li>
-
-              </ul>
-              <Link href="/service"><h5 className="font-semibold mb-4 text-base md:text-base">Nos Services</h5></Link>
-
-            </div>
-            <div>
-              <h5 className="font-semibold mb-3 text-base md:text-lg">Connectiques</h5>
-              <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/connectiques/cables" className="hover:text-white">Cables</Link></li>
-                <li><Link href="/products/category/connectiques/multiprise" className="hover:text-white">Multiprise</Link></li>
-                <li><Link href="/products/category/connectiques/ondulateur" className="hover:text-white">Ondulateurs</Link></li>
-                <li><Link href="/products/category/connectiques/adaptateurs" className="hover:text-white">Adaptateurs</Link></li>
+                <li><Link href="/products/category/peripheriques/photocopieuse" className="hover:text-white">Scanner</Link></li>
+                <li><Link href="/products/category/peripheriques/composants" className="hover:text-white">Copieur</Link></li>
 
               </ul>
               <h5 className="font-semibold mb-3 text-base md:text-lg">Accessoires</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/accessoires/video" className="hover:text-white">Video</Link></li>
-                <li><Link href="/products/category/accessoires/son" className="hover:text-white">Son</Link></li>
-                <li><Link href="/products/category/accessoires/equipement-pc" className="hover:text-white">Equipements PC</Link></li>
+                <li><Link href="/products/category/accessoires/connectiques" className="hover:text-white">Connectique</Link></li>
                 <li><Link href="/products/category/accessoires/stockage" className="hover:text-white">Stockage</Link></li>
-                <li><Link href="/products/category/accessoires/support" className="hover:text-white">Support</Link></li>
-
+                <li><Link href="/products/category/accessoires/Multimédia" className="hover:text-white">Multimédia</Link></li>
+                <li><Link href="/products/category/accessoires/Consommable" className="hover:text-white">Consommable</Link></li>
+                <li><Link href="/products/category/accessoires/Composants" className="hover:text-white">Composants</Link></li>
+                <li><Link href="/products/category/accessoires/Energie" className="hover:text-white">Energie</Link></li>
+                <li><Link href="/products/category/accessoires/Bureautique" className="hover:text-white">Bureautique</Link></li>
               </ul>
-
             </div>
+            
+             
+              
+              
              {/*
               <Link href="/service"><h5 className="font-semibold mb-4 text-base md:text-lg">Nos Services</h5></Link>
               <Link href="/promotions"><h5 className="font-semibold mb-4 text-base md:text-lg">Nos Promos</h5></Link>*/}
@@ -101,7 +86,10 @@ export default function Footer() {
               </ul>*/}
             
             <div>
-              <h5 className="font-semibold mb-4 text-base md:text-lg">Politiques</h5>
+              <Link href="/service"><h5 className="font-semibold mb-4 text-base md:text-base">Nos Services</h5></Link>
+              <Link href="/promotions"><h5 className="font-semibold mb-4 text-base md:text-base">Nos Promos</h5></Link>
+      
+              <h5 className="font-semibold mb-4 text-base md:text-lg">Nos politiques</h5>
               <ul className="space-y-2 text-gray-400 text-sm md:text-base">
                 <li><a href="/cgv" className="hover:text-white">CGV</a></li>
                 <li><a href="/cgv" className="hover:text-white">Mentions Legales</a></li>

@@ -550,19 +550,20 @@ function parseSlug(slug) {
 
     // Reseaux&Sécurité
     'camera-de-surveillance': 'Caméra de surveillance',
-    'gache': 'Gache',
+    'gache': 'Gâche',
     'securite-incendie': 'Sécurité incendie',
     'reseaux-cuivre': 'Réseaux cuivre',
     'reseaux-fibre': 'Réseaux fibre',
 
     // Imprimante/Copieur
     'imprimantes': 'Imprimantes',
-    'scanneur': 'Scanneur',
+    'scanneur': 'Scanners',
+    'scanners': 'Scanners',
     'copieur': 'Copieur',
 
     // Accessoires
-    'connectique': 'Connectique',
-    'connectiques': 'Connectique',
+    'connectique': 'Connectiques',
+    'connectiques': 'Connectiques',
     'stockage': 'Stockage',
     'multimedia': 'Multimedia',
     'consommable': 'Consommable',

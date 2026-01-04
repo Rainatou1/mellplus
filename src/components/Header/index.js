@@ -22,12 +22,14 @@ export default function Header() {
   // Helper functions to convert database categories to URL slugs
   const getCategorySlug = (dbCategory) => {
     const slugMap = {
-      'ORDI_SERVEUR': 'ordi-serveur',
-      'RESEAUX_SECURITE': 'reseaux-securite',
-      'IMPRIMANTE_COPIEUR': 'imprimante-copieur',
+      'ORDI': 'informatique',
+      'PERIPHERIQUES': 'peripheriques',
+      'SECURITE': 'securite',
+      'RESEAUX_SERVEUR': 'reseaux-serveur',
+      'CONNECTIQUES': 'connectiques',
       'ACCESSOIRES': 'accessoires'
     }
-    return slugMap[dbCategory] || dbCategory.toLowerCase().replace(/_/g, '-')
+    return slugMap[dbCategory] || dbCategory.toLowerCase()
   }
 
   const getSubcategorySlug = (subcategory) => {
