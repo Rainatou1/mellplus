@@ -110,24 +110,18 @@ export default function CategoryPage({ params }) {
       )
     } else if (subcategory) {
       // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
-      // Gérer les variations de format (majuscules/minuscules, singulier/pluriel)
+      // Gérer les variations de format (anciennes valeurs avec espaces vs nouvelles clés en MAJUSCULES)
       filtered = filtered.filter(product => {
         if (!product.subcategory) return false
 
-        const productSubcat = product.subcategory.toLowerCase()
-        const targetSubcat = subcategory.toLowerCase()
+        // Correspondance exacte (pour les nouvelles clés en MAJUSCULES)
+        if (product.subcategory === subcategory) return true
 
-        // Correspondance exacte
-        if (productSubcat === targetSubcat) return true
-
-        // Correspondance avec variations communes
-        const variations = {
-          'imprimantes': ['imprimante', 'imprimantes'],
-          'imprimante': ['imprimante', 'imprimantes']
-        }
-
-        if (variations[targetSubcat]) {
-          return variations[targetSubcat].some(v => productSubcat === v)
+        // Fallback: si le produit a une ancienne valeur, chercher la correspondance
+        // En convertissant la clé en nom d'affichage depuis categoryHierarchy
+        if (product.category && CATEGORY_HIERARCHY[product.category]?.subcategories?.[subcategory]) {
+          const expectedName = CATEGORY_HIERARCHY[product.category].subcategories[subcategory].name
+          if (product.subcategory === expectedName) return true
         }
 
         return false
@@ -521,11 +515,14 @@ function parseSlug(slug) {
 
   const [categorySlug, subcategorySlug, subSubcategorySlug] = slug
 
-  // Map URL slugs to database categories
+  // Map URL slugs to database categories (support both hyphens and underscores)
   const categoryMap = {
     'ordi-serveur': 'ORDI_SERVEUR',
+    'ordi_serveur': 'ORDI_SERVEUR',
     'reseaux-securite': 'RESEAUX_SECURITE',
+    'reseaux_securite': 'RESEAUX_SECURITE',
     'imprimante-copieur': 'IMPRIMANTE_COPIEUR',
+    'imprimante_copieur': 'IMPRIMANTE_COPIEUR',
     'accessoires': 'ACCESSOIRES'
   }
 
@@ -549,36 +546,43 @@ function parseSlug(slug) {
       .replace(/\bPoint\s+D\s/g, "Point d'")
   }
 
-  // Direct mapping from slug to database values
+  // Direct mapping from slug to database values (using UPPERCASE keys from categoryHierarchy.js)
   const subcategoryMap = {
-    // Ordi&Serveur
-    'pc-portable': 'PC Portable',
-    'pc-de-bureau': 'PC de Bureau',
-    'serveur': 'Serveur',
-    'all-in-one': 'All in one',
+    // Ordi&Serveur (support both hyphens and underscores)
+    'pc-portable': 'PC_PORTABLE',
+    'pc_portable': 'PC_PORTABLE',
+    'pc-de-bureau': 'PC_DE_BUREAU',
+    'pc_de_bureau': 'PC_DE_BUREAU',
+    'serveur': 'SERVEUR',
+    'all-in-one': 'ALL_IN_ONE',
+    'all_in_one': 'ALL_IN_ONE',
 
     // Reseaux&Sécurité
-    'camera-de-surveillance': 'Caméra de surveillance',
-    'gache': 'Gâche',
-    'securite-incendie': 'Sécurité incendie',
-    'reseaux-cuivre': 'Réseaux cuivre',
-    'reseaux-fibre': 'Réseaux fibre',
+    'camera-de-surveillance': 'CAMERA_SURVEILLANCE',
+    'camera_de_surveillance': 'CAMERA_SURVEILLANCE',
+    'gache': 'GACHE',
+    'securite-incendie': 'SECURITE_INCENDIE',
+    'securite_incendie': 'SECURITE_INCENDIE',
+    'reseaux-cuivre': 'RESEAUX_CUIVRE',
+    'reseaux_cuivre': 'RESEAUX_CUIVRE',
+    'reseaux-fibre': 'RESEAUX_FIBRE',
+    'reseaux_fibre': 'RESEAUX_FIBRE',
 
     // Imprimante/Copieur
-    'imprimantes': 'Imprimantes',
-    'scanneur': 'Scanners',
-    'scanners': 'Scanners',
-    'copieur': 'Copieur',
+    'imprimantes': 'IMPRIMANTES',
+    'scanneur': 'SCANNEUR',
+    'scanners': 'SCANNEUR',
+    'copieur': 'COPIEUR',
 
     // Accessoires
-    'connectique': 'Connectiques',
-    'connectiques': 'Connectiques',
-    'stockage': 'Stockage',
-    'multimedia': 'Multimedia',
-    'consommable': 'Consommable',
-    'composants': 'Composants',
-    'energie': 'Energie',
-    'bureautique': 'Bureautique'
+    'connectique': 'CONNECTIQUES',
+    'connectiques': 'CONNECTIQUES',
+    'stockage': 'STOCKAGE',
+    'multimedia': 'MULTIMEDIA',
+    'consommable': 'CONSOMMABLE',
+    'composants': 'COMPOSANTS',
+    'energie': 'ENERGIE',
+    'bureautique': 'BUREAUTIQUE'
   }
 
   // Sub-subcategory mapping (currently empty as new categories don't have sub-subcategories)

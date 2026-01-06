@@ -33,42 +33,42 @@ export default function Footer() {
             <div>
               <h5 className="font-semibold mb-4 text-base md:text-lg">Ordi&Serveur</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/ordi_serveur/pc-portable" className="hover:text-white">PC Portable</Link></li>
-                <li><Link href="/products/category/ORDI_SERVEUR/pc-de-bureau" className="hover:text-white">PC de Bureau</Link></li>
-                <li><Link href="/products/category/informatique/logiciels" className="hover:text-white">Serveur</Link></li>
-                <li><Link href="/products/category/informatique/stockage" className="hover:text-white">All in one</Link></li>
+                <li><Link href="/products/category/ordi-serveur/pc-portable" className="hover:text-white">PC Portable</Link></li>
+                <li><Link href="/products/category/ordi-serveur/pc-de-bureau" className="hover:text-white">PC de Bureau</Link></li>
+                <li><Link href="/products/category/ordi-serveur/serveur" className="hover:text-white">Serveur</Link></li>
+                <li><Link href="/products/category/ordi-serveur/all-in-one" className="hover:text-white">All in one</Link></li>
 
               </ul>
               <h5 className="font-semibold mb-4 text-base md:text-lg">Réseaux&Sécurité</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/securite/camera-de-surveillance" className="hover:text-white">Caméra de surveillance</Link></li>
-                <li><Link href="/products/category/securite/controle-d-acces" className="hover:text-white">Gache</Link></li>
-                <li><Link href="/products/category/securite/detecteur" className="hover:text-white">Sécurité incendie</Link></li>
-                <li><Link href="/products/category/securite/systeme-d-alarme" className="hover:text-white">Réseaux cuivre</Link></li>
-                <li><Link href="/products/category/securite/systeme-d-alarme" className="hover:text-white">Réseaux fibre</Link></li>
+                <li><Link href="/products/category/reseaux-securite/camera-de-surveillance" className="hover:text-white">Caméra de surveillance</Link></li>
+                <li><Link href="/products/category/reseaux-securite/gache" className="hover:text-white">Gache</Link></li>
+                <li><Link href="/products/category/reseaux-securite/securite-incendie" className="hover:text-white">Sécurité incendie</Link></li>
+                <li><Link href="/products/category/reseaux-securite/reseaux-cuivre" className="hover:text-white">Réseaux cuivre</Link></li>
+                <li><Link href="/products/category/reseaux-securite/reseaux-fibre" className="hover:text-white">Réseaux fibre</Link></li>
 
 
               </ul>
 
             </div>
             <div>
-             
+
               <h5 className="font-semibold mb-4 text-base md:text-lg">Imprimante&Copieur</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
-                <li><Link href="/products/category/peripheriques/imprimantes" className="hover:text-white">Imprimante</Link></li>
-                <li><Link href="/products/category/peripheriques/photocopieuse" className="hover:text-white">Scanner</Link></li>
-                <li><Link href="/products/category/peripheriques/composants" className="hover:text-white">Copieur</Link></li>
+                <li><Link href="/products/category/imprimante-copieur/imprimantes" className="hover:text-white">Imprimante</Link></li>
+                <li><Link href="/products/category/imprimante-copieur/scanneur" className="hover:text-white">Scanner</Link></li>
+                <li><Link href="/products/category/imprimante-copieur/copieur" className="hover:text-white">Copieur</Link></li>
 
               </ul>
               <h5 className="font-semibold mb-3 text-base md:text-lg">Accessoires</h5>
               <ul className="space-y-1 text-gray-400 text-sm md:text-sm">
                 <li><Link href="/products/category/accessoires/connectiques" className="hover:text-white">Connectique</Link></li>
                 <li><Link href="/products/category/accessoires/stockage" className="hover:text-white">Stockage</Link></li>
-                <li><Link href="/products/category/accessoires/Multimédia" className="hover:text-white">Multimédia</Link></li>
-                <li><Link href="/products/category/accessoires/Consommable" className="hover:text-white">Consommable</Link></li>
-                <li><Link href="/products/category/accessoires/Composants" className="hover:text-white">Composants</Link></li>
-                <li><Link href="/products/category/accessoires/Energie" className="hover:text-white">Energie</Link></li>
-                <li><Link href="/products/category/accessoires/Bureautique" className="hover:text-white">Bureautique</Link></li>
+                <li><Link href="/products/category/accessoires/multimedia" className="hover:text-white">Multimédia</Link></li>
+                <li><Link href="/products/category/accessoires/consommable" className="hover:text-white">Consommable</Link></li>
+                <li><Link href="/products/category/accessoires/composants" className="hover:text-white">Composants</Link></li>
+                <li><Link href="/products/category/accessoires/energie" className="hover:text-white">Energie</Link></li>
+                <li><Link href="/products/category/accessoires/bureautique" className="hover:text-white">Bureautique</Link></li>
               </ul>
             </div>
             
