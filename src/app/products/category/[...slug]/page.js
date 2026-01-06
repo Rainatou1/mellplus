@@ -199,8 +199,17 @@ export default function CategoryPage({ params }) {
       ? CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.name
       : CATEGORY_HIERARCHY[category]?.name
 
-  const config = categoryConfig[category] || categoryConfig['ORDI_SERVEUR']
-  const IconComponent = config.icon
+  //const config = categoryConfig[category] || categoryConfig['INFORMATIQUE']
+  //const IconComponent = config.icon
+  const DEFAULT_CATEGORY_CONFIG = {
+  name: 'Produits',
+  color: 'from-gray-600 to-gray-800',
+  icon: Monitor,
+  bannerText: 'Découvrez nos produits'
+}
+
+const config = categoryConfig[category] ?? DEFAULT_CATEGORY_CONFIG
+const IconComponent = config.icon
 
   if (loading) {
     return (
