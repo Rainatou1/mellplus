@@ -391,7 +391,7 @@ function BestSellerProductCard({ product }) {
           width={300}
           height={200}
           unoptimized
-          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
             e.target.src = '/images/ordi.jpg'
           }}

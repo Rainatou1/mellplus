@@ -469,7 +469,7 @@ const MellPlusNiger = () => {
                       width={300}
                       height={200}
                       unoptimized
-                      className="w-full h-40 md:h-48 object-contain"
+                      className="w-full h-40 md:h-48 object-cover"
                       onError={(e) => {
                         e.target.src = '/images/ordi.jpg'
                       }}
@@ -645,7 +645,7 @@ const MellPlusNiger = () => {
                       width={300}
                       height={200}
                       unoptimized
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
 
                     {/* Badge de stock */}
