@@ -199,7 +199,7 @@ export default function CategoryPage({ params }) {
       ? CATEGORY_HIERARCHY[category]?.subcategories?.[subcategory]?.name
       : CATEGORY_HIERARCHY[category]?.name
 
-  const config = categoryConfig[category] || categoryConfig['INFORMATIQUE']
+  const config = categoryConfig[category] || categoryConfig['ORDI_SERVEUR']
   const IconComponent = config.icon
 
   if (loading) {
