@@ -448,7 +448,7 @@ const MellPlusNiger = () => {
                 </Link>
               </div>
           {bestSellerLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
                   <div className="h-40 md:h-48 bg-gray-200 rounded mb-4"></div>
@@ -459,7 +459,7 @@ const MellPlusNiger = () => {
               ))}
             </div>
           ) : bestSellerProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
               {bestSellerProducts.map((product) => (
                 <div key={product.id} className="bg-white border-1 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                   <div className="relative">
@@ -616,7 +616,7 @@ const MellPlusNiger = () => {
                 </Link>
               </div>
               {promoLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                   {[...Array(8)].map((_, i) => (
                     <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
                       <div className="h-48 bg-gray-200 rounded mb-4"></div>
@@ -627,7 +627,7 @@ const MellPlusNiger = () => {
                   ))}
                 </div>
               ) : promoProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
               {promoProducts.map((product) => (
                 <div key={product.id} className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-1 border-gray-300 relative flex flex-col">
                   {/* Badge de réduction */}

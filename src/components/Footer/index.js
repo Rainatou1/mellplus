@@ -14,21 +14,22 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-2">
             {/* Logo et description - Prend toute la largeur sur mobile */}
             <div className="lg:col-span-1 col-span-1 md:col-span-2 lg:col-span-1">
-              <div className="flex items-center mb-4">
-                <div className=" text-white p-2 md:p-3 rounded-lg mr-2 md:mr-3">
-                    <Image
-                      width={100}
-                      height={90}
-                      src="/images/logo.png"
-                      alt="logo"
-                      className="w-28 h-22 md:w-44 md:h-34" />
+              <div className="flex items-start gap-3 mb-4">
+                <div className="flex-shrink-0">
+                  <Image
+                    width={80}
+                    height={70}
+                    src="/images/logo.png"
+                    alt="logo"
+                    className="w-20 h-18 md:w-28 md:h-24" />
                 </div>
-
+                <div className="flex-1">
+                  <h4 className="text-base md:text-xl font-bold mb-1 md:mb-2">Mell Plus Niger</h4>
+                  <p className="text-gray-400 text-xs md:text-base leading-tight">
+                    Votre partenaire de confiance pour tous vos besoins en matériel informatique et électronique au Niger.
+                  </p>
+                </div>
               </div>
-              <h4 className="text-lg md:text-xl font-bold">Mell Plus Niger</h4>
-              <p className="text-gray-400 mb-4 text-sm md:text-base">
-                Votre partenaire de confiance pour tous vos besoins en matériel informatique et électronique au Niger.
-              </p>
             </div>
 
             {/* Grille 2 colonnes sur mobile pour les catégories */}
