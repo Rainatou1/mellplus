@@ -5,7 +5,7 @@ import { MessageCircle, Star } from 'lucide-react';
 
 const FloatingButtons = () => {
   return (
-    <div className="fixed right-4 md:right-6 top-20 md:top-24 z-50 flex flex-col gap-3">
+    <div className="fixed right-4 md:right-6 bottom-20 md:bottom-24 z-50 flex flex-col gap-3">
       {/* Bouton Contact */}
       <Link href="/contact">
         <button
