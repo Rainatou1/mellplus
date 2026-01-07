@@ -212,3 +212,121 @@ export async function sendContactConfirmation(contactData) {
     return { success: false, error: error.message }
   }
 }
+
+// Template HTML pour l'alerte de connexion
+const createLoginAlertTemplate = (loginData) => {
+  const { adminEmail, success, ip, userAgent, timestamp, failedEmail } = loginData
+
+  const statusColor = success ? '#059669' : '#dc2626'
+  const statusIcon = success ? '✅' : '⚠️'
+  const statusText = success ? 'Connexion réussie' : 'Tentative de connexion échouée'
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Alerte de connexion - Mell Plus Niger Admin</title>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: ${statusColor}; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+        .field { margin-bottom: 15px; }
+        .label { font-weight: bold; color: #374151; }
+        .value { background: white; padding: 10px; border-radius: 4px; border-left: 4px solid ${statusColor}; }
+        .warning { background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0; }
+        .footer { margin-top: 20px; padding: 15px; background: #1f2937; color: white; text-align: center; border-radius: 8px; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>${statusIcon} ${statusText}</h1>
+          <p>Alerte de sécurité - Panneau d'administration Mell Plus</p>
+        </div>
+
+        <div class="content">
+          ${!success ? `
+          <div class="warning">
+            <strong>⚠️ Attention!</strong> Une tentative de connexion échouée a été détectée sur votre compte administrateur.
+          </div>
+          ` : ''}
+
+          <div class="field">
+            <div class="label">📧 Compte concerné:</div>
+            <div class="value">${success ? adminEmail : failedEmail}</div>
+          </div>
+
+          <div class="field">
+            <div class="label">🕒 Date et heure:</div>
+            <div class="value">${new Date(timestamp).toLocaleString('fr-FR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+            })}</div>
+          </div>
+
+          <div class="field">
+            <div class="label">🌐 Adresse IP:</div>
+            <div class="value">${ip || 'Non disponible'}</div>
+          </div>
+
+          <div class="field">
+            <div class="label">💻 Navigateur/Appareil:</div>
+            <div class="value">${userAgent || 'Non disponible'}</div>
+          </div>
+
+          ${!success ? `
+          <div class="warning">
+            <p><strong>Si ce n'était pas vous:</strong></p>
+            <ul>
+              <li>Changez immédiatement votre mot de passe</li>
+              <li>Vérifiez les activités récentes sur votre compte</li>
+              <li>Contactez l'équipe technique si nécessaire</li>
+            </ul>
+          </div>
+          ` : `
+          <div class="field">
+            <div class="label">✅ Statut:</div>
+            <div class="value">Connexion réussie. Si ce n'était pas vous, changez votre mot de passe immédiatement.</div>
+          </div>
+          `}
+        </div>
+
+        <div class="footer">
+          <p><strong>Mell Plus Niger - Administration</strong></p>
+          <p>Cet email a été envoyé automatiquement pour la sécurité de votre compte</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+}
+
+// Fonction pour envoyer une alerte de connexion
+export async function sendLoginAlert(loginData) {
+  try {
+    const transporter = createTransporter()
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: loginData.adminEmail || loginData.failedEmail,
+      subject: loginData.success
+        ? '✅ Nouvelle connexion à votre compte admin - Mell Plus'
+        : '⚠️ Tentative de connexion échouée - Mell Plus',
+      html: createLoginAlertTemplate(loginData)
+    }
+
+    const result = await transporter.sendMail(mailOptions)
+    console.log('Alerte de connexion envoyée:', result.messageId)
+    return { success: true, messageId: result.messageId }
+
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi de l\'alerte:', error)
+    return { success: false, error: error.message }
+  }
+}
