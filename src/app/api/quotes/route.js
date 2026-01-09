@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { sendQuoteNotification, sendQuoteConfirmation } from '@/lib/email'
+export const runtime = "nodejs";
 
 // Schéma de validation pour un item de devis
 const quoteItemSchema = z.object({
@@ -64,17 +66,17 @@ export async function POST(request) {
         company: validatedData.company,
         address: validatedData.address,
         city: validatedData.city || 'Niamey',
-        
+
         // Détails de la demande
         type: validatedData.type.toUpperCase(),
         subject,
         message: validatedData.message || '',
         budget: validatedData.budget,
         deadline: validatedData.deadline ? new Date(validatedData.deadline) : null,
-        
+
         // Source et tracking
         source: request.headers.get('referer') || 'direct',
-        
+
         // Créer les items associés
         items: {
           create: validatedData.items.map(item => ({
@@ -91,9 +93,29 @@ export async function POST(request) {
         items: true
       }
     })
-    
+
+    // Envoyer les emails en arrière-plan (ne pas bloquer la réponse)
+    try {
+      // Vérifier si les credentials email sont configurés
+      if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD &&
+          process.env.EMAIL_PASSWORD !== 'your-app-password-here') {
+        // Email de notification à l'admin
+        await sendQuoteNotification(quoteRequest)
+
+        // Email de confirmation au client
+        await sendQuoteConfirmation(quoteRequest)
+
+        console.log('Emails de devis envoyés avec succès pour:', quoteRequest.id)
+      } else {
+        console.log('Configuration email manquante - emails non envoyés pour le devis:', quoteRequest.id)
+      }
+    } catch (emailError) {
+      console.error('Erreur lors de l\'envoi des emails de devis:', emailError)
+      // On continue même si l'email échoue - le devis est sauvegardé
+    }
+
     return NextResponse.json(
-      { 
+      {
         success: true,
         message: 'Demande de devis envoyée avec succès',
         quoteId: quoteRequest.id,

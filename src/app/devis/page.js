@@ -7,6 +7,8 @@ const ContactDevisPage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('contact');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -28,36 +30,71 @@ const ContactDevisPage = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  console.log('Formulaire soumis:', formData);
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
 
-  const formDataToSend = new FormData();
-  Object.entries(formData).forEach(([key, value]) => {
-    formDataToSend.append(key, value);
-  });
+    // Préparer les données pour l'API
+    const quoteData = {
+      name: `${formData.nom} ${formData.prenom}`,
+      email: formData.email,
+      phone: formData.telephone,
+      company: formData.entreprise || undefined,
+      type: 'mixed', // Type générique
+      subject: `Demande de devis - ${formData.typeDevis}`,
+      message: formData.message,
+      budget: formData.budget || undefined,
+      deadline: formData.urgence === 'urgente' ?
+        new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() :
+        new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+      items: [{
+        type: 'custom',
+        name: `Demande ${formData.typeDevis}`,
+        description: formData.message,
+        quantity: 1,
+        unitPrice: 0,
+        totalPrice: 0
+      }]
+    };
 
-  try {
-    const response = await fetch('https://formspree.io/f/xvgqvjwr', {
-      method: 'POST',
-      body: formDataToSend,
-      headers: {
-        Accept: 'application/json',
-      },
-    });
+    try {
+      const response = await fetch('/api/quotes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (response.ok) {
-      alert('Votre demande a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.');
-    } else {
-      alert('Une erreur est survenue. Veuillez réessayer.');
-      console.error(result);
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          nom: '',
+          prenom: '',
+          email: '',
+          telephone: '',
+          entreprise: '',
+          message: '',
+          typeDevis: 'informatique',
+          budget: '',
+          urgence: 'normale'
+        });
+        alert('✅ Votre demande de devis a été envoyée avec succès ! Nous vous répondrons dans les plus brefs délais.');
+      } else {
+        setSubmitStatus('error');
+        alert('❌ Une erreur est survenue. Veuillez réessayer.');
+        console.error(result);
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du formulaire:', error);
+      setSubmitStatus('error');
+      alert('❌ Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    console.error('Erreur lors de l’envoi du formulaire:', error);
-    alert('Une erreur est survenue. Veuillez réessayer.');
-  }
-};
+  };
 
   
 
@@ -301,10 +338,24 @@ const ContactDevisPage = () => {
                   <div className="pt-4">
                     <button
                       type="submit"
-                      className="w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+                      disabled={isSubmitting}
+                      className={`w-full md:w-auto px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2 ${
+                        isSubmitting
+                          ? 'bg-gray-400 cursor-not-allowed'
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
+                      }`}
                     >
-                      <Send className="w-5 h-5" />
-                      <span>Demander un devis</span>
+                      {isSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                          <span>Envoi en cours...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5" />
+                          <span>Demander un devis</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </form>

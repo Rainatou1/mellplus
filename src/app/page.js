@@ -386,7 +386,7 @@ const MellPlusNiger = () => {
 
         {/* Featured Products with Banners */}
         <div className="py-8 md:py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-2 md:px-4">
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Left Banners - Hidden on small screens */}
             <div className="hidden lg:block lg:w-1/4 space-y-4">
@@ -459,7 +459,7 @@ const MellPlusNiger = () => {
               ))}
             </div>
           ) : bestSellerProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4">
               {bestSellerProducts.map((product) => (
                 <div key={product.id} className="bg-white border-1 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                   <div className="relative">
@@ -567,7 +567,7 @@ const MellPlusNiger = () => {
 
       {/* Promotions Section with Banner */}
       <div className="py-8 md:py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-2 md:px-4">
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Left Banner - Hidden on small screens */}
             <div className="hidden lg:block lg:w-1/4">
@@ -627,7 +627,7 @@ const MellPlusNiger = () => {
                   ))}
                 </div>
               ) : promoProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4">
               {promoProducts.map((product) => (
                 <div key={product.id} className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-1 border-gray-300 relative flex flex-col">
                   {/* Badge de réduction */}
