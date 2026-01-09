@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer'
 
 // Configuration du service email
-const createTransporter = () => {
+const createTransport = () => {
   // Configuration SMTP plus robuste
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false, // true pour 465, false pour les autres ports
@@ -107,7 +107,7 @@ const createContactEmailTemplate = (contactData) => {
 // Fonction pour envoyer un email de notification
 export async function sendContactNotification(contactData) {
   try {
-    const transporter = createTransporter()
+    const transporter = createTransport()
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -144,7 +144,7 @@ Date: ${new Date(contactData.createdAt).toLocaleString('fr-FR')}
 // Fonction pour envoyer un email de confirmation automatique au visiteur
 export async function sendContactConfirmation(contactData) {
   try {
-    const transporter = createTransporter()
+    const transporter = createTransport()
 
     const confirmationTemplate = `
       <!DOCTYPE html>
@@ -310,7 +310,7 @@ const createLoginAlertTemplate = (loginData) => {
 // Fonction pour envoyer une alerte de connexion
 export async function sendLoginAlert(loginData) {
   try {
-    const transporter = createTransporter()
+    const transporter = createTransport()
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -330,3 +330,5 @@ export async function sendLoginAlert(loginData) {
     return { success: false, error: error.message }
   }
 }
+
+

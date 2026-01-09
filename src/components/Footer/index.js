@@ -10,11 +10,11 @@ export default function Footer() {
   return (
      
       <footer className="bg-gray-800 text-white py-8 md:py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-2">
+        <div className="max-w-7xl mx-auto px-2 md:px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-2">
             {/* Logo et description - Prend toute la largeur sur mobile */}
             <div className="lg:col-span-1 col-span-1 md:col-span-2 lg:col-span-1">
-              <div className="flex items-start gap-3 mb-4">
+              <div className="flex items-start gap-2 mb-4 md:flex-col md:items-start md:gap-3">
                 <div className="flex-shrink-0">
                   <Image
                     width={80}
@@ -23,7 +23,7 @@ export default function Footer() {
                     alt="logo"
                     className="w-20 h-18 md:w-28 md:h-24" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 md:flex-none md:w-full">
                   <h4 className="text-base md:text-xl font-bold mb-1 md:mb-2">Mell Plus Niger</h4>
                   <p className="text-gray-400 text-xs md:text-base leading-tight">
                     Votre partenaire de confiance pour tous vos besoins en matériel informatique et électronique au Niger.
@@ -33,7 +33,7 @@ export default function Footer() {
             </div>
 
             {/* Grille 2 colonnes sur mobile pour les catégories */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-0">
+            <div className="col-span-1 md:col-span-2 lg:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-0">
               <div>
                 <h5 className="font-semibold mb-2 md:mb-4 text-sm md:text-lg">Ordi&Serveur</h5>
                 <ul className="space-y-1 text-gray-400 text-xs md:text-sm">
@@ -56,7 +56,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="col-span-1 md:col-span-2 lg:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-0">
+            <div className="col-span-1 md:col-span-2 lg:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-0">
               <div>
                 <h5 className="font-semibold mb-2 md:mb-4 text-sm md:text-lg">Imprimante&Copieur</h5>
                 <ul className="space-y-1 text-gray-400 text-xs md:text-sm">

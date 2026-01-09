@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { sendContactNotification, sendContactConfirmation } from '@/lib/email'
+export const runtime = "nodejs";
+
 
 // Schéma de validation avec Zod
 const contactSchema = z.object({
