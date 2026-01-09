@@ -386,8 +386,8 @@ const MellPlusNiger = () => {
 
         {/* Featured Products with Banners */}
         <div className="py-8 md:py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-2 md:px-4">
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-6 lg:px-4">
             {/* Left Banners - Hidden on small screens */}
             <div className="hidden lg:block lg:w-1/4 space-y-4">
               {/* Services Banner */}
@@ -438,7 +438,7 @@ const MellPlusNiger = () => {
 
             {/* Featured Products Section */}
             <section className="flex-1">
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
+              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8 px-4 lg:px-0">
                 <div>
                   <h3 className="text-xl text-gray-800 md:text-2xl font-bold mb-2">🏆 Produits en vedette</h3>
                   <p className="text-gray-600 text-sm md:text-base">Nos produits les plus populaires</p>
@@ -448,7 +448,7 @@ const MellPlusNiger = () => {
                 </Link>
               </div>
           {bestSellerLoading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4 lg:px-0">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
                   <div className="h-40 md:h-48 bg-gray-200 rounded mb-4"></div>
@@ -459,7 +459,7 @@ const MellPlusNiger = () => {
               ))}
             </div>
           ) : bestSellerProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4 px-4 lg:px-0">
               {bestSellerProducts.map((product) => (
                 <div key={product.id} className="bg-white border-1 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                   <div className="relative">
@@ -554,7 +554,7 @@ const MellPlusNiger = () => {
               ))}
             </div>
           ) : (
-            <div className="bg-white rounded-lg p-12 text-center">
+            <div className="bg-white rounded-lg p-12 text-center mx-4 lg:mx-0">
               <div className="text-6xl mb-4">🏆</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucun produit vedette pour le moment</h3>
               <p className="text-gray-600">Les produits best sellers apparaîtront bientôt ici !</p>
@@ -567,8 +567,8 @@ const MellPlusNiger = () => {
 
       {/* Promotions Section with Banner */}
       <div className="py-8 md:py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-2 md:px-4">
-          <div className="flex flex-col lg:flex-row gap-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-6 lg:px-4">
             {/* Left Banner - Hidden on small screens */}
             <div className="hidden lg:block lg:w-1/4">
               <div className="bg-gradient-to-br from-blue-200 to-blue-800 rounded-lg p-6 text-white h-full min-h-[500px] flex flex-col justify-center items-center text-center shadow-lg">
@@ -603,7 +603,7 @@ const MellPlusNiger = () => {
 
             {/* Promotions Section */}
             <section className="flex-1">
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8">
+              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 md:mb-8 px-4 lg:px-0">
                 <div>
                   <h3 className="text-xl md:text-2xl text-gray-800 font-bold mb-2">🔥 Promotions</h3>
                   <p className="text-gray-600 text-sm md:text-base">Ne ratez pas nos offres exceptionnelles</p>
@@ -616,7 +616,7 @@ const MellPlusNiger = () => {
                 </Link>
               </div>
               {promoLoading ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4 lg:px-0">
                   {[...Array(8)].map((_, i) => (
                     <div key={i} className="bg-white rounded-lg p-4 shadow animate-pulse">
                       <div className="h-48 bg-gray-200 rounded mb-4"></div>
@@ -627,7 +627,7 @@ const MellPlusNiger = () => {
                   ))}
                 </div>
               ) : promoProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4 px-4 lg:px-0">
               {promoProducts.map((product) => (
                 <div key={product.id} className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border-1 border-gray-300 relative flex flex-col">
                   {/* Badge de réduction */}
@@ -743,7 +743,7 @@ const MellPlusNiger = () => {
               ))}
                 </div>
               ) : (
-                <div className="bg-white rounded-lg p-12 text-center">
+                <div className="bg-white rounded-lg p-12 text-center mx-4 lg:mx-0">
                   <div className="text-6xl mb-4">🎉</div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucune promotion en cours</h3>
                   <p className="text-gray-600">Revenez bientôt pour découvrir nos prochaines offres !</p>

@@ -52,8 +52,8 @@ const ContactDevisPage = () => {
         name: `Demande ${formData.typeDevis}`,
         description: formData.message,
         quantity: 1,
-        unitPrice: 0,
-        totalPrice: 0
+        unitPrice: 1,
+        totalPrice: 1
       }]
     };
 

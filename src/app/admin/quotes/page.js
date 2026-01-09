@@ -1,7 +1,7 @@
 // app/admin/quotes/page.js
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   FileText,
   Search,
@@ -38,89 +38,8 @@ import {
 } from 'lucide-react'
 
 export default function AdminQuotesPage() {
-  const [quotes, setQuotes] = useState([
-    {
-      id: 'QT-2024-001',
-      name: 'Raina Boubacar',
-      email: 'raina@entreprise.ne',
-      phone: '+227 96 00 00 01',
-      company: 'Entreprise ABC',
-      address: 'Quartier Plateau, Niamey',
-      type: 'mixed',
-      items: [
-        { name: 'HP EliteBook 840 G7', quantity: 5, unitPrice: 850000, totalPrice: 4250000, type: 'product' },
-        { name: 'Installation Réseau', quantity: 1, unitPrice: 500000, totalPrice: 500000, type: 'service' }
-      ],
-      total: 4750000,
-      status: 'pending',
-      priority: 'high',
-      createdAt: '2024-01-20T10:30:00',
-      message: 'Nous avons besoin de ces équipements pour notre nouveau bureau. Délai souhaité: 2 semaines.',
-      budget: '5M-10M',
-      assignedTo: 'Ahmed M.',
-      source: 'website',
-      validUntil: '2024-02-20'
-    },
-    {
-      id: 'QT-2024-002',
-      name: 'Marie Bouraima',
-      email: 'marie@hotel.ne',
-      phone: '+227 90 00 00 02',
-      company: 'Hôtel Sahel',
-      address: 'Route de l\'Aéroport, Niamey',
-      type: 'product',
-      items: [
-        { name: 'Hp pavilion', quantity: 10, unitPrice: 450000, totalPrice: 4500000, type: 'product' }
-      ],
-      total: 4500000,
-      status: 'reviewing',
-      priority: 'normal',
-      createdAt: '2024-01-19T14:15:00',
-      budget: '1M-5M',
-      assignedTo: 'Fatima S.',
-      source: 'phone',
-      validUntil: null
-    },
-    {
-      id: 'QT-2024-003',
-      name: 'Ahmed Sidi',
-      email: 'ahmed@startup.ne',
-      phone: '+227 91 00 00 03',
-      company: 'Tech Startup Niger',
-      type: 'service',
-      items: [
-        { name: 'Formation Bureautique', quantity: 1, unitPrice: 250000, totalPrice: 250000, type: 'service' },
-        { name: 'Support Technique Mensuel', quantity: 3, unitPrice: 150000, totalPrice: 450000, type: 'service' }
-      ],
-      total: 700000,
-      status: 'quoted',
-      priority: 'low',
-      createdAt: '2024-01-18T09:00:00',
-      assignedTo: 'Mohamed A.',
-      source: 'email',
-      validUntil: '2024-02-10'
-    },
-    {
-      id: 'QT-2024-004',
-      name: 'Amina Diallo',
-      email: 'amina@ong.ne',
-      phone: '+227 92 00 00 04',
-      company: 'ONG Espoir',
-      type: 'product',
-      items: [
-        { name: 'Ordinateur Desktop HP', quantity: 15, unitPrice: 350000, totalPrice: 5250000, type: 'product' },
-        { name: 'Imprimante Epson', quantity: 3, unitPrice: 280000, totalPrice: 840000, type: 'product' }
-      ],
-      total: 6090000,
-      status: 'accepted',
-      priority: 'urgent',
-      createdAt: '2024-01-17T16:45:00',
-      budget: '5M-10M',
-      assignedTo: 'Ahmed M.',
-      source: 'website',
-      validUntil: '2024-02-05'
-    }
-  ])
+  const [quotes, setQuotes] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const [selectedQuote, setSelectedQuote] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -129,6 +48,58 @@ export default function AdminQuotesPage() {
   const [showResponseModal, setShowResponseModal] = useState(false)
   const [responseText, setResponseText] = useState('')
   const [dateRange, setDateRange] = useState('all')
+
+  // Charger les devis depuis l'API
+  useEffect(() => {
+    fetchQuotes()
+  }, [])
+
+  const fetchQuotes = async () => {
+    try {
+      setIsLoading(true)
+      const response = await fetch('/api/quotes')
+
+      if (response.ok) {
+        const data = await response.json()
+        // Transformer les données pour correspondre au format attendu
+        const transformedQuotes = data.quotes.map(quote => ({
+          id: quote.id,
+          name: quote.name,
+          email: quote.email,
+          phone: quote.phone,
+          company: quote.company,
+          address: quote.address,
+          city: quote.city,
+          type: quote.type.toLowerCase(),
+          items: quote.items.map(item => ({
+            name: item.customItem || item.product?.name || 'Article personnalisé',
+            quantity: item.quantity,
+            unitPrice: item.unitPrice,
+            totalPrice: item.totalPrice,
+            type: item.productId ? 'product' : 'service',
+            description: item.description
+          })),
+          total: quote.items.reduce((sum, item) => sum + item.totalPrice, 0),
+          status: quote.status.toLowerCase(),
+          priority: 'normal', // Valeur par défaut
+          createdAt: quote.createdAt,
+          message: quote.message,
+          budget: quote.budget,
+          assignedTo: quote.assignedTo,
+          source: quote.source || 'website',
+          validUntil: quote.validUntil,
+          subject: quote.subject
+        }))
+        setQuotes(transformedQuotes)
+      } else {
+        console.error('Erreur lors du chargement des devis')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   // Statistiques
   const stats = {
@@ -372,7 +343,22 @@ export default function AdminQuotesPage() {
           </div>
 
           <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
-            {filteredQuotes.map((quote) => {
+            {isLoading ? (
+              <div className="p-12 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Chargement des devis...</p>
+              </div>
+            ) : filteredQuotes.length === 0 ? (
+              <div className="p-12 text-center">
+                <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun devis trouvé</h3>
+                <p className="text-gray-600">
+                  {searchTerm || filterStatus !== 'all' || filterPriority !== 'all'
+                    ? 'Aucun devis ne correspond à vos critères de recherche.'
+                    : 'Les demandes de devis apparaîtront ici.'}
+                </p>
+              </div>
+            ) : filteredQuotes.map((quote) => {
               const statusConfig = getStatusConfig(quote.status)
               const priorityConfig = getPriorityConfig(quote.priority)
               
