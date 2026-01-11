@@ -103,7 +103,7 @@ const MellPlusNiger = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 9000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [slides.length]);
@@ -260,11 +260,11 @@ const MellPlusNiger = () => {
                 <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-1 md:gap-4 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center lg:pr-4">
-                      <h2 className="text-lg md:text-2xl lg:text-4xl xl:text-5xl font-bold mb-0 md:mb-4 leading-tight h-[3.5rem] md:h-[5.5rem] lg:h-[7rem] overflow-hidden flex items-center justify-center lg:justify-start">
-                        <span className="line-clamp-1">{slide.title}</span>
+                      <h2 className="text-lg md:text-xl lg:text-3xl xl:text-5xl font-bold mb-0 md:mb-4 leading-tight h-[3.5rem] md:h-[5.5rem] lg:h-[7rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                        <span className="line-clamp-2">{slide.title}</span>
                       </h2>
-                      <p className="text-base md:text-xl lg:text-2xl mb-0 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
-                        <span className="line-clamp-1">{slide.subtitle}</span>
+                      <p className="text-base md:text-lg lg:text-xl mb-0 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                        <span className="line-clamp-2">{slide.subtitle}</span>
                       </p>
                       <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed h-[3rem] md:h-[4.5rem] lg:h-[5rem] overflow-hidden">
                         <span className="line-clamp-2 md:line-clamp-3">{slide.description}</span>
@@ -281,7 +281,7 @@ const MellPlusNiger = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-center order-1 lg:order-2">
-                      <div className="relative w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-68 lg:h-68">
+                      <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-68 lg:h-68">
                         <Image
                           width={256}
                           height={256}
@@ -352,7 +352,7 @@ const MellPlusNiger = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent flex flex-col justify-end p-3 md:p-4">
-            <Link href="/seconde-vie"><h3 className="text-white font-bold text-sm md:text-base mb-1">Nouveautés</h3>
+            <Link href="/products"><h3 className="text-white font-bold text-sm md:text-base mb-1">Nouveautés</h3>
             <p className="text-white/90 text-xs md:text-sm">Découvrez-les</p></Link>
           </div>
         </div>
@@ -685,7 +685,7 @@ const MellPlusNiger = () => {
                     <div className="min-h-[2.5rem]">
                     {product.discount && (
                       <div className="bg-green-50 border border-green-200 rounded-lg p-1 mb-1">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs md:text-sm">
                           <span className="text-gray-600">Économie :</span>
                           <span className="font-bold text-green-600">{formatPrice(calculateSavings(product.price, product.discount))}</span>
                         </div>
@@ -698,7 +698,7 @@ const MellPlusNiger = () => {
                       <div className="flex items-center gap-1">
                         {product.discount ? (
                           <>
-                            <div className="text-lg font-bold text-red-600">
+                            <div className="text-base font-bold text-red-600">
                               {formatPrice(calculateDiscountedPrice(product.price, product.discount))}
                             </div>
                             <div className="text-sm text-gray-500 line-through">
@@ -706,7 +706,7 @@ const MellPlusNiger = () => {
                             </div>
                           </>
                         ) : (
-                          <div className="text-xl font-bold text-gray-900">
+                          <div className="text-lg font-bold text-gray-900">
                             {formatPrice(product.price)}
                           </div>
                         )}
@@ -726,8 +726,8 @@ const MellPlusNiger = () => {
                           href={`/contact?product=${product.id}`}
                           className="bg-gradient-to-r hover:from-red-600 hover:to-pink-600 hover:text-white text-blue-500 border-1 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
                         >
-                          <ShoppingCart className="w-4 h-4" />
-                          Profiter
+                          {/*<ShoppingCart className="w-4 h-4" />*/}
+                          Devis
                         </Link>
                       ) : (
                         <button
