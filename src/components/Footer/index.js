@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-2 md:px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-3">
             {/* Logo et description - Prend toute la largeur sur mobile */}
-            <div className="lg:col-span-1 col-span-1 md:col-span-2 lg:col-span-1">
+            <div className="lg:col-span-1 col-span-1 md:col-span-3 lg:col-span-1">
               <div className="flex items-start gap-2 mb-4 md:flex-col md:items-start md:gap-5">
                 <div className="flex-shrink-0">
                   <Image
