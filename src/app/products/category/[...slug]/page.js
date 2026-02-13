@@ -681,13 +681,15 @@ function CategoryProductCard({ product }) {
         </h3>
 
         {/* Description courte */}
-        <p className="text-gray-600 text-sm mb-2 h-10 overflow-hidden" style={{
-          display: '-webkit-box',
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical'
-        }}>
-          {product.description}
-        </p>
+        {product.description && (
+          <p className="text-gray-600 text-sm mb-2 h-10 overflow-hidden" style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical'
+          }}>
+            {product.description}
+          </p>
+        )}
 
         {/* Prix */}
         <div className="mb-4">
