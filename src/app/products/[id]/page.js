@@ -77,7 +77,7 @@ export default function ProductDetailPage() {
   }, [params.id, fetchProductDetails])
 
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',
@@ -756,7 +756,7 @@ export default function ProductDetailPage() {
 // Composant pour les produits similaires
 function RelatedProductCard({ product }) {
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',

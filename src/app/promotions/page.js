@@ -118,7 +118,7 @@ export default function PromotionsPage() {
   }
 
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',
@@ -445,7 +445,7 @@ export default function PromotionsPage() {
 // Composant carte produit spécial promotions
 function PromoProductCard({ product }) {
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',

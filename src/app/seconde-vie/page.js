@@ -92,7 +92,7 @@ export default function SecondeViePage() {
   }
 
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',
@@ -324,7 +324,7 @@ export default function SecondeViePage() {
 // Composant carte produit spécial produits reconditionnés
 function RefurbishedProductCard({ product }) {
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',

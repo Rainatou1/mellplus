@@ -598,7 +598,7 @@ function parseSlug(slug) {
 // Composant carte produit pour les catégories
 function CategoryProductCard({ product }) {
   const formatPrice = (price) => {
-    if (!price) return 'N/A'
+    if (!price) return ''
     return new Intl.NumberFormat('fr-NE', {
       style: 'currency',
       currency: 'XOF',
