@@ -7,27 +7,26 @@ export default function MentionsLegales() {
         <section>
           <h2 className="text-2xl font-semibold text-blue-600 mb-2">Éditeur du site</h2>
           <p>
-            Nom de l&apos;entreprise : <strong>TonNomEntreprise</strong><br />
-            Responsable de la publication : <strong>Ton Nom complet</strong><br />
-            Email : <a href="mailto:contact@tonentreprise.com" className="text-blue-600">contact@tonentreprise.com</a><br />
-            Adresse : 123 Rue Exemple, Ville, Pays<br />
-            Numéro d’immatriculation : RCS XX-XXX-XXX
+            Nom de l&apos;entreprise : <strong>Mell Plus Niger</strong><br />
+            Responsable de la publication : <strong>Rainatou Boubacar</strong><br />
+            Email : <a href="mailto:mellplus@mellplusniger.com" className="text-blue-600">mellplus@mellplusniger.com</a><br />
+            Adresse : Boulevard Mali Béro Ex Kalao Porte N°2770<br />
           </p>
         </section>
 
         <section>
           <h2 className="text-2xl font-semibold text-blue-600 mb-2">Hébergement</h2>
           <p>
-            Hébergeur : <strong>LWS (Ligne Web Services)</strong><br />
-            Adresse : 10 Rue Penthièvre, 75008 Paris, France<br />
-            Site : <a href="https://www.lws.fr" className="text-blue-600" target="_blank">www.lws.fr</a>
+            Hébergeur : <strong>OVH</strong><br />
+            Adresse : 2 Rue Kellermann, 59100 Roubaix, France<br />
+            Site : <a href="https://www.ovhcloud.com" className="text-blue-600" target="_blank">www.ovhcloud.com</a>
           </p>
         </section>
 
         <section>
           <h2 className="text-2xl font-semibold text-blue-600 mb-2">Propriété intellectuelle</h2>
           <p>
-            L’ensemble des contenus (textes, images, logos, etc.) présents sur ce site sont la propriété exclusive de <strong>TonNomEntreprise</strong>, sauf mention contraire. Toute reproduction, distribution ou utilisation sans autorisation est interdite.
+            L’ensemble des contenus (textes, images, logos, etc.) présents sur ce site sont la propriété exclusive de <strong>Mell Pus Niger</strong>, sauf mention contraire. Toute reproduction, distribution ou utilisation sans autorisation est interdite.
           </p>
         </section>
 
@@ -49,7 +48,7 @@ export default function MentionsLegales() {
           <h2 className="text-2xl font-semibold text-blue-600 mb-2">Contact</h2>
           <p>
             Pour toute question, vous pouvez nous écrire à l’adresse suivante : <br />
-            <a href="mailto:contact@tonentreprise.com" className="text-blue-600">contact@tonentreprise.com</a>
+            <a href="mailto:mellplus@mellplusniger.com" className="text-blue-600">mellplus@mellplusniger.com</a>
           </p>
         </section>
       </div>

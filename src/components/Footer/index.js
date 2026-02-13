@@ -11,10 +11,10 @@ export default function Footer() {
      
       <footer className="bg-gray-800 text-white py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-2 md:px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-3">
             {/* Logo et description - Prend toute la largeur sur mobile */}
             <div className="lg:col-span-1 col-span-1 md:col-span-2 lg:col-span-1">
-              <div className="flex items-start gap-2 mb-4 md:flex-col md:items-start md:gap-3">
+              <div className="flex items-start gap-2 mb-4 md:flex-col md:items-start md:gap-5">
                 <div className="flex-shrink-0">
                   <Image
                     width={80}
@@ -99,9 +99,7 @@ export default function Footer() {
       
               <h5 className="font-semibold mb-4 text-base md:text-lg">Nos politiques</h5>
               <ul className="space-y-2 text-gray-400 text-sm md:text-base">
-                <li><a href="/cgv" className="hover:text-white">CGV</a></li>
                 <li><a href="/cgv" className="hover:text-white">Mentions Legales</a></li>
-                <li><a href="#" className="hover:text-white">Politique de retour</a></li>
                 <li><a href="/about" className="hover:text-white">Qui sommes nous?</a></li>
               </ul>
             </div>
