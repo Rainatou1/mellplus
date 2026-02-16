@@ -172,7 +172,7 @@ function LoginForm() {
 
         {/* Footer */}
         <div className="mt-8 text-center text-sm text-gray-600">
-          <p>© 2024 Mell Plus Niger. Tous droits réservés.</p>
+          <p>© 2026 Mell Plus Niger. Tous droits réservés.</p>
         </div>
       </div>
     </div>

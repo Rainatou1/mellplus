@@ -117,7 +117,7 @@ const MellPlusNiger = () => {
   const fetchPromoProducts = async () => {
     try {
       setPromoLoading(true);
-      const response = await fetch('/api/products/promotions?limit=8&sortBy=createdAt');
+      const response = await fetch('/api/products/promotions?limit=4&sortBy=createdAt');
 
       if (response.ok) {
         const data = await response.json();
@@ -137,7 +137,7 @@ const MellPlusNiger = () => {
   const fetchBestSellerProducts = async () => {
     try {
       setBestSellerLoading(true);
-      const response = await fetch('/api/products/bestsellers?limit=4&sortBy=createdAt&sortOrder=desc');
+      const response = await fetch('/api/products/bestsellers?limit=8&sortBy=createdAt&sortOrder=desc');
 
       if (response.ok) {
         const data = await response.json();

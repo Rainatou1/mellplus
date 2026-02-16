@@ -261,7 +261,8 @@ const ContactDevisPage = () => {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           >
                             <option value="informatique">Matériel informatique</option>
-                            <option value="telephonie">Téléphonie</option>
+                            <option value="telephonie">Sécurité</option>
+                            <option value="telephonie">Réseaux</option>
                             <option value="electromenager">Accessoire</option>
                             <option value="bureautique">Bureautique</option>
                             <option value="mixte">Plusieurs catégories</option>
