@@ -116,21 +116,24 @@ export default function CategoryPage({ params }) {
     } else if (subcategory) {
       // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
       // Gérer les variations de format (anciennes valeurs avec espaces vs nouvelles clés en MAJUSCULES)
-      filtered = filtered.filter(product => {
-        if (!product.subcategory) return false
+     // filtered = filtered.filter(product => {
+        filtered = filtered.filter(product =>
+    product.subcategory?.toUpperCase() === subcategory?.toUpperCase()
+  )
+        //if (!product.subcategory) return false
 
         // Correspondance exacte (pour les nouvelles clés en MAJUSCULES)
-        if (product.subcategory === subcategory) return true
+        //if (product.subcategory === subcategory) return true
 
         // Fallback: si le produit a une ancienne valeur, chercher la correspondance
         // En convertissant la clé en nom d'affichage depuis categoryHierarchy
-        if (product.category && CATEGORY_HIERARCHY[product.category]?.subcategories?.[subcategory]) {
-          const expectedName = CATEGORY_HIERARCHY[product.category].subcategories[subcategory].name
-          if (product.subcategory === expectedName) return true
-        }
+       // if (product.category && CATEGORY_HIERARCHY[product.category]?.subcategories?.[subcategory]) {
+         // const expectedName = CATEGORY_HIERARCHY[product.category].subcategories[subcategory].name
+         // if (product.subcategory === expectedName) return true
+        //}
 
-        return false
-      })
+       // return false
+      //})
     }
 
     // Search filter
