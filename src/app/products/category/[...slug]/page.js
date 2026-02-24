@@ -98,9 +98,14 @@ export default function CategoryPage({ params }) {
     let filtered = [...products]
 
     // Filter by main category
-    if (category) {
+    {/*if (category) {
       filtered = filtered.filter(product => product.category === category)
-    }
+    }*/}
+    if (category) {
+  filtered = filtered.filter(product =>
+    product.category?.toUpperCase() === category?.toUpperCase()
+  )
+}
 
     // Filter by subcategory or sub-subcategory
     if (subSubcategory) {
