@@ -107,6 +107,10 @@ export default function CategoryPage({ params }) {
   )
   console.log(products)
   console.log(category, subcategory, subSubcategory)
+  console.log("Produit test:", products[0])
+  products.forEach(p => {
+  console.log(p.category, "|", p.subcategory)
+})
 }
 
     // Filter by subcategory or sub-subcategory
