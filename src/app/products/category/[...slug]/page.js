@@ -26,7 +26,9 @@ const normalize = (str) =>
     ?.toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/-/g, "_")
     .replace(/\s+/g, "_")
+    .trim()
     
   const PRODUCTS_PER_PAGE = 12
 
@@ -129,9 +131,11 @@ const normalize = (str) =>
       // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
       // Gérer les variations de format (anciennes valeurs avec espaces vs nouvelles clés en MAJUSCULES)
      // filtered = filtered.filter(product => {
-       filtered = filtered.filter(product =>
-  normalize(product.subcategory) === normalize(subcategory)
-)
+       filtered = filtered.filter(product => {
+    const productSub = normalize(product.subcategory)
+    const urlSub = normalize(subcategory)
+    return productSub === urlSub
+  })
         //if (!product.subcategory) return false
 
         // Correspondance exacte (pour les nouvelles clés en MAJUSCULES)
