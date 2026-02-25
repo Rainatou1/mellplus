@@ -105,6 +105,8 @@ export default function CategoryPage({ params }) {
   filtered = filtered.filter(product =>
     product.category?.toUpperCase() === category?.toUpperCase()
   )
+  console.log(products)
+  console.log(category, subcategory, subSubcategory)
 }
 
     // Filter by subcategory or sub-subcategory
