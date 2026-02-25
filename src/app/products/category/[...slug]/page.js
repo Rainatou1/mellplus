@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Search, Filter, ShoppingCart, Eye, Star, Heart, ArrowLeft, Zap, Award, TrendingUp, Monitor, Printer, Router as RouterIcon, Shield, Cable, Headphones, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { matchSubcategory, getCategoryDisplayName } from '@/lib/categoryMapping'
+import { matchSubcategory } from '@/lib/categoryMapping'
 import { CATEGORY_HIERARCHY, getCategoryDisplayPath, validateCategoryPath } from '@/lib/categoryHierarchy'
 
 export default function CategoryPage({ params }) {
@@ -21,14 +21,59 @@ export default function CategoryPage({ params }) {
     maxPrice: '',
     sortBy: 'name'
   })
-const normalize = (str) =>
-  str
-    ?.toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/-/g, "_")
-    .replace(/\s+/g, "_")
-    .trim()
+  const normalizeValue = (value) => {
+    if (value === null || value === undefined) return ''
+    return value
+      .toString()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "")
+  }
+
+  const categoryMatches = (productCategory, categoryKey) => {
+    if (!productCategory || !categoryKey) return false
+    const normalizedProduct = normalizeValue(productCategory)
+    const normalizedKey = normalizeValue(categoryKey)
+    if (normalizedProduct === normalizedKey) return true
+
+    const displayName = CATEGORY_HIERARCHY[categoryKey]?.name
+    if (displayName && normalizeValue(displayName) === normalizedProduct) return true
+
+    return false
+  }
+
+  const subcategoryMatches = (product, categoryKey, subcategoryKeyOrName) => {
+    if (!subcategoryKeyOrName) return true
+    const normalizedProduct = normalizeValue(product.subcategory)
+    if (!normalizedProduct) return false
+
+    const candidates = new Set()
+    candidates.add(normalizeValue(subcategoryKeyOrName))
+
+    const displayName = CATEGORY_HIERARCHY[categoryKey]?.subcategories?.[subcategoryKeyOrName]?.name
+    if (displayName) candidates.add(normalizeValue(displayName))
+
+    if (candidates.has(normalizedProduct)) return true
+
+    const keywordTarget = displayName || subcategoryKeyOrName
+    return matchSubcategory(product, keywordTarget)
+  }
+
+  const subSubcategoryMatches = (product, categoryKey, subcategoryKeyOrName, subSubcategoryKeyOrName) => {
+    if (!subSubcategoryKeyOrName) return true
+    const normalizedProduct = normalizeValue(product.subSubcategory)
+    if (!normalizedProduct) return false
+
+    const candidates = new Set()
+    candidates.add(normalizeValue(subSubcategoryKeyOrName))
+
+    const displayName = CATEGORY_HIERARCHY[categoryKey]?.subcategories?.[subcategoryKeyOrName]?.subSubcategories?.[subSubcategoryKeyOrName]?.name
+    if (displayName) candidates.add(normalizeValue(displayName))
+
+    return candidates.has(normalizedProduct)
+  }
     
   const PRODUCTS_PER_PAGE = 12
 
@@ -87,7 +132,7 @@ const normalize = (str) =>
   const fetchProducts = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/products')
+      const response = await fetch('/api/products?limit=1000')
 
       if (response.ok) {
         const data = await response.json()
@@ -106,50 +151,22 @@ const normalize = (str) =>
     let filtered = [...products]
 
     // Filter by main category
-    {/*if (category) {
-      filtered = filtered.filter(product => product.category === category)
-    }*/}
     if (category) {
-  filtered = filtered.filter(product =>
-  normalize(product.category) === normalize(category)
-)
-  console.log(products)
-  console.log(category, subcategory, subSubcategory)
-  console.log("Produit test:", products[0])
-  products.forEach(p => {
-  console.log(p.category, "|", p.subcategory)
-})
-}
+      filtered = filtered.filter(product => categoryMatches(product.category, category))
+    }
 
     // Filter by subcategory or sub-subcategory
     if (subSubcategory) {
-      // Si on a une sous-sous-catégorie, filtrer sur le champ subSubcategory
+      // Si on a une sous-sous-categorie, filtrer sur le champ subSubcategory
       filtered = filtered.filter(product =>
-  normalize(product.subSubcategory) === normalize(subSubcategory)
-)
+        subSubcategoryMatches(product, category, subcategory, subSubcategory)
+      )
     } else if (subcategory) {
-      // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
-      // Gérer les variations de format (anciennes valeurs avec espaces vs nouvelles clés en MAJUSCULES)
-     // filtered = filtered.filter(product => {
-       filtered = filtered.filter(product => {
-    const productSub = normalize(product.subcategory)
-    const urlSub = normalize(subcategory)
-    return productSub === urlSub
-  })
-        //if (!product.subcategory) return false
-
-        // Correspondance exacte (pour les nouvelles clés en MAJUSCULES)
-        //if (product.subcategory === subcategory) return true
-
-        // Fallback: si le produit a une ancienne valeur, chercher la correspondance
-        // En convertissant la clé en nom d'affichage depuis categoryHierarchy
-       // if (product.category && CATEGORY_HIERARCHY[product.category]?.subcategories?.[subcategory]) {
-         // const expectedName = CATEGORY_HIERARCHY[product.category].subcategories[subcategory].name
-         // if (product.subcategory === expectedName) return true
-        //}
-
-       // return false
-      //})
+      // Si on a seulement une sous-categorie, filtrer sur le champ subcategory
+      // Gerer les variations de format (anciennes valeurs avec espaces vs nouvelles cles en MAJUSCULES)
+      filtered = filtered.filter(product =>
+        subcategoryMatches(product, category, subcategory)
+      )
     }
 
     // Search filter
@@ -770,3 +787,5 @@ function CategoryProductCard({ product }) {
     </div>
   )
 }
+
+
