@@ -21,7 +21,13 @@ export default function CategoryPage({ params }) {
     maxPrice: '',
     sortBy: 'name'
   })
-
+const normalize = (str) =>
+  str
+    ?.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_")
+    
   const PRODUCTS_PER_PAGE = 12
 
   // Unwrap params Promise using React.use()
@@ -103,8 +109,8 @@ export default function CategoryPage({ params }) {
     }*/}
     if (category) {
   filtered = filtered.filter(product =>
-    product.category?.toUpperCase() === category?.toUpperCase()
-  )
+  normalize(product.category) === normalize(category)
+)
   console.log(products)
   console.log(category, subcategory, subSubcategory)
   console.log("Produit test:", products[0])
@@ -117,15 +123,15 @@ export default function CategoryPage({ params }) {
     if (subSubcategory) {
       // Si on a une sous-sous-catégorie, filtrer sur le champ subSubcategory
       filtered = filtered.filter(product =>
-        product.subSubcategory === subSubcategory
-      )
+  normalize(product.subSubcategory) === normalize(subSubcategory)
+)
     } else if (subcategory) {
       // Si on a seulement une sous-catégorie, filtrer sur le champ subcategory
       // Gérer les variations de format (anciennes valeurs avec espaces vs nouvelles clés en MAJUSCULES)
      // filtered = filtered.filter(product => {
-        filtered = filtered.filter(product =>
-    product.subcategory?.toUpperCase() === subcategory?.toUpperCase()
-  )
+       filtered = filtered.filter(product =>
+  normalize(product.subcategory) === normalize(subcategory)
+)
         //if (!product.subcategory) return false
 
         // Correspondance exacte (pour les nouvelles clés en MAJUSCULES)
