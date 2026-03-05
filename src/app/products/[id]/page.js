@@ -112,8 +112,8 @@ export default function ProductDetailPage() {
       toast.error('Produit non disponible')
       return
     }
-    // Redirect to contact form with product info
-    router.push(`/contact?product=${product.id}&quantity=${quantity}`)
+    // Redirect to devis form with product info
+    router.push(`/devis?product=${product.id}&quantity=${quantity}`)
   }
 
   const handleShare = async () => {
