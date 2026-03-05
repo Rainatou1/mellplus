@@ -30,7 +30,7 @@ import {
 import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
 
-const getMenuItems = (unreadMessagesCount) => [
+const getMenuItems = (unreadMessagesCount, unreadQuotesCount) => [
   {
     href: '/admin/dashboard',
     label: 'Tableau de bord',
@@ -59,7 +59,7 @@ const getMenuItems = (unreadMessagesCount) => [
     href: '/admin/quotes',
     label: 'Devis',
     icon: FileText,
-    badge: '3' // Nombre de nouveaux devis
+    badge: unreadQuotesCount > 0 ? unreadQuotesCount.toString() : null
   },
   {
     href: '/admin/contacts',
@@ -119,6 +119,7 @@ export default function AdminLayout({ children }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [notifications, setNotifications] = useState(8)
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0)
+  const [unreadQuotesCount, setUnreadQuotesCount] = useState(0)
   const [showWarning, setShowWarning] = useState(false)
   const [warningCountdown, setWarningCountdown] = useState(0)
 
@@ -173,6 +174,19 @@ export default function AdminLayout({ children }) {
     }
   }
 
+  // Fetch unread quotes count (mapped to pending quotes)
+  const fetchUnreadQuotesCount = async () => {
+    try {
+      const response = await fetch('/api/quotes?status=pending&limit=1')
+      if (response.ok) {
+        const data = await response.json()
+        setUnreadQuotesCount(data?.pagination?.total || 0)
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du nombre de devis non lus:', error)
+    }
+  }
+
   // Redirection si non authentifié
   useEffect(() => {
     if (status === 'loading') return
@@ -185,8 +199,12 @@ export default function AdminLayout({ children }) {
   useEffect(() => {
     if (session) {
       fetchUnreadMessagesCount()
+      fetchUnreadQuotesCount()
       // Refresh count every 30 seconds
-      const interval = setInterval(fetchUnreadMessagesCount, 30000)
+      const interval = setInterval(() => {
+        fetchUnreadMessagesCount()
+        fetchUnreadQuotesCount()
+      }, 30000)
       return () => clearInterval(interval)
     }
   }, [session])
@@ -238,7 +256,7 @@ export default function AdminLayout({ children }) {
 
         {/* Navigation */}
         <nav className="px-4 py-6 space-y-1">
-          {getMenuItems(unreadMessagesCount).map((item) => {
+          {getMenuItems(unreadMessagesCount, unreadQuotesCount).map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
 
