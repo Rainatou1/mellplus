@@ -2,6 +2,51 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
+function slugify(value) {
+  return (value || 'product')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'product'
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+async function generateUniqueProductSlug(baseSlug, excludeProductId) {
+  const similarSlugs = await prisma.product.findMany({
+    where: {
+      OR: [
+        { slug: baseSlug },
+        { slug: { startsWith: `${baseSlug}-` } }
+      ],
+      ...(excludeProductId ? { id: { not: excludeProductId } } : {})
+    },
+    select: { slug: true }
+  })
+
+  if (similarSlugs.length === 0) return baseSlug
+
+  const slugRegex = new RegExp(`^${escapeRegExp(baseSlug)}-(\\d+)$`)
+  let maxSuffix = 1
+
+  for (const { slug } of similarSlugs) {
+    if (slug === baseSlug) continue
+    const match = slug.match(slugRegex)
+    if (!match) continue
+    const suffix = Number(match[1])
+    if (!Number.isNaN(suffix) && suffix > maxSuffix) {
+      maxSuffix = suffix
+    }
+  }
+
+  return `${baseSlug}-${maxSuffix + 1}`
+}
+
 // Schéma de validation pour la mise à jour d'un produit
 const updateProductSchema = z.object({
   name: z.string().min(1, 'Le nom est requis').optional(),
@@ -152,18 +197,6 @@ export async function PUT(request, { params }) {
     // Valider les données
     const validatedData = updateProductSchema.parse(body)
 
-    // Générer le slug si le nom a changé
-    if (validatedData.name) {
-      validatedData.slug = validatedData.name
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // Supprimer les accents
-        .replace(/[^a-z0-9\s-]/g, '') // Garder seulement lettres, chiffres, espaces et tirets
-        .replace(/\s+/g, '-') // Remplacer espaces par tirets
-        .replace(/-+/g, '-') // Éviter les tirets multiples
-        .trim('-') // Supprimer tirets en début/fin
-    }
-
     // Vérifier que le produit existe
     const existingProduct = await prisma.product.findFirst({
       where: {
@@ -183,6 +216,12 @@ export async function PUT(request, { params }) {
 
     // Préparer les données de mise à jour
     const updateData = { ...validatedData }
+
+    // Autoriser les noms identiques en attribuant un slug unique
+    if (validatedData.name || validatedData.slug) {
+      const baseSlug = slugify(validatedData.slug || validatedData.name || existingProduct.slug)
+      updateData.slug = await generateUniqueProductSlug(baseSlug, existingProduct.id)
+    }
 
     // Calculer automatiquement inStock basé sur la quantité
     if (validatedData.quantity !== undefined) {
@@ -302,3 +341,4 @@ export async function DELETE(request, { params }) {
     )
   }
 }
+

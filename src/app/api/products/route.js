@@ -4,6 +4,50 @@ import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
+function slugify(value) {
+  return (value || 'product')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'product'
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+async function generateUniqueProductSlug(baseSlug) {
+  const similarSlugs = await prisma.product.findMany({
+    where: {
+      OR: [
+        { slug: baseSlug },
+        { slug: { startsWith: `${baseSlug}-` } }
+      ]
+    },
+    select: { slug: true }
+  })
+
+  if (similarSlugs.length === 0) return baseSlug
+
+  const slugRegex = new RegExp(`^${escapeRegExp(baseSlug)}-(\\d+)$`)
+  let maxSuffix = 1
+
+  for (const { slug } of similarSlugs) {
+    if (slug === baseSlug) continue
+    const match = slug.match(slugRegex)
+    if (!match) continue
+    const suffix = Number(match[1])
+    if (!Number.isNaN(suffix) && suffix > maxSuffix) {
+      maxSuffix = suffix
+    }
+  }
+
+  return `${baseSlug}-${maxSuffix + 1}`
+}
+
 // GET - Récupérer les produits
 export async function GET(request) {
   try {
@@ -97,14 +141,9 @@ export async function POST(request) {
     
     const body = await request.json()
     
-    // Utiliser le slug fourni ou créer à partir du nom
-    const slug = body.slug || body.name
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9\s]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/^-+|-+$/g, '')
+    // Autoriser les noms identiques en garantissant un slug unique
+    const baseSlug = slugify(body.slug || body.name)
+    const slug = await generateUniqueProductSlug(baseSlug)
     
     // Créer le produit
     const product = await prisma.product.create({
@@ -146,7 +185,7 @@ export async function POST(request) {
     
     if (error?.code === 'P2002') {
       return NextResponse.json(
-        { error: 'Un produit avec ce nom existe déjà' },
+        { error: 'Conflit d\'unicité lors de la création du produit' },
         { status: 409 }
       )
     }
