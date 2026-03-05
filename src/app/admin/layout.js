@@ -200,12 +200,21 @@ export default function AdminLayout({ children }) {
     if (session) {
       fetchUnreadMessagesCount()
       fetchUnreadQuotesCount()
+      const handleQuotesUpdated = () => fetchUnreadQuotesCount()
+      if (typeof window !== 'undefined') {
+        window.addEventListener('quotes-updated', handleQuotesUpdated)
+      }
       // Refresh count every 30 seconds
       const interval = setInterval(() => {
         fetchUnreadMessagesCount()
         fetchUnreadQuotesCount()
       }, 30000)
-      return () => clearInterval(interval)
+      return () => {
+        clearInterval(interval)
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('quotes-updated', handleQuotesUpdated)
+        }
+      }
     }
   }, [session])
 

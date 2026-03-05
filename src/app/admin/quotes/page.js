@@ -176,10 +176,53 @@ export default function AdminQuotesPage() {
     }
   }
 
-  const handleStatusChange = (quoteId, newStatus) => {
-    setQuotes(quotes.map(q => 
-      q.id === quoteId ? { ...q, status: newStatus } : q
-    ))
+  const updateQuoteStatus = async (quoteId, newStatus) => {
+    try {
+      const response = await fetch(`/api/quotes?id=${quoteId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      })
+
+      if (!response.ok) {
+        throw new Error('Impossible de mettre à jour le statut du devis')
+      }
+
+      const data = await response.json()
+      const updatedStatus = (data?.quote?.status || newStatus).toLowerCase()
+
+      setQuotes(prevQuotes =>
+        prevQuotes.map(q => (q.id === quoteId ? { ...q, status: updatedStatus } : q))
+      )
+      setSelectedQuote(prevQuote =>
+        prevQuote?.id === quoteId ? { ...prevQuote, status: updatedStatus } : prevQuote
+      )
+
+      // Informe le layout admin de recalculer les badges immédiatement
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('quotes-updated'))
+      }
+
+      return true
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du statut du devis:', error)
+      return false
+    }
+  }
+
+  const handleStatusChange = async (quoteId, newStatus) => {
+    await updateQuoteStatus(quoteId, newStatus)
+  }
+
+  const handleQuoteSelect = async (quote) => {
+    setSelectedQuote(quote)
+
+    // Un devis "lu" = il sort de "pending" vers "reviewing" au premier affichage
+    if (quote.status === 'pending') {
+      await updateQuoteStatus(quote.id, 'reviewing')
+    }
   }
 
   const formatDate = (dateString) => {
@@ -368,7 +411,7 @@ export default function AdminQuotesPage() {
                   className={`p-4 hover:bg-gray-50 cursor-pointer transition-all ${
                     selectedQuote?.id === quote.id ? 'bg-indigo-50 border-l-4 border-indigo-500' : ''
                   }`}
-                  onClick={() => setSelectedQuote(quote)}
+                  onClick={() => handleQuoteSelect(quote)}
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
@@ -677,7 +720,7 @@ L'équipe Mell Plus Niger"
                 </button>
                 <button
                   onClick={() => {
-                    handleStatusChange(selectedQuote.id, 'quoted')
+                    updateQuoteStatus(selectedQuote.id, 'quoted')
                     setShowResponseModal(false)
                     setResponseText('')
                   }}
