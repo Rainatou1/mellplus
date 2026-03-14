@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 function slugify(value) {
   return (value || 'product')
@@ -81,6 +83,9 @@ const updateProductSchema = z.object({
 
 export async function GET(request, { params }) {
   try {
+    const session = await getServerSession(authOptions)
+    const isAdmin = Boolean(session && ['ADMIN', 'SUPER_ADMIN'].includes(session.user?.role))
+
     const { id } = await params
 
     if (!id) {
@@ -96,7 +101,8 @@ export async function GET(request, { params }) {
         OR: [
           { id },
           { slug: id }
-        ]
+        ],
+        ...(!isAdmin ? { publishedAt: { not: null } } : {})
       }
     })
 
@@ -114,7 +120,8 @@ export async function GET(request, { params }) {
         id: {
           not: product.id
         },
-        inStock: true
+        inStock: true,
+        ...(!isAdmin ? { publishedAt: { not: null } } : {})
       },
       take: 4,
       orderBy: {

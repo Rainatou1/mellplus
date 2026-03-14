@@ -51,6 +51,9 @@ async function generateUniqueProductSlug(baseSlug) {
 // GET - Récupérer les produits
 export async function GET(request) {
   try {
+    const session = await getServerSession(authOptions)
+    const isAdmin = Boolean(session && ['ADMIN', 'SUPER_ADMIN'].includes(session.user?.role))
+
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
@@ -61,6 +64,11 @@ export async function GET(request) {
     
     // Construire les filtres
     const where = {}
+
+    // Les visiteurs ne doivent voir que les produits publiés
+    if (!isAdmin) {
+      where.publishedAt = { not: null }
+    }
     
     if (category && category !== 'all') {
       where.category = category
@@ -91,6 +99,7 @@ export async function GET(request) {
       }),
       prisma.product.count({ where }),
       prisma.product.findMany({
+        where,
         select: { category: true },
         distinct: ['category']
       })

@@ -31,12 +31,12 @@ import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
 
 const getMenuItems = (unreadMessagesCount, unreadQuotesCount) => [
-  {
-    href: '/admin/dashboard',
-    label: 'Tableau de bord',
-    icon: LayoutDashboard,
-    badge: null
-  },
+ // {
+   // href: '/admin/dashboard',
+    //label: 'Tableau de bord',
+    //icon: LayoutDashboard,
+    //badge: null
+ // },
   {
     href: '/admin/products',
     label: 'Produits',
@@ -339,14 +339,14 @@ export default function AdminLayout({ children }) {
             {/* Right side */}
             <div className="flex items-center space-x-4">
               {/* Notifications */}
-              <button className="relative p-2 text-gray-600 hover:text-gray-900">
+              {/*<button className="relative p-2 text-gray-600 hover:text-gray-900">
                 <Bell className="w-6 h-6" />
                 {notifications > 0 && (
                   <span className="absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center">
                     {notifications}
                   </span>
                 )}
-              </button>
+              </button>*/}
 
               {/* User Menu */}
               <div className="relative">
