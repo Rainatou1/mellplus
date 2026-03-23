@@ -10,7 +10,7 @@ import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react'
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/admin/dashboard'
+  const callbackUrl = searchParams.get('callbackUrl') || '/admin/products'
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

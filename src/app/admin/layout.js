@@ -249,7 +249,7 @@ export default function AdminLayout({ children }) {
       `}>
         {/* Logo */}
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-800">
-          <Link href="/admin/dashboard" className="flex items-center space-x-3">
+          <Link href="/admin/products" className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold">M</span>
             </div>
