@@ -86,9 +86,5 @@ signIn: '/admin/login',
 )
 
 export const config = {
-matcher: [
-'/admin/((?!login).*)',
-// Ajouter toutes les routes publiques à intercepter pour la maintenance
-'/((?!_next|favicon|maintenance|api/set-bypass).*)',
-],
+matcher: ['/(.*)',],
 }
