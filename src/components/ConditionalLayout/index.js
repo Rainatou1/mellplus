@@ -18,6 +18,11 @@ export default function ConditionalLayout({ children }) {
     if (pathname.startsWith('/admin/') && pathname !== '/admin/login') {
       return true
     }
+
+     // Cacher header/footer sur la page maintenance
+    if (pathname === '/maintenance') {
+      return true
+    }
     
     return false
   }
