@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
@@ -11,17 +14,19 @@ const nextConfig = {
       },
     ],
   },
-  headers: async () => [
+  async headers() {
+    return [
     {
       source: '/(.*)',
       headers: [
         {
           key: 'Cache-Control',
-          value: 'no-store, must-revalidate',
+          value: 'no-store',
         },
       ],
     },
   ],
+  },
 };
 
 export default nextConfig;
