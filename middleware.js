@@ -40,6 +40,8 @@ const BYPASS_SECRET = 'mellplusi-1907'; // 👈 change cette valeur
 export default withAuth(
 function middleware(req) {
 const { pathname } = req.nextUrl;
+console.log('MIDDLEWARE APPELé:', pathname);
+
 
 // Laisser passer : assets, page maintenance, endpoint bypass, routes admin
 if (
