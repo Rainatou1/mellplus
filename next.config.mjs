@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
+ experimental: {
+missingSuspenseWithCSRBailout: false,
+},
   images: {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
@@ -16,16 +16,11 @@ const nextConfig = {
   },
   async headers() {
     return [
-    {
-      source: '/(.*)',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'no-store',
-        },
-      ],
-    },
-  ],
+      {
+        source: '/(.*)',
+        headers: [{ key: 'Cache-Control', value: 'no-store' }],
+      },
+    ];
   },
 };
 
