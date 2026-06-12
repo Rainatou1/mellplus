@@ -33,7 +33,7 @@ export const config = {
 import { withAuth } from "next-auth/middleware"
 import { NextResponse } from "next/server"
 
-const MAINTENANCE_MODE = true; // 👈 false pour désactiver
+const MAINTENANCE_MODE = false; // 👈 false pour désactiver
 const BYPASS_COOKIE = 'bypass_maintenance';
 const BYPASS_SECRET = 'mellplusi-1907'; // 👈 change cette valeur
 
