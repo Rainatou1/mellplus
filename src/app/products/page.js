@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { matchSubcategory, getCategoryDisplayName } from '@/lib/categoryMapping'
+import { createProductSearch } from '@/lib/productSearch'
 
 function ProductsContent() {
   const searchParams = useSearchParams()
@@ -52,12 +53,19 @@ function ProductsContent() {
   const fetchProducts = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/products')
+      const response = await fetch('/api/products?limit=100')
 
       if (response.ok) {
         const data = await response.json()
-        setProducts(data.products || [])
-        setCategories(data.categories || [])
+        const allProducts = [...(data.products || [])]
+        for (let page = 2; page <= data.pagination.totalPages; page++) {
+          const nextResponse = await fetch(`/api/products?limit=100&page=${page}`)
+          if (!nextResponse.ok) throw new Error('Erreur lors du chargement des produits')
+          const nextData = await nextResponse.json()
+          allProducts.push(...nextData.products)
+        }
+        setProducts(allProducts)
+        setCategories([...new Set(allProducts.map(product => product.category))])
       } else {
         console.error('Erreur lors du chargement des produits')
       }
@@ -73,11 +81,7 @@ function ProductsContent() {
 
     // Filtrage par recherche
     if (filters.search) {
-      const searchLower = filters.search.toLowerCase()
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchLower) ||
-        product.description.toLowerCase().includes(searchLower)
-      )
+      filtered = filtered.filter(createProductSearch(filters.search))
     }
 
     // Filtrage par catégorie

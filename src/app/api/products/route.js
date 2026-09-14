@@ -1,6 +1,7 @@
 // app/api/products/route.js
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { createProductSearch, normalizeSearchText } from '@/lib/productSearch'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
@@ -82,11 +83,14 @@ export async function GET(request) {
       where.inStock = true
     }
     
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } }
-      ]
+    if (normalizeSearchText(search)) {
+      // Match before pagination/counting, including existing accented names.
+      // Apply visibility/category filters before reading searchable fields.
+      const candidates = await prisma.product.findMany({
+        where,
+        select: { id: true, name: true, description: true }
+      })
+      where.id = { in: candidates.filter(createProductSearch(search)).map(product => product.id) }
     }
     
     // Récupérer les produits avec pagination et les catégories
