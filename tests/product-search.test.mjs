@@ -30,6 +30,7 @@ test('API matches before pagination and preserves visibility, category and total
   const rows = Array.from({ length: 16 }, (_, i) => ({
     id: String(i), name: i < 12 ? 'Autre produit' : 'Câble HDMI', description: null,
     category: i === 14 ? 'RESEAUX_SECURITE' : 'ACCESSOIRES',
+    subcategory: i % 2 === 0 ? 'CONNECTIQUES' : 'STOCKAGE',
     publishedAt: i === 15 ? null : new Date(), createdAt: i
   }))
   const filter = where => rows.filter(row =>
@@ -74,6 +75,10 @@ test('API matches before pagination and preserves visibility, category and total
   assert.deepEqual(category.categories, ['ACCESSOIRES'])
   assert.equal((await get('search=inexistant')).pagination.total, 0)
   assert.equal((await get('')).pagination.total, 15)
+  const parent = await get('category=ACCESSOIRES&limit=100')
+  assert.equal(parent.pagination.total, 14)
+  assert.deepEqual(new Set(parent.products.map(row => row.subcategory)), new Set(['CONNECTIQUES', 'STOCKAGE']))
+  assert.ok(parent.products.every(row => row.category === 'ACCESSOIRES' && row.publishedAt !== null))
   rows.push({ ...rows[12], id: 'new', name: 'CÂBLE HDMI', createdAt: 20 })
   assert.equal((await get('search=cable+hdmi')).pagination.total, 4)
 })

@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation'
 import { Search, Filter, ShoppingCart, Eye, Star, Heart, ArrowLeft, Zap, Award, TrendingUp, Monitor, Printer, Router as RouterIcon, Shield, Cable, Headphones, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { matchSubcategory } from '@/lib/categoryMapping'
-import { CATEGORY_HIERARCHY, getCategoryDisplayPath, validateCategoryPath } from '@/lib/categoryHierarchy'
+import { filterProductsByCategoryPath } from '@/lib/categoryProducts'
+import { fetchAllProducts } from '@/lib/fetchAllProducts'
+import { createProductSearch } from '@/lib/productSearch'
+import { CATEGORY_HIERARCHY, getCategoryDisplayPath } from '@/lib/categoryHierarchy'
 
 export default function CategoryPage({ params }) {
   const router = useRouter()
@@ -21,60 +23,6 @@ export default function CategoryPage({ params }) {
     maxPrice: '',
     sortBy: 'name'
   })
-  const normalizeValue = (value) => {
-    if (value === null || value === undefined) return ''
-    return value
-      .toString()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "_")
-      .replace(/^_+|_+$/g, "")
-  }
-
-  const categoryMatches = (productCategory, categoryKey) => {
-    if (!productCategory || !categoryKey) return false
-    const normalizedProduct = normalizeValue(productCategory)
-    const normalizedKey = normalizeValue(categoryKey)
-    if (normalizedProduct === normalizedKey) return true
-
-    const displayName = CATEGORY_HIERARCHY[categoryKey]?.name
-    if (displayName && normalizeValue(displayName) === normalizedProduct) return true
-
-    return false
-  }
-
-  const subcategoryMatches = (product, categoryKey, subcategoryKeyOrName) => {
-    if (!subcategoryKeyOrName) return true
-    const normalizedProduct = normalizeValue(product.subcategory)
-    if (!normalizedProduct) return false
-
-    const candidates = new Set()
-    candidates.add(normalizeValue(subcategoryKeyOrName))
-
-    const displayName = CATEGORY_HIERARCHY[categoryKey]?.subcategories?.[subcategoryKeyOrName]?.name
-    if (displayName) candidates.add(normalizeValue(displayName))
-
-    if (candidates.has(normalizedProduct)) return true
-
-    const keywordTarget = displayName || subcategoryKeyOrName
-    return matchSubcategory(product, keywordTarget)
-  }
-
-  const subSubcategoryMatches = (product, categoryKey, subcategoryKeyOrName, subSubcategoryKeyOrName) => {
-    if (!subSubcategoryKeyOrName) return true
-    const normalizedProduct = normalizeValue(product.subSubcategory)
-    if (!normalizedProduct) return false
-
-    const candidates = new Set()
-    candidates.add(normalizeValue(subSubcategoryKeyOrName))
-
-    const displayName = CATEGORY_HIERARCHY[categoryKey]?.subcategories?.[subcategoryKeyOrName]?.subSubcategories?.[subSubcategoryKeyOrName]?.name
-    if (displayName) candidates.add(normalizeValue(displayName))
-
-    return candidates.has(normalizedProduct)
-  }
-    
   const PRODUCTS_PER_PAGE = 12
 
   // Unwrap params Promise using React.use()
@@ -122,60 +70,36 @@ export default function CategoryPage({ params }) {
       return
     }
 
-    fetchProducts()
+    const controller = new AbortController()
+    setCurrentPage(1)
+    setProducts([])
+    setLoading(true)
+    fetchAllProducts({ category }, { signal: controller.signal })
+      .then(products => {
+        if (!controller.signal.aborted) setProducts(products)
+      })
+      .catch(error => {
+        if (error.name !== 'AbortError') console.error('Erreur:', error)
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false)
+      })
+    return () => controller.abort()
   }, [category, subcategory, subSubcategory, router])
 
   useEffect(() => {
+    setCurrentPage(1)
+  }, [filters])
+
+  useEffect(() => {
     applyFilters()
-  }, [products, filters, currentPage]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/products?limit=1000')
-
-      if (response.ok) {
-        const data = await response.json()
-        setProducts(data.products || [])
-      } else {
-        console.error('Erreur lors du chargement des produits')
-      }
-    } catch (error) {
-      console.error('Erreur:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [products, filters, currentPage, category, subcategory, subSubcategory]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const applyFilters = () => {
-    let filtered = [...products]
+    let filtered = filterProductsByCategoryPath(products, category, subcategory, subSubcategory)
 
-    // Filter by main category
-    if (category) {
-      filtered = filtered.filter(product => categoryMatches(product.category, category))
-    }
-
-    // Filter by subcategory or sub-subcategory
-    if (subSubcategory) {
-      // Si on a une sous-sous-categorie, filtrer sur le champ subSubcategory
-      filtered = filtered.filter(product =>
-        subSubcategoryMatches(product, category, subcategory, subSubcategory)
-      )
-    } else if (subcategory) {
-      // Si on a seulement une sous-categorie, filtrer sur le champ subcategory
-      // Gerer les variations de format (anciennes valeurs avec espaces vs nouvelles cles en MAJUSCULES)
-      filtered = filtered.filter(product =>
-        subcategoryMatches(product, category, subcategory)
-      )
-    }
-
-    // Search filter
     if (filters.search) {
-      const searchLower = filters.search.toLowerCase()
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchLower) ||
-        product.description.toLowerCase().includes(searchLower)
-      )
+      filtered = filtered.filter(createProductSearch(filters.search))
     }
 
     // Price filters
@@ -787,5 +711,4 @@ function CategoryProductCard({ product }) {
     </div>
   )
 }
-
 

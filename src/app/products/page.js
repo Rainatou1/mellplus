@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { matchSubcategory, getCategoryDisplayName } from '@/lib/categoryMapping'
 import { createProductSearch } from '@/lib/productSearch'
+import { fetchAllProducts } from '@/lib/fetchAllProducts'
 
 function ProductsContent() {
   const searchParams = useSearchParams()
@@ -53,22 +54,9 @@ function ProductsContent() {
   const fetchProducts = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/products?limit=100')
-
-      if (response.ok) {
-        const data = await response.json()
-        const allProducts = [...(data.products || [])]
-        for (let page = 2; page <= data.pagination.totalPages; page++) {
-          const nextResponse = await fetch(`/api/products?limit=100&page=${page}`)
-          if (!nextResponse.ok) throw new Error('Erreur lors du chargement des produits')
-          const nextData = await nextResponse.json()
-          allProducts.push(...nextData.products)
-        }
-        setProducts(allProducts)
-        setCategories([...new Set(allProducts.map(product => product.category))])
-      } else {
-        console.error('Erreur lors du chargement des produits')
-      }
+      const allProducts = await fetchAllProducts()
+      setProducts(allProducts)
+      setCategories([...new Set(allProducts.map(product => product.category))])
     } catch (error) {
       console.error('Erreur:', error)
     } finally {

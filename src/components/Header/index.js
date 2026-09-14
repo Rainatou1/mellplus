@@ -217,10 +217,20 @@ export default function Header() {
                   onMouseEnter={() => setActiveCategory(index)}
                   onMouseLeave={() => setActiveCategory(null)}
                 >
-                  <button className="flex items-center space-x-1 text-blue hover:text-gray-200 py-2 whitespace-nowrap">
-                    <span>{category.name}</span>
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center space-x-1 text-blue hover:text-gray-200 py-2 whitespace-nowrap">
+                    <Link href={`/products/category/${getCategorySlug(category.dbCategory)}`} onClick={() => setActiveCategory(null)}>
+                      {category.name}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setActiveCategory(activeCategory === index ? null : index)}
+                      aria-label={`Sous-catégories de ${category.name}`}
+                      aria-expanded={activeCategory === index}
+                      className="p-1"
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
+                  </div>
                   
                   {/* Dropdown */}
                   {activeCategory === index && (
@@ -285,13 +295,24 @@ export default function Header() {
               <div className="space-y-3">
                 {categories.map((category, index) => (
                   <div key={index}>
-                    <button 
-                      onClick={() => setActiveCategory(activeCategory === index ? null : index)}
-                      className="flex items-center justify-between w-full text-left text-gray-700 hover:text-blue-600 py-2"
-                    >
-                      <span>{category.name}</span>
-                      <ChevronDown className={`w-4 h-4 transition-transform ${activeCategory === index ? 'rotate-180' : ''}`} />
-                    </button>
+                    <div className="flex items-center justify-between w-full text-left text-gray-700 hover:text-blue-600">
+                      <Link
+                        href={`/products/category/${getCategorySlug(category.dbCategory)}`}
+                        onClick={closeMobileMenu}
+                        className="flex-1 py-2"
+                      >
+                        {category.name}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setActiveCategory(activeCategory === index ? null : index)}
+                        aria-label={`Sous-catégories de ${category.name}`}
+                        aria-expanded={activeCategory === index}
+                        className="p-3"
+                      >
+                        <ChevronDown className={`w-4 h-4 transition-transform ${activeCategory === index ? 'rotate-180' : ''}`} />
+                      </button>
+                    </div>
                     
                     {activeCategory === index && (
                       <div className="pl-4 space-y-2 mt-2">
