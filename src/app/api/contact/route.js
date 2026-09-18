@@ -38,17 +38,23 @@ export async function POST(request) {
       }
     })
 
-    // Envoyer les emails en arrière-plan (ne pas bloquer la réponse)
+    // Attendre les envois ; conserver le contact en base même si SMTP échoue.
     try {
       // Vérifier si les credentials email sont configurés
       if (isEmailConfigured()) {
         // Email de notification à l'admin
-        await sendContactNotification(contact)
+        const notification = await sendContactNotification(contact)
 
         // Email de confirmation au visiteur
-        await sendContactConfirmation(contact)
+        const confirmation = await sendContactConfirmation(contact)
 
-        console.log('Emails envoyés avec succès pour le contact:', contact.id)
+        if (notification.success && confirmation.success) {
+          console.log('Emails acceptés par le serveur SMTP pour:', contact.id)
+        } else {
+          console.error('Envoi email incomplet pour:', contact.id, {
+            notification: notification.success, confirmation: confirmation.success
+          })
+        }
       } else {
         console.log('Configuration email manquante - emails non envoyés pour le contact:', contact.id)
       }

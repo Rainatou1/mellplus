@@ -1,27 +1,13 @@
 import nodemailer from 'nodemailer'
 
-// Gmail conserve les variables historiques ; OVH utilise ses propres identifiants.
-const getEmailConfig = () => {
-  const provider = process.env.EMAIL_PROVIDER ?? 'gmail'
-  if (provider === 'gmail') {
-    return {
-      host: 'smtp.gmail.com', port: 587, secure: false,
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD },
-      tls: { rejectUnauthorized: false }
-    }
-  }
-  if (provider === 'ovh') {
-    return {
-      host: 'smtp.mail.ovh.net', port: 465, secure: true,
-      auth: { user: process.env.OVH_USER, pass: process.env.OVH_PASSWORD }
-    }
-  }
-  throw new Error('EMAIL_PROVIDER doit être gmail ou ovh')
-}
+// Configuration unique en développement et en production : boîte officielle OVH.
+const getOfficialEmail = () => process.env.OVH_USER?.trim()
+const getEmailConfig = () => ({
+  host: 'smtp.mail.ovh.net', port: 465, secure: true,
+  auth: { user: getOfficialEmail(), pass: process.env.OVH_PASSWORD }
+})
 
-const hasCredentials = ({ auth }) => Boolean(
-  auth.user && auth.pass && auth.pass !== 'your-app-password-here'
-)
+const hasCredentials = ({ auth }) => Boolean(auth.user && auth.pass?.trim())
 
 export function isEmailConfigured() {
   return hasCredentials(getEmailConfig())
@@ -31,7 +17,7 @@ export function isEmailConfigured() {
 async function sendEmail(mailOptions) {
   const config = getEmailConfig()
   if (!hasCredentials(config)) {
-    throw new Error('Identifiants manquants pour le fournisseur email sélectionné')
+    throw new Error('OVH_USER et OVH_PASSWORD doivent être renseignés')
   }
   const transporter = nodemailer.createTransport(config)
   return transporter.sendMail({ ...mailOptions, from: config.auth.user })
@@ -116,7 +102,7 @@ const createContactEmailTemplate = (contactData) => {
         <div class="footer">
           <p><strong>Mell Plus Niger</strong></p>
           <p>MELL PLUS Informatique, Blvd Mali Bero, Niamey</p>
-          <p>📞 +227 20 35 23 23 | 📧 binome296@gmail.com</p>
+          <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
         </div>
       </div>
     </body>
@@ -128,7 +114,8 @@ const createContactEmailTemplate = (contactData) => {
 export async function sendContactNotification(contactData) {
   try {
     const mailOptions = {
-      to: 'binome296@gmail.com', // Email de destination
+      to: getOfficialEmail(),
+      replyTo: contactData.email,
       subject: `🔔 Nouveau message de contact: ${contactData.subject}`,
       html: createContactEmailTemplate(contactData),
       // Version texte pour les clients qui ne supportent pas HTML
@@ -204,7 +191,7 @@ export async function sendContactConfirmation(contactData) {
           <div class="footer">
             <p><strong>Mell Plus Niger</strong></p>
             <p>Votre partenaire IT au Niger</p>
-            <p>📞 +227 20 35 23 23 | 📧 binome296@gmail.com</p>
+            <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
           </div>
         </div>
       </body>
@@ -325,7 +312,7 @@ const createLoginAlertTemplate = (loginData) => {
 export async function sendLoginAlert(loginData) {
   try {
     const mailOptions = {
-      to: loginData.adminEmail || loginData.failedEmail,
+      to: getOfficialEmail(),
       subject: loginData.success
         ? '✅ Nouvelle connexion à votre compte admin - Mell Plus'
         : '⚠️ Tentative de connexion échouée - Mell Plus',
@@ -479,7 +466,7 @@ const createQuoteEmailTemplate = (quoteData) => {
         <div class="footer">
           <p><strong>Mell Plus Niger</strong></p>
           <p>MELL PLUS Informatique, Blvd Mali Bero, Niamey</p>
-          <p>📞 +227 20 35 23 23 | 📧 binome296@gmail.com</p>
+          <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
         </div>
       </div>
     </body>
@@ -491,7 +478,8 @@ const createQuoteEmailTemplate = (quoteData) => {
 export async function sendQuoteNotification(quoteData) {
   try {
     const mailOptions = {
-      to: 'binome296@gmail.com', // Email de destination
+      to: getOfficialEmail(),
+      replyTo: quoteData.email,
       subject: `💼 Nouvelle demande de devis: ${quoteData.name}`,
       html: createQuoteEmailTemplate(quoteData),
       // Version texte pour les clients qui ne supportent pas HTML
@@ -583,7 +571,7 @@ export async function sendQuoteConfirmation(quoteData) {
           <div class="footer">
             <p><strong>Mell Plus Niger</strong></p>
             <p>Votre partenaire IT au Niger</p>
-            <p>📞 +227 20 35 23 23 | 📧 binome296@gmail.com</p>
+            <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
           </div>
         </div>
       </body>
@@ -605,4 +593,3 @@ export async function sendQuoteConfirmation(quoteData) {
     return { success: false, error: error.message }
   }
 }
-

@@ -94,17 +94,23 @@ export async function POST(request) {
       }
     })
 
-    // Envoyer les emails en arrière-plan (ne pas bloquer la réponse)
+    // Attendre les envois ; conserver le devis en base même si SMTP échoue.
     try {
       // Vérifier si les credentials email sont configurés
       if (isEmailConfigured()) {
         // Email de notification à l'admin
-        await sendQuoteNotification(quoteRequest)
+        const notification = await sendQuoteNotification(quoteRequest)
 
         // Email de confirmation au client
-        await sendQuoteConfirmation(quoteRequest)
+        const confirmation = await sendQuoteConfirmation(quoteRequest)
 
-        console.log('Emails de devis envoyés avec succès pour:', quoteRequest.id)
+        if (notification.success && confirmation.success) {
+          console.log('Emails acceptés par le serveur SMTP pour:', quoteRequest.id)
+        } else {
+          console.error('Envoi email incomplet pour:', quoteRequest.id, {
+            notification: notification.success, confirmation: confirmation.success
+          })
+        }
       } else {
         console.log('Configuration email manquante - emails non envoyés pour le devis:', quoteRequest.id)
       }
