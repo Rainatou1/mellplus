@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
-import { sendContactNotification, sendContactConfirmation } from '@/lib/email'
+import { sendContactNotification, sendContactConfirmation, isEmailConfigured } from '@/lib/email'
 export const runtime = "nodejs";
 
 
@@ -41,8 +41,7 @@ export async function POST(request) {
     // Envoyer les emails en arrière-plan (ne pas bloquer la réponse)
     try {
       // Vérifier si les credentials email sont configurés
-      if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD &&
-          process.env.EMAIL_PASSWORD !== 'your-app-password-here') {
+      if (isEmailConfigured()) {
         // Email de notification à l'admin
         await sendContactNotification(contact)
 

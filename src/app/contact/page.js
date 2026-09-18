@@ -96,8 +96,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Téléphone</h3>
-                    <p className="text-gray-600">+227 20 35 23 23</p>
-                    <p className="text-sm text-gray-500">Lun-Ven: 8h-18h | Sam: 8h-16h</p>
+                    <p className="text-gray-600">+227 20 35 23 23/ +227 99 86 01 01</p>
+                    <p className="text-sm text-gray-500">Lun-Ven: 8h-17h30 | Sam: 8h-14h</p>
                   </div>
                 </div>
 
@@ -108,7 +108,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900">Email</h3>
                     <p className="text-gray-600">mellplus@mellplusniger.com</p>
-                    <p className="text-sm text-gray-500">Réponse sous 12h</p>
+                   {/*  <p className="text-sm text-gray-500">Réponse sous 12h</p>*/}
                   </div>
                 </div>
 

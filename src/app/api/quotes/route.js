@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { sendQuoteNotification, sendQuoteConfirmation } from '@/lib/email'
+import { sendQuoteNotification, sendQuoteConfirmation, isEmailConfigured } from '@/lib/email'
 export const runtime = "nodejs";
 
 // Schéma de validation pour un item de devis
@@ -97,8 +97,7 @@ export async function POST(request) {
     // Envoyer les emails en arrière-plan (ne pas bloquer la réponse)
     try {
       // Vérifier si les credentials email sont configurés
-      if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD &&
-          process.env.EMAIL_PASSWORD !== 'your-app-password-here') {
+      if (isEmailConfigured()) {
         // Email de notification à l'admin
         await sendQuoteNotification(quoteRequest)
 

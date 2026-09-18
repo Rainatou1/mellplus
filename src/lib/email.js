@@ -1,20 +1,40 @@
 import nodemailer from 'nodemailer'
 
-// Configuration du service email
-const createTransport = () => {
-  // Configuration SMTP plus robuste
-  return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // true pour 465, false pour les autres ports
-    auth: {
-      user: process.env.EMAIL_USER, // Email utilisé pour envoyer
-      pass: process.env.EMAIL_PASSWORD // Mot de passe d'application Gmail
-    },
-    tls: {
-      rejectUnauthorized: false
+// Gmail conserve les variables historiques ; OVH utilise ses propres identifiants.
+const getEmailConfig = () => {
+  const provider = process.env.EMAIL_PROVIDER ?? 'gmail'
+  if (provider === 'gmail') {
+    return {
+      host: 'smtp.gmail.com', port: 587, secure: false,
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD },
+      tls: { rejectUnauthorized: false }
     }
-  })
+  }
+  if (provider === 'ovh') {
+    return {
+      host: 'smtp.mail.ovh.net', port: 465, secure: true,
+      auth: { user: process.env.OVH_USER, pass: process.env.OVH_PASSWORD }
+    }
+  }
+  throw new Error('EMAIL_PROVIDER doit être gmail ou ovh')
+}
+
+const hasCredentials = ({ auth }) => Boolean(
+  auth.user && auth.pass && auth.pass !== 'your-app-password-here'
+)
+
+export function isEmailConfigured() {
+  return hasCredentials(getEmailConfig())
+}
+
+// Le même choix de configuration détermine le SMTP et l'expéditeur.
+async function sendEmail(mailOptions) {
+  const config = getEmailConfig()
+  if (!hasCredentials(config)) {
+    throw new Error('Identifiants manquants pour le fournisseur email sélectionné')
+  }
+  const transporter = nodemailer.createTransport(config)
+  return transporter.sendMail({ ...mailOptions, from: config.auth.user })
 }
 
 // Template HTML pour l'email de notification
@@ -107,10 +127,7 @@ const createContactEmailTemplate = (contactData) => {
 // Fonction pour envoyer un email de notification
 export async function sendContactNotification(contactData) {
   try {
-    const transporter = createTransport()
-
     const mailOptions = {
-      from: process.env.EMAIL_USER,
       to: 'binome296@gmail.com', // Email de destination
       subject: `🔔 Nouveau message de contact: ${contactData.subject}`,
       html: createContactEmailTemplate(contactData),
@@ -131,7 +148,7 @@ Date: ${new Date(contactData.createdAt).toLocaleString('fr-FR')}
       `
     }
 
-    const result = await transporter.sendMail(mailOptions)
+    const result = await sendEmail(mailOptions)
     console.log('Email de notification envoyé:', result.messageId)
     return { success: true, messageId: result.messageId }
 
@@ -144,8 +161,6 @@ Date: ${new Date(contactData.createdAt).toLocaleString('fr-FR')}
 // Fonction pour envoyer un email de confirmation automatique au visiteur
 export async function sendContactConfirmation(contactData) {
   try {
-    const transporter = createTransport()
-
     const confirmationTemplate = `
       <!DOCTYPE html>
       <html>
@@ -197,13 +212,12 @@ export async function sendContactConfirmation(contactData) {
     `
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
       to: contactData.email,
       subject: '✅ Confirmation de réception - Mell Plus Niger',
       html: confirmationTemplate
     }
 
-    const result = await transporter.sendMail(mailOptions)
+    const result = await sendEmail(mailOptions)
     console.log('Email de confirmation envoyé à:', contactData.email)
     return { success: true, messageId: result.messageId }
 
@@ -310,10 +324,7 @@ const createLoginAlertTemplate = (loginData) => {
 // Fonction pour envoyer une alerte de connexion
 export async function sendLoginAlert(loginData) {
   try {
-    const transporter = createTransport()
-
     const mailOptions = {
-      from: process.env.EMAIL_USER,
       to: loginData.adminEmail || loginData.failedEmail,
       subject: loginData.success
         ? '✅ Nouvelle connexion à votre compte admin - Mell Plus'
@@ -321,7 +332,7 @@ export async function sendLoginAlert(loginData) {
       html: createLoginAlertTemplate(loginData)
     }
 
-    const result = await transporter.sendMail(mailOptions)
+    const result = await sendEmail(mailOptions)
     console.log('Alerte de connexion envoyée:', result.messageId)
     return { success: true, messageId: result.messageId }
 
@@ -479,10 +490,7 @@ const createQuoteEmailTemplate = (quoteData) => {
 // Fonction pour envoyer un email de notification pour un devis
 export async function sendQuoteNotification(quoteData) {
   try {
-    const transporter = createTransport()
-
     const mailOptions = {
-      from: process.env.EMAIL_USER,
       to: 'binome296@gmail.com', // Email de destination
       subject: `💼 Nouvelle demande de devis: ${quoteData.name}`,
       html: createQuoteEmailTemplate(quoteData),
@@ -503,7 +511,7 @@ Date: ${new Date(quoteData.createdAt).toLocaleString('fr-FR')}
       `
     }
 
-    const result = await transporter.sendMail(mailOptions)
+    const result = await sendEmail(mailOptions)
     console.log('Email de notification de devis envoyé:', result.messageId)
     return { success: true, messageId: result.messageId }
 
@@ -516,8 +524,6 @@ Date: ${new Date(quoteData.createdAt).toLocaleString('fr-FR')}
 // Fonction pour envoyer un email de confirmation au client pour le devis
 export async function sendQuoteConfirmation(quoteData) {
   try {
-    const transporter = createTransport()
-
     const confirmationTemplate = `
       <!DOCTYPE html>
       <html>
@@ -585,13 +591,12 @@ export async function sendQuoteConfirmation(quoteData) {
     `
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
       to: quoteData.email,
       subject: '✅ Confirmation de votre demande de devis - Mell Plus Niger',
       html: confirmationTemplate
     }
 
-    const result = await transporter.sendMail(mailOptions)
+    const result = await sendEmail(mailOptions)
     console.log('Email de confirmation de devis envoyé à:', quoteData.email)
     return { success: true, messageId: result.messageId }
 
