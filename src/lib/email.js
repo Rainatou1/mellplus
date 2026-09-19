@@ -1,13 +1,12 @@
 import nodemailer from 'nodemailer'
 
 // Configuration unique en développement et en production : boîte officielle OVH.
-const getOfficialEmail = () => process.env.OVH_USER?.trim()
 const getEmailConfig = () => ({
   host: 'smtp.mail.ovh.net', port: 465, secure: true,
-  auth: { user: getOfficialEmail(), pass: process.env.OVH_PASSWORD }
+  auth: { user: process.env.OVH_USER, pass: process.env.OVH_PASSWORD }
 })
 
-const hasCredentials = ({ auth }) => Boolean(auth.user && auth.pass?.trim())
+const hasCredentials = ({ auth }) => Boolean(auth.user?.trim() && auth.pass?.trim())
 
 export function isEmailConfigured() {
   return hasCredentials(getEmailConfig())
@@ -20,7 +19,7 @@ async function sendEmail(mailOptions) {
     throw new Error('OVH_USER et OVH_PASSWORD doivent être renseignés')
   }
   const transporter = nodemailer.createTransport(config)
-  return transporter.sendMail({ ...mailOptions, from: config.auth.user })
+  return transporter.sendMail({ ...mailOptions, from: process.env.OVH_USER })
 }
 
 // Template HTML pour l'email de notification
@@ -102,7 +101,7 @@ const createContactEmailTemplate = (contactData) => {
         <div class="footer">
           <p><strong>Mell Plus Niger</strong></p>
           <p>MELL PLUS Informatique, Blvd Mali Bero, Niamey</p>
-          <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
+          <p>📞 +227 20 35 23 23 | 📧 ${process.env.OVH_USER}</p>
         </div>
       </div>
     </body>
@@ -114,7 +113,7 @@ const createContactEmailTemplate = (contactData) => {
 export async function sendContactNotification(contactData) {
   try {
     const mailOptions = {
-      to: getOfficialEmail(),
+      to: process.env.OVH_USER,
       replyTo: contactData.email,
       subject: `🔔 Nouveau message de contact: ${contactData.subject}`,
       html: createContactEmailTemplate(contactData),
@@ -191,7 +190,7 @@ export async function sendContactConfirmation(contactData) {
           <div class="footer">
             <p><strong>Mell Plus Niger</strong></p>
             <p>Votre partenaire IT au Niger</p>
-            <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
+            <p>📞 +227 20 35 23 23 | 📧 ${process.env.OVH_USER}</p>
           </div>
         </div>
       </body>
@@ -312,7 +311,7 @@ const createLoginAlertTemplate = (loginData) => {
 export async function sendLoginAlert(loginData) {
   try {
     const mailOptions = {
-      to: getOfficialEmail(),
+      to: process.env.OVH_USER,
       subject: loginData.success
         ? '✅ Nouvelle connexion à votre compte admin - Mell Plus'
         : '⚠️ Tentative de connexion échouée - Mell Plus',
@@ -466,7 +465,7 @@ const createQuoteEmailTemplate = (quoteData) => {
         <div class="footer">
           <p><strong>Mell Plus Niger</strong></p>
           <p>MELL PLUS Informatique, Blvd Mali Bero, Niamey</p>
-          <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
+          <p>📞 +227 20 35 23 23 | 📧 ${process.env.OVH_USER}</p>
         </div>
       </div>
     </body>
@@ -478,7 +477,7 @@ const createQuoteEmailTemplate = (quoteData) => {
 export async function sendQuoteNotification(quoteData) {
   try {
     const mailOptions = {
-      to: getOfficialEmail(),
+      to: process.env.OVH_USER,
       replyTo: quoteData.email,
       subject: `💼 Nouvelle demande de devis: ${quoteData.name}`,
       html: createQuoteEmailTemplate(quoteData),
@@ -571,7 +570,7 @@ export async function sendQuoteConfirmation(quoteData) {
           <div class="footer">
             <p><strong>Mell Plus Niger</strong></p>
             <p>Votre partenaire IT au Niger</p>
-            <p>📞 +227 20 35 23 23 | 📧 ${getOfficialEmail()}</p>
+            <p>📞 +227 20 35 23 23 | 📧 ${process.env.OVH_USER}</p>
           </div>
         </div>
       </body>

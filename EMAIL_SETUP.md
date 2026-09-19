@@ -71,12 +71,17 @@ les valeurs effectivement chargées sur le serveur restent à vérifier sur celu
 Tests automatisés sans envoi réel :
 
 ```sh
-node --experimental-vm-modules --test tests/email.test.mjs
+npm test
 ```
 
-Ils couvrent les cinq fonctions d'envoi, le routage, replyTo, développement/production,
-les anciennes variables ignorées, les identifiants absents, les échecs SMTP et les routes
-Contact/Devis avec SMTP et base de données simulés.
+Cette commande lance toutes les suites de `tests/` (e-mails, catégories et recherche).
+Les tests e-mail couvrent les cinq fonctions d'envoi, le routage, replyTo,
+développement/production, les anciennes variables ignorées, les identifiants absents,
+le refus d'authentification OVH (EAUTH), l'absence de configuration Gmail dans le module,
+les échecs SMTP et les routes Contact/Devis avec SMTP et base de données simulés.
+
+Les scripts manuels `node test-auth.js` et `node test-db-connection.js` sont séparés :
+le second nécessite une connexion à la base configurée dans l'environnement.
 
 Test réel en local puis en production :
 

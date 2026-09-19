@@ -15,9 +15,12 @@ const data = {
   adminEmail: 'admin@example.test', success: true, timestamp: new Date().toISOString(),
   type: 'product', items: [{ type: 'custom', name: 'Article', quantity: 1, unitPrice: 10, totalPrice: 10 }]
 }
-async function setup(env, fail = false) {
+async function setup(env, failure = null) {
   const calls = []
-  const context = createContext({ process: { env }, console: { log() {}, error() {} } })
+  const logs = { log: [], error: [] }
+  const context = createContext({ process: { env }, console: {
+    log(...args) { logs.log.push(args) }, error(...args) { logs.error.push(args) }
+  } })
   const module = new SourceTextModule(source, { context })
   await module.link(() => new SyntheticModule(['default'], function () {
     this.setExport('default', { createTransport(config) {
@@ -25,13 +28,13 @@ async function setup(env, fail = false) {
       calls.push(call)
       return { async sendMail(mail) {
         call.mail = mail
-        if (fail) throw new Error('SMTP unavailable')
+        if (failure) throw failure
         return { messageId: 'mock-id' }
       } }
     } })
   }, { context }))
   await module.evaluate()
-  return { module, calls, context }
+  return { module, calls, context, logs }
 }
 
 for (const NODE_ENV of ['development', 'production']) {
@@ -66,15 +69,33 @@ for (const key of ['OVH_USER', 'OVH_PASSWORD']) {
     for (const value of [undefined, '', '   ']) {
       const { module, calls } = await setup({ ...credentials, [key]: value })
       assert.equal(module.namespace.isEmailConfigured(), false)
-      assert.equal((await module.namespace.sendContactNotification(data)).success, false)
+      const result = await module.namespace.sendContactNotification(data)
+      assert.equal(result.success, false)
+      assert.match(result.error, /OVH_USER et OVH_PASSWORD/)
       assert.equal(calls.length, 0)
     }
   })
 }
 test('SMTP failure never falls back', async () => {
-  const { module, calls } = await setup(credentials, true)
+  const { module, calls } = await setup(credentials, new Error('SMTP unavailable'))
   assert.equal((await module.namespace.sendQuoteNotification(data)).success, false)
   assert.equal(calls.length, 1)
+})
+
+test('OVH authentication rejection is reported without fallback', async () => {
+  const failure = Object.assign(new Error('Invalid login: 535 Authentication failed'), { code: 'EAUTH' })
+  const { module, calls, logs } = await setup(credentials, failure)
+  const result = await module.namespace.sendContactNotification(data)
+  assert.equal(result.success, false)
+  assert.equal(result.error, failure.message)
+  assert.equal(calls.length, 1)
+  assert.equal(calls[0].config.host, 'smtp.mail.ovh.net')
+  assert.equal(logs.log.length, 0)
+  assert.equal(logs.error[0][1].code, 'EAUTH')
+})
+
+test('email source has no legacy provider or recipient configuration', () => {
+  assert.doesNotMatch(source, /gmail|EMAIL_PROVIDER|EMAIL_USER|EMAIL_PASSWORD|GMAIL_USER|GMAIL_APP_PASSWORD|ADMIN_EMAIL|CONTACT_EMAIL|MAIL_TO/i)
 })
 test('failed login alerts go to the official mailbox', async () => {
   const { module, calls } = await setup(credentials)
