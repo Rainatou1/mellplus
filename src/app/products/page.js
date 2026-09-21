@@ -496,7 +496,7 @@ function CategoryProductCard({ product }) {
         </h3>
 
         {/* Description courte */}
-        {product.description && (
+       {/*  {product.description && (
           <p className="text-gray-600 text-sm mb-2 h-10 overflow-hidden" style={{
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -504,7 +504,7 @@ function CategoryProductCard({ product }) {
           }}>
             {product.description}
           </p>
-        )}
+        )} */}
 
         {/* Prix */}
         <div className="mb-4">
