@@ -9,6 +9,7 @@ export default function ImageUpload({
   value,
   onChange,
   onRemove,
+  validateUrl,
   label = "Image",
   multiple = false,
   className = ""
@@ -62,6 +63,10 @@ export default function ImageUpload({
 
   const handleUrlSubmit = () => {
     if (!urlInput.trim()) return
+    if (validateUrl && !validateUrl(urlInput.trim())) {
+      toast.error('Utilisez une image Cloudinary ou un chemin local commençant par /')
+      return
+    }
 
     if (multiple) {
       const currentImages = Array.isArray(value) ? value : []
@@ -122,7 +127,7 @@ export default function ImageUpload({
         {urlMode && (
           <div className="flex gap-2">
             <input
-              type="url"
+              type={validateUrl ? 'text' : 'url'}
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
               placeholder="https://example.com/image.jpg"

@@ -1,112 +1,36 @@
-// app/api/carousel/route.js
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { homeAdmin, forbidden, apiError } from '@/lib/homeAdmin'
+import { slideSchema } from '@/lib/homeValidation'
+import { publicSlide } from '@/lib/homeContent'
 
-// GET - Récupérer les slides du carousel
+export const dynamic = 'force-dynamic'
 export async function GET(request) {
   try {
-    const { searchParams } = new URL(request.url)
-    const active = searchParams.get('active')
-    const limit = parseInt(searchParams.get('limit') || '10')
-
-    // Construire les filtres
-    const where = {}
-
-    if (active === 'true') {
-      where.active = true
-    }
-
-    // Récupérer les slides
+    const params = new URL(request.url).searchParams
+    const adminView = params.get('admin') === 'true'
+    if (adminView && !await homeAdmin()) return forbidden()
+    const limit = params.get('limit')
+    if (limit !== null && (!/^\d+$/.test(limit) || Number(limit) < 1 || Number(limit) > 1000)) return NextResponse.json({ error: 'Limite invalide' }, { status: 400 })
     const slides = await prisma.carousel.findMany({
-      where,
-      take: limit,
-      orderBy: [
-        { order: 'asc' },
-        { createdAt: 'desc' }
-      ]
+      where: adminView && params.get('active') !== 'true' ? {} : { active: true },
+      ...(limit ? { take: Number(limit) } : {}), orderBy: [{ order: 'asc' }, { id: 'asc' }]
     })
-
-    return NextResponse.json({
-      slides,
-      total: slides.length
-    })
-
-  } catch (error) {
-    console.error('Erreur lors de la récupération des slides:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la récupération des slides' },
-      { status: 500 }
-    )
-  }
+    return NextResponse.json({ slides: adminView ? slides : slides.map(publicSlide), total: slides.length })
+  } catch (error) { return apiError(error) }
 }
-
-// POST - Créer une nouvelle slide (Admin seulement)
 export async function POST(request) {
   try {
-    // Vérifier l'authentification
-    const session = await getServerSession(authOptions)
-    if (!session || !['ADMIN', 'SUPER_ADMIN'].includes(session.user.role)) {
-      return NextResponse.json(
-        { error: 'Non autorisé' },
-        { status: 401 }
-      )
-    }
-
-    const body = await request.json()
-
-    // Validation des données requises
-    if (!body.title || !body.image) {
-      return NextResponse.json(
-        { error: 'Le titre et l\'image sont requis' },
-        { status: 400 }
-      )
-    }
-
-    // Si aucun ordre n'est spécifié, le mettre à la fin
-    let order = body.order
-    if (order === undefined || order === null) {
-      const lastSlide = await prisma.carousel.findFirst({
-        orderBy: { order: 'desc' },
-        select: { order: true }
-      })
-      order = (lastSlide?.order || 0) + 1
-    }
-
-    // Créer la slide
-    const slide = await prisma.carousel.create({
-      data: {
-        title: body.title,
-        subtitle: body.subtitle || null,
-        description: body.description || null,
-        image: body.image,
-        ctaPrimary: body.ctaPrimary || null,
-        ctaSecondary: body.ctaSecondary || null,
-        linkPrimary: body.linkPrimary || null,
-        linkSecondary: body.linkSecondary || null,
-        bgGradient: body.bgGradient || 'from-blue-600 to-blue-800',
-        textColor: body.textColor || 'text-white',
-        active: body.active !== undefined ? body.active : true,
-        order: order,
-        featured: body.featured || false,
-        createdBy: session.user.id
+    const admin = await homeAdmin()
+    if (!admin) return forbidden()
+    const data = slideSchema.parse(await request.json())
+    const slide = await prisma.$transaction(async tx => {
+      if (data.order === undefined) {
+        const last = await tx.carousel.findFirst({ orderBy: { order: 'desc' }, select: { order: true } })
+        data.order = (last?.order ?? -1) + 1
       }
-    })
-
-    return NextResponse.json(
-      {
-        success: true,
-        slide
-      },
-      { status: 201 }
-    )
-
-  } catch (error) {
-    console.error('Erreur lors de la création de la slide:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la création de la slide' },
-      { status: 500 }
-    )
-  }
+      return tx.carousel.create({ data: { ...data, createdBy: admin.id } })
+    }, { isolationLevel: 'Serializable' })
+    return NextResponse.json({ success: true, slide }, { status: 201 })
+  } catch (error) { return apiError(error) }
 }

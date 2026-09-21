@@ -412,7 +412,7 @@ model Carousel {
   linkSecondary String? // Lien du bouton secondaire
 
   // Style et apparence
-  bgGradient  String   @default("from-blue-600 to-blue-800") // Classes Tailwind
+  bgGradient  String   @default("from-blue-600 to-blue-800") // Classes historiques, couleur hex ou linear-gradient validé
   textColor   String   @default("text-white") // Couleur du texte
 
   // Gestion et ordre
@@ -429,6 +429,19 @@ model Carousel {
 
   @@index([active])
   @@index([order])
+}
+
+// Emplacements visuels indépendants, réutilisables sur d'autres pages.
+model VisualBlock {
+  key       String   @id
+  image     String
+  title     String
+  subtitle  String?
+  alt       String?
+  link      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Système d'avis clients

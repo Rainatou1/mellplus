@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { homeAdmin, forbidden } from '@/lib/homeAdmin'
 import { v2 as cloudinary } from 'cloudinary'
 
 // Configuration Cloudinary
@@ -14,13 +13,7 @@ cloudinary.config({
 export async function POST(request) {
   try {
     // Vérifier l'authentification admin
-    const session = await getServerSession(authOptions)
-    if (!session || !['ADMIN', 'SUPER_ADMIN'].includes(session.user.role)) {
-      return NextResponse.json(
-        { error: 'Non autorisé' },
-        { status: 401 }
-      )
-    }
+    if (!await homeAdmin()) return forbidden()
 
     const data = await request.formData()
     const file = data.get('file')

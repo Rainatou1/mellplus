@@ -26,10 +26,18 @@ import {
 import toast from 'react-hot-toast'
 import Image from 'next/image'
 import ImageUpload from '@/components/admin/ImageUpload'
+import HomeVisualBlocks from '@/components/admin/HomeVisualBlocks'
+import SlideBackground from '@/components/admin/SlideBackground'
+import { slideStyle } from '@/lib/homeContent'
+import { safeImage } from '@/lib/homeValidation'
+import { useSession } from 'next-auth/react'
 
 export default function AdminCarouselPage() {
+  const { data: session, status } = useSession()
+  const canManage = ['ADMIN', 'SUPER_ADMIN'].includes(session?.user?.role)
   const [slides, setSlides] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState('')
   const [saving, setSaving] = useState(false)
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingSlide, setEditingSlide] = useState(null)
@@ -65,17 +73,19 @@ export default function AdminCarouselPage() {
   // Charger les slides
   const fetchSlides = async () => {
     try {
-      setLoading(true)
-      const response = await fetch('/api/carousel?limit=50')
+      setLoadError('')
+      const response = await fetch('/api/carousel?admin=true', { cache: 'no-store' })
       const data = await response.json()
 
       if (response.ok) {
         setSlides(data.slides || [])
       } else {
+        setLoadError(data.error || 'Chargement impossible')
         toast.error(data.error || 'Erreur lors du chargement des slides')
       }
     } catch (error) {
       console.error('Erreur:', error)
+      setLoadError('Chargement impossible. Réessayez.')
       toast.error('Erreur lors du chargement des slides')
     } finally {
       setLoading(false)
@@ -83,8 +93,8 @@ export default function AdminCarouselPage() {
   }
 
   useEffect(() => {
-    fetchSlides()
-  }, [])
+    if (canManage) fetchSlides()
+  }, [canManage])
 
   // Soumettre le formulaire
   const handleSubmit = async (e) => {
@@ -105,7 +115,7 @@ export default function AdminCarouselPage() {
         textColor: formData.textColor,
         active: formData.active,
         featured: formData.featured,
-        order: formData.order
+        ...(editingSlide ? { order: formData.order } : {})
       }
 
       let response
@@ -204,20 +214,18 @@ export default function AdminCarouselPage() {
     }
 
     const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1
-    const otherSlide = sortedSlides[newIndex]
+    ;[sortedSlides[currentIndex], sortedSlides[newIndex]] = [sortedSlides[newIndex], sortedSlides[currentIndex]]
 
     try {
-      await fetch('/api/carousel/reorder', {
+      const response = await fetch('/api/carousel/reorder', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          slideOrders: [
-            { id: slide.id, order: otherSlide.order },
-            { id: otherSlide.id, order: slide.order }
-          ]
+          slideOrders: sortedSlides.map((item, order) => ({ id: item.id, order }))
         })
       })
 
+      if (!response.ok) throw new Error((await response.json()).error)
       toast.success('Ordre modifié')
       await fetchSlides()
     } catch (error) {
@@ -274,6 +282,20 @@ export default function AdminCarouselPage() {
     active: slides.filter(s => s.active).length,
     inactive: slides.filter(s => !s.active).length,
     featured: slides.filter(s => s.featured).length
+  }
+
+  if (status !== 'loading' && !canManage) return <p role="alert">Accès réservé aux administrateurs.</p>
+
+  async function importDefaults() {
+    setSaving(true)
+    try {
+      const response = await fetch('/api/carousel/import-defaults', { method: 'POST' })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error)
+      toast.success(`${data.imported} slides importées ; contenus existants conservés`)
+      await fetchSlides()
+    } catch (error) { toast.error(error.message) }
+    finally { setSaving(false) }
   }
 
   if (loading) {
@@ -385,8 +407,13 @@ export default function AdminCarouselPage() {
         </div>
       </div>
 
+      <HomeVisualBlocks />
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-2">
+        <p className="text-sm">Sans slide enregistrée, l’accueil affiche les huit slides historiques. Si toutes les slides sont désactivées, il affiche un visuel neutre. Importez les contenus historiques pour les modifier ; cet import conserve toutes les données existantes.</p>
+        <button disabled={saving} onClick={importDefaults} className="px-4 py-2 bg-purple-600 text-white rounded-lg disabled:opacity-50">Importer les contenus historiques manquants</button>
+      </div>
       {/* Liste des slides */}
-      {slides.length === 0 ? (
+      {loadError ? <div role="alert" className="p-4 bg-red-50 text-red-700 rounded-lg">{loadError} <button onClick={fetchSlides} className="underline">Réessayer</button></div> : slides.length === 0 ? (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
           <MonitorPlay className="w-16 h-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Aucune slide</h3>
@@ -401,18 +428,18 @@ export default function AdminCarouselPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {slides.sort((a, b) => a.order - b.order).map((slide) => (
+          {[...slides].sort((a, b) => a.order - b.order).map((slide) => (
             <div key={slide.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all">
               {/* Preview de la slide */}
-              <div className={`relative h-48 bg-gradient-to-r ${slide.bgGradient}`}>
+              <div className={`relative h-48 bg-gradient-to-r ${slide.bgGradient}`} style={slideStyle(slide)}>
                 <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                 <div className="relative z-10 p-4 h-full flex flex-col justify-between">
                   <div>
-                    <h3 className={`text-lg font-bold ${slide.textColor} mb-1 line-clamp-2`}>
+                    <h3 style={slideStyle({ textColor: slide.textColor })} className={`text-lg font-bold ${slide.textColor} mb-1 line-clamp-2`}>
                       {slide.title}
                     </h3>
                     {slide.subtitle && (
-                      <p className={`text-sm ${slide.textColor} opacity-90 line-clamp-1`}>
+                      <p style={slideStyle({ textColor: slide.textColor })} className={`text-sm ${slide.textColor} opacity-90 line-clamp-1`}>
                         {slide.subtitle}
                       </p>
                     )}
@@ -603,6 +630,7 @@ export default function AdminCarouselPage() {
 
                   <div>
                     <ImageUpload
+                      validateUrl={safeImage}
                       label="Image de la slide *"
                       value={formData.image}
                       onChange={(url) => setFormData({...formData, image: url})}
@@ -641,6 +669,7 @@ export default function AdminCarouselPage() {
                     </div>
                   </div>
 
+                  <SlideBackground value={formData.bgGradient} onChange={bgGradient => setFormData({ ...formData, bgGradient })} textColor={formData.textColor} onTextColorChange={textColor => setFormData({ ...formData, textColor })} />
                   {/* Boutons CTA */}
                   <div className="grid grid-cols-1 gap-4">
                     <div>
@@ -656,7 +685,7 @@ export default function AdminCarouselPage() {
                           placeholder="Texte du bouton"
                         />
                         <input
-                          type="url"
+                          type="text"
                           value={formData.linkPrimary}
                           onChange={(e) => setFormData({...formData, linkPrimary: e.target.value})}
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -678,7 +707,7 @@ export default function AdminCarouselPage() {
                           placeholder="Texte du bouton"
                         />
                         <input
-                          type="url"
+                          type="text"
                           value={formData.linkSecondary}
                           onChange={(e) => setFormData({...formData, linkSecondary: e.target.value})}
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -712,7 +741,7 @@ export default function AdminCarouselPage() {
                       />
                       <div>
                         <span className="text-sm font-medium text-gray-900">En vedette</span>
-                        <p className="text-xs text-gray-500">Mettre cette slide en avant</p>
+                        <p className="text-xs text-gray-500">Repère interne ; l’ordre public reste celui de la liste</p>
                       </div>
                     </label>
                   </div>
@@ -725,7 +754,7 @@ export default function AdminCarouselPage() {
                   <Eye className="w-5 h-5 text-purple-600" />
                   Aperçu
                 </h3>
-                <div className={`relative h-32 rounded-lg overflow-hidden bg-gradient-to-r ${formData.bgGradient}`}>
+                <div className={`relative h-32 rounded-lg overflow-hidden bg-gradient-to-r ${formData.bgGradient}`} style={slideStyle(formData)}>
                   <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                   <div className="relative z-10 p-4 h-full flex flex-col justify-center">
                     {formData.title && (

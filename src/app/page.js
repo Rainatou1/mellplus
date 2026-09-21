@@ -3,6 +3,9 @@ import Link from 'next/link'
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Star, Truck, Shield, Users, Clock, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import { DEFAULT_SLIDES, DEFAULT_BLOCKS, EMPTY_SLIDE } from '@/lib/homeDefaults';
+import { slideStyle } from '@/lib/homeContent';
+import HeroSideBlock from '@/components/HeroSideBlock';
 import FloatingButtons from '@/components/FloatingButtons';
 
 const MellPlusNiger = () => {
@@ -15,89 +18,21 @@ const MellPlusNiger = () => {
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
   const [bestSellerLoading, setBestSellerLoading] = useState(true);
 
-  // Slides du carrousel
-  const slides = [
-    {
-      id: 1,
-      title: "Votre expert IT basé au Niger",
-      subtitle: "Une offre évolutive avec plus de 20ans d'experiences",
-      description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
-      image: "/images/logo.png",
-      ctaPrimary: "Demander un devis",
-      ctaSecondary: "Nos produits",
-      bgGradient: "from-gray-300 to-gray-600"
-    },
-    {
-      id: 2,
-      title: "Dernières technologies HP",
-      subtitle: "HP Pavilion",
-      description: "Découvrez la nouvelle gamme HP avec des offres exclusives et un service après-vente premium",
-      image: "/images/hp-removebg.png",
-      ctaPrimary: "En savoir plus",
-      ctaSecondary: "Voir les produits",
-      bgGradient: "from-gray-800 to-gray-900"
-    },
-    {
-      id: 3,
-      title: "Camera Surveillance",
-      subtitle: "Vision de nuit",
-      description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de climatisation",
-      image: "/images/camera.png",
-      ctaPrimary: "Demander un devis",
-      ctaSecondary: "Catalogue",
-      bgGradient: "from-green-600 to-teal-700"
-    },
-    {
-      id: 4,
-      title: "Promotions exceptionnelles",
-      subtitle: "Jusqu'à -30% sur une sélection",
-      description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      image: "/images/hp.png",
-      ctaPrimary: "En savoir plus",
-      ctaSecondary: "Tous les promos",
-      bgGradient: "from-red-600 to-pink-700"
-    },
-    {
-      id: 5,
-      title: "Promotion PC portable",
-      subtitle: "Une offre évolutive avec plus de 15 000 références",
-      description: "Équipements informatiques professionnels, support technique et solutions sur mesure pour votre entreprise",
-      image: "/images/hp-removebg.png",
-      ctaPrimary: "Demander un devis",
-      ctaSecondary: "Tous les produits",
-      bgGradient: "from-pink-600 to-blue-800"
-    },
-    {
-      id: 6,
-      title: "Derniere démarque",
-      subtitle: "Scanner, Imprimante sharp, HP Pavilion",
-      description: "Découvrez la nouvelle gamme de periphériques avec des offres exclusives et un service après-vente premium",
-      image: "/images/imprimante.png",
-      ctaPrimary: "En savoir plus",
-      ctaSecondary: "Voir les produits",
-      bgGradient: "from-gray-800 to-black-900"
-    },
-    {
-      id: 7,
-      title: "Economisez 10%",
-      subtitle: "Maintenance",
-      description: "Installation professionnelle, maintenance et garantie étendue pour tous vos besoins de Multimedia",
-      image: "/images/camera.png",
-      ctaPrimary: "Demander un devis",
-      ctaSecondary: "Catalogue",
-      bgGradient: "from-blue-400 to-teal-700"
-    },
-    {
-      id: 8,
-      title: "Solde d'été",
-      subtitle: "Jusqu'à -30% sur une sélection",
-      description: "Profitez de nos offres limitées sur les ordinateurs portables, smartphones et équipements bureautiques",
-      image: "/images/hp-removebg.png",
-      ctaPrimary: "En savoir plus",
-      ctaSecondary: "Tous les produits",
-      bgGradient: "from-purple-600 to-pink-700"
-    }
-  ];
+  const [slides, setSlides] = useState(DEFAULT_SLIDES);
+  const [blocks, setBlocks] = useState(DEFAULT_BLOCKS);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/api/home-content', { signal: controller.signal, cache: 'no-store' })
+      .then(response => { if (!response.ok) throw new Error('Accueil indisponible'); return response.json(); })
+      .then(data => {
+        setSlides(data.slides.length ? data.slides : [EMPTY_SLIDE]);
+        setBlocks(data.blocks);
+        setCurrentSlide(0);
+      })
+      .catch(error => { if (error.name !== 'AbortError') console.error('Chargement accueil:', error.message); });
+    return () => controller.abort();
+  }, []);
 
   // Auto-rotation du carrousel
   useEffect(() => {
@@ -230,19 +165,7 @@ const MellPlusNiger = () => {
       {/* Hero Carousel avec bandes latérales */}
       <section className="relative flex flex-col lg:flex-row gap-4 md:gap-6 py-4 md:py-6">
         {/* Bande gauche */}
-        <div className="w-full lg:w-1/5 h-32 md:h-40 lg:h-[540px] bg-white rounded-lg border-1 shadow gap-3 flex-shrink-0 relative overflow-hidden">
-          <Image
-            src="/images/large1.jpg"
-            alt="Offres spéciales"
-            width={300}
-            height={500}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-3 md:p-4">
-            <Link href="/promotions"><h3 className="text-white font-bold text-sm md:text-base mb-1">Offres Spéciales</h3>
-            <p className="text-white/90 text-xs md:text-sm">Jusqu&apos;à -50%</p></Link>
-          </div>
-        </div>
+        <HeroSideBlock block={blocks.left} side="left" />
 
         {/* Carrousel principal */}
         <div className="w-full lg:flex-1 h-[500px] md:h-[520px] lg:h-[540px] relative overflow-hidden rounded-lg">
@@ -256,30 +179,30 @@ const MellPlusNiger = () => {
                 index < currentSlide ? '-translate-x-full' : 'translate-x-full'
               }`}
             >
-              <div className={`h-full bg-gradient-to-r ${slide.bgGradient} text-white`}>
+              <div className={`h-full bg-gradient-to-r ${slide.bgGradient} ${slide.textColor || "text-white"}`} style={slideStyle(slide)}>
                 <div className="px-4 h-full">
                   <div className="grid lg:grid-cols-2 gap-1 md:gap-4 items-center h-full py-8 md:py-16">
                     <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center lg:pr-4">
                       <h2 className="text-lg md:text-xl lg:text-3xl xl:text-5xl font-bold mb-0 md:mb-4 leading-tight h-[3.5rem] md:h-[5.5rem] lg:h-[7rem] overflow-hidden flex items-center justify-center lg:justify-start">
                         <span className="line-clamp-2">{slide.title}</span>
                       </h2>
-                      <p className="text-base md:text-lg lg:text-xl mb-0 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
+                      <p style={slide.textColor !== "text-white" ? { color: "inherit" } : undefined} className="text-base md:text-lg lg:text-xl mb-0 md:mb-4 font-medium text-blue-100 h-[3rem] md:h-[4rem] overflow-hidden flex items-center justify-center lg:justify-start">
                         <span className="line-clamp-2">{slide.subtitle}</span>
                       </p>
-                      <p className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed h-[3rem] md:h-[4.5rem] lg:h-[5rem] overflow-hidden">
+                      <p style={slide.textColor !== "text-white" ? { color: "inherit" } : undefined} className="text-sm md:text-lg mb-3 md:mb-8 text-blue-50 leading-relaxed h-[3rem] md:h-[4.5rem] lg:h-[5rem] overflow-hidden">
                         <span className="line-clamp-2 md:line-clamp-3">{slide.description}</span>
                       </p>
                       <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center lg:justify-start">
-                        <Link href="/contact" className="w-full sm:w-auto">
+                        {slide.ctaPrimary && slide.linkPrimary && <Link href={slide.linkPrimary} className="w-full sm:w-auto">
                         <button className="w-full sm:w-auto bg-white text-gray-800 px-4 md:px-6 py-2 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-gray-100 transition-colors shadow-lg whitespace-nowrap">
                           {slide.ctaPrimary}
                         </button>
-                        </Link>
-                        <Link href="/products" className="w-full sm:w-auto">
+                        </Link>}
+                        {slide.ctaSecondary && slide.linkSecondary && <Link href={slide.linkSecondary} className="w-full sm:w-auto">
                         <button className="w-full sm:w-auto border-2 border-white text-white px-4 md:px-6 py-2 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-white hover:text-gray-800 transition-colors whitespace-nowrap">
                           {slide.ctaSecondary}
                         </button>
-                        </Link>
+                        </Link>}
                       </div>
                     </div>
                     <div className="flex items-center justify-center order-1 lg:order-2">
@@ -345,19 +268,7 @@ const MellPlusNiger = () => {
         </div>
 
         {/* Bande droite */}
-        <div className="w-full lg:w-1/5 h-32 md:h-40 lg:h-[540px] rounded-lg border-1 flex-shrink-0 relative overflow-hidden">
-          <Image
-            src="/images/accessories.jpg"
-            alt="Nouveautés"
-            width={300}
-            height={500}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent flex flex-col justify-end p-3 md:p-4">
-            <Link href="/products"><h3 className="text-white font-bold text-sm md:text-base mb-1">Nouveautés</h3>
-            <p className="text-white/90 text-xs md:text-sm">Découvrez-les</p></Link>
-          </div>
-        </div>
+        <HeroSideBlock block={blocks.right} side="right" />
       {/*<div className="pt-2 md:pt-5"></div>*/}
       </section>
       {/*<section>      <div className="pt-2 md:pt-6"></div>
