@@ -55,6 +55,7 @@ export default function AdminProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [savingPromotions, setSavingPromotions] = useState({})
 
   useEffect(() => {
     fetchProducts()
@@ -100,6 +101,27 @@ export default function AdminProductsPage() {
     }
 
     setFilteredProducts(filtered)
+  }
+
+  const handlePromotionChange = async (id, isPromotion) => {
+    setSavingPromotions(current => ({ ...current, [id]: true }))
+    try {
+      const response = await fetch(`/api/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isPromotion })
+      })
+      if (!response.ok) throw new Error('Enregistrement impossible')
+      const data = await response.json()
+      setProducts(current => current.map(product => product.id === id
+        ? { ...product, isPromotion: data.product.isPromotion }
+        : product))
+      toast.success('Promotion mise à jour')
+    } catch {
+      toast.error('Impossible de modifier la promotion. Réessayez.')
+    } finally {
+      setSavingPromotions(current => ({ ...current, [id]: false }))
+    }
   }
 
   const handleDeleteProduct = async (id) => {
@@ -318,6 +340,17 @@ export default function AdminProductsPage() {
                               Brouillon
                             </span>
                           )}
+                          <label className="flex items-center gap-2 text-sm text-gray-700 mt-1">
+                            <input
+                              type="checkbox"
+                              checked={Boolean(product.isPromotion)}
+                              disabled={Boolean(savingPromotions[product.id])}
+                              onChange={event => handlePromotionChange(product.id, event.target.checked)}
+                              aria-label={`Promotion : ${product.name}`}
+                              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 disabled:opacity-50"
+                            />
+                            {savingPromotions[product.id] ? 'Enregistrement…' : 'Promotion'}
+                          </label>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -336,6 +369,7 @@ export default function AdminProductsPage() {
                             }}
                             className="text-green-600 hover:text-green-900 p-1 rounded"
                             title="Modifier"
+                            disabled={Boolean(savingPromotions[product.id])}
                           >
                             <Edit size={16} />
                           </button>
@@ -413,6 +447,7 @@ function ProductModal({ product, onClose, onSave }) {
     refurbished: product?.refurbished || false,
     isNew: product?.isNew !== undefined ? product.isNew : true,
     discount: product?.discount || '',
+    isPromotion: product?.isPromotion ?? false,
     publishedAt: product?.publishedAt ? true : false
   })
 
@@ -723,6 +758,15 @@ function ProductModal({ product, onClose, onSave }) {
                 <div className="space-y-3">
                   <h4 className="font-medium text-gray-700">Options</h4>
                   <div className="space-y-2">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.isPromotion}
+                        onChange={event => setFormData(prev => ({ ...prev, isPromotion: event.target.checked }))}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Promotion</span>
+                    </label>
                     {/*<label className="flex items-center">
                       <input
                         type="checkbox"

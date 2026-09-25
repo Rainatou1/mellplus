@@ -480,9 +480,9 @@ function PromoProductCard({ product }) {
   return (
     <div className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border border-gray-300 relative flex flex-col">
       {/* Badge de réduction */}
-      <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg">
+      {product.discount > 0 && <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10 shadow-lg">
         -{product.discount}%
-      </div>
+      </div>}
 
       {/* Image du produit */}
       <div className="relative h-48 bg-gray-100 overflow-hidden">
@@ -530,15 +530,15 @@ function PromoProductCard({ product }) {
         <div className="mb-3">
           <div className="flex items-center gap-2 mb-1">
             <div className="text-base font-bold text-red-600">
-              {formatPrice(discountedPrice)}
+              {product.price ? formatPrice(discountedPrice) : 'Sur devis'}
             </div>
-            <div className="text-sm text-gray-500 line-through">
+            {product.price && product.discount > 0 && <div className="text-sm text-gray-500 line-through">
               {formatPrice(product.price)}
-            </div>
+            </div>}
           </div>
-          <div className="text-xs text-green-600 font-medium">
+          {savings > 0 && <div className="text-xs text-green-600 font-medium">
             Économies: {formatPrice(savings)}
-          </div>
+          </div>}
         </div>
 
         {/* Boutons d&apos;action */}
@@ -555,7 +555,7 @@ function PromoProductCard({ product }) {
               className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-red-600 hover:to-pink-600 text-white px-3 py-2 rounded text-sm font-medium transition-all flex items-center gap-1"
             >
               <ShoppingCart size={14} />
-              Acheter
+              {product.price ? 'Acheter' : 'Demander un devis'}
             </Link>
           ) : (
             <button

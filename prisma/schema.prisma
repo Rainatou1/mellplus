@@ -47,6 +47,7 @@ model Product {
   bestSeller  Boolean  @default(false)
   refurbished Boolean  @default(false)
   isNew       Boolean  @default(true)
+  isPromotion Boolean  @default(false)
   discount    Int?     // Pourcentage de réduction
   
   // Métadonnées

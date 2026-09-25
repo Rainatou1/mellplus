@@ -69,7 +69,7 @@ const updateProductSchema = z.object({
   model: z.string().optional(),
   image: z.string().optional(),
   images: z.array(z.string()).optional(),
-  specifications: z.record(z.any()).optional(),
+  specifications: z.record(z.string(), z.any()).optional(),
   inStock: z.boolean().optional(),
   quantity: z.number().int().min(0).optional(),
   lowStock: z.number().int().min(0).optional(),
@@ -77,6 +77,7 @@ const updateProductSchema = z.object({
   bestSeller: z.boolean().optional(),
   refurbished: z.boolean().optional(),
   isNew: z.boolean().optional(),
+  isPromotion: z.boolean().optional(),
   discount: z.number().int().min(0).max(100).nullable().optional(),
   publishedAt: z.string().nullable().optional(),
 })
@@ -137,6 +138,7 @@ export async function GET(request, { params }) {
       longDescription: product.longDescription || product.description,
       price: product.price,
       discount: product.discount || null,
+      isPromotion: product.isPromotion,
       category: product.category,
       brand: product.brand || null,
       image: product.image,
@@ -158,6 +160,7 @@ export async function GET(request, { params }) {
       description: p.description,
       price: p.price,
       discount: p.discount || null,
+      isPromotion: p.isPromotion,
       category: p.category,
       image: p.image,
       inStock: p.inStock,
@@ -200,6 +203,14 @@ export async function PUT(request, { params }) {
 
     // Parser le body de la requête
     const body = await request.json()
+
+    // Promotion changes are restricted to the same roles as product creation.
+    if (Object.prototype.hasOwnProperty.call(body, 'isPromotion')) {
+      const session = await getServerSession(authOptions)
+      if (!session || !['ADMIN', 'SUPER_ADMIN'].includes(session.user?.role)) {
+        return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+      }
+    }
 
     // Valider les données
     const validatedData = updateProductSchema.parse(body)

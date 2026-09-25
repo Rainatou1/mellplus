@@ -153,6 +153,9 @@ export async function POST(request) {
     }
     
     const body = await request.json()
+    if (body.isPromotion !== undefined && typeof body.isPromotion !== 'boolean') {
+      return NextResponse.json({ error: 'Promotion doit être un booléen' }, { status: 400 })
+    }
     
     // Autoriser les noms identiques en garantissant un slug unique
     const baseSlug = slugify(body.slug || body.name)
@@ -181,6 +184,7 @@ export async function POST(request) {
         refurbished: body.refurbished || false,
         isNew: body.isNew !== undefined ? body.isNew : true,
         discount: body.discount || null,
+        isPromotion: body.isPromotion ?? false,
         publishedAt: body.publishedAt ? new Date(body.publishedAt) : null
       }
     })

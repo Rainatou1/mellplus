@@ -12,11 +12,10 @@ export async function GET(request) {
     const minDiscount = searchParams.get('minDiscount')
     const sortBy = searchParams.get('sortBy') || 'discount-desc'
     
-    // Construire les filtres de base (produits avec réduction uniquement)
+    // Promotion is independent of price/discount; drafts remain excluded.
     const where = {
       AND: [
-        { discount: { not: null } },
-        { discount: { gt: 0 } },
+        { isPromotion: true },
         { publishedAt: { not: null } }
       ]
     }
@@ -74,8 +73,7 @@ export async function GET(request) {
     const promoCategories = await prisma.product.findMany({
       where: {
         AND: [
-          { discount: { not: null } },
-          { discount: { gt: 0 } },
+          { isPromotion: true },
           { publishedAt: { not: null } }
         ]
       },
@@ -89,8 +87,7 @@ export async function GET(request) {
     const stats = await prisma.product.aggregate({
       where: {
         AND: [
-          { discount: { not: null } },
-          { discount: { gt: 0 } },
+          { isPromotion: true },
           { publishedAt: { not: null } }
         ]
       },

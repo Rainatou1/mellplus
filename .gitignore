@@ -24,4 +24,7 @@ Thumbs.db
 *.jar
 .bfg-report/
 
+# Private migration audits and database backups
+.backups/
+
 /src/generated/prisma
