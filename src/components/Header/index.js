@@ -232,9 +232,9 @@ export default function Header() {
                     </button>
                   </div>
                   
-                  {/* Dropdown */}
+                  {/* Dropdown: the transparent bridge keeps hover active across the visual gap. */}
                   {activeCategory === index && (
-                    <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1">
+                    <div className="absolute top-full left-0 bg-white shadow-xl border rounded-lg p-4 min-w-48 z-40 transform translate-y-1 before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']">
                       {/* Lien vers toute la catégorie */}
                       {/* <Link
                         href={`/products/category/${getCategorySlug(category.dbCategory)}`}
