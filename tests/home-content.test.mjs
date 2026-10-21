@@ -63,18 +63,18 @@ async function setup({ slides = [], blocks = [], user = admin, loggedIn = true }
     if (!path.endsWith('.js')) path += '.js'
     if (!modules.has(path)) {
       const source = await readFile(path, 'utf8')
-      const vmModule = new SourceTextModule(source, { context, identifier: path })
-      modules.set(path, vmModule)
-      await vmModule.link(child => moduleFor(child, path))
-      await vmModule.evaluate()
+      const module = new SourceTextModule(source, { context, identifier: path })
+      modules.set(path, module)
+      await module.link(child => moduleFor(child, path))
+      await module.evaluate()
     }
     return modules.get(path)
   }
   return {
     prisma, state: () => copy(state),
     async call(path, method = 'GET', body, query = '', params = {}) {
-      const vmModule = await moduleFor(`@/app/api/${path}/route`)
-      return vmModule.namespace[method]({ url: `https://test.local/api/${path}${query}`, json: async () => body }, { params: Promise.resolve(params) })
+      const module = await moduleFor(`@/app/api/${path}/route`)
+      return module.namespace[method]({ url: `https://test.local/api/${path}${query}`, json: async () => body }, { params: Promise.resolve(params) })
     }
   }
 }

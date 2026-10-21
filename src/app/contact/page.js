@@ -1,6 +1,5 @@
 'use client'
 
-import SubmissionProtection from '@/components/SubmissionProtection'
 import { useState } from 'react'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, User, Building } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -16,8 +15,6 @@ export default function ContactPage() {
     message: ''
   })
 
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [protectionReset, setProtectionReset] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
 
@@ -39,7 +36,7 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, ...{ turnstileToken, website: e.currentTarget.elements.namedItem('website')?.value || '' } })
+        body: JSON.stringify(formData)
       })
 
       const result = await response.json()
@@ -64,8 +61,6 @@ export default function ContactPage() {
       setSubmitStatus('error')
       toast.error('Erreur de connexion')
     } finally {
-      setTurnstileToken('');
-      setProtectionReset(value => value + 1);
       setIsSubmitting(false)
     }
   }
@@ -191,7 +186,6 @@ export default function ContactPage() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <SubmissionProtection action="contact" onToken={setTurnstileToken} reset={protectionReset} />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -311,7 +305,7 @@ export default function ContactPage() {
                 <div className="pt-4">
                   <button
                     type="submit"
-                    disabled={isSubmitting || !turnstileToken}
+                    disabled={isSubmitting}
                     className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
                   >
                     {isSubmitting ? (

@@ -2,64 +2,41 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { sendContactNotification, sendContactConfirmation, isEmailConfigured } from '@/lib/email'
 export const runtime = "nodejs";
 
 
-import { contactSchema } from '@/lib/submissionSchemas'
-import { readSubmission, verifySubmission, storeSubmission, rejection, sourceIP, limitAttempts } from '@/lib/antispam'
-
-// All existing back-office roles can triage messages. No deletion or content editing.
-const contactRoles = ['SUPER_ADMIN', 'ADMIN', 'MODERATOR', 'SUPPORT']
-async function contactAccessDenied() {
-  const session = await getServerSession(authOptions)
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Authentification requise' }, { status: 401 })
-  }
-  // Read current privileges: a stale JWT must not retain revoked access.
-  const admin = await prisma.admin.findUnique({
-    where: { id: session.user.id },
-    select: { active: true, role: true }
-  })
-  if (!admin?.active || !contactRoles.includes(admin.role)) {
-    return NextResponse.json({ error: 'Accès non autorisé' }, { status: 403 })
-  }
-  return null
-}
-
-const contactPatchSchema = z.object({
-  id: z.string().min(1).max(100),
-  read: z.boolean().optional(),
-  starred: z.boolean().optional(),
-  archived: z.boolean().optional()
-}).strict().refine(({ read, starred, archived }) =>
-  read !== undefined || starred !== undefined || archived !== undefined)
+// Schéma de validation avec Zod
+const contactSchema = z.object({
+  name: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
+  email: z.string().email('Email invalide'),
+  phone: z.string().optional(),
+  company: z.string().optional(),
+  subject: z.string().min(1, 'Le sujet est requis'),
+  message: z.string().min(10, 'Le message doit contenir au moins 10 caractères')
+})
 
 export async function POST(request) {
   try {
     // Parser le body de la requête
-    await limitAttempts(prisma, request)
-    const body = await readSubmission(request)
+    const body = await request.json()
     
     // Valider les données
     const validatedData = contactSchema.parse(body)
-    await verifySubmission(body, 'contact')
     
     // Obtenir l'IP et le user agent pour le tracking
-    const ip = sourceIP(request)
+    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown'
     const userAgent = request.headers.get('user-agent') || 'unknown'
     
     // Créer l'entrée dans la base de données
-    const contact = await storeSubmission(prisma, request, validatedData, 'contact', tx => tx.contact.create({
+    const contact = await prisma.contact.create({
       data: {
         ...validatedData,
         source: request.headers.get('referer') || 'direct',
         ip,
         userAgent
       }
-    }))
+    })
 
     // Attendre les envois ; conserver le contact en base même si SMTP échoue.
     try {
@@ -97,16 +74,14 @@ export async function POST(request) {
     )
     
   } catch (error) {
-    const refused = rejection(error)
-    if (refused) return NextResponse.json(refused.body, { status: refused.status, headers: refused.headers })
-    console.error('contact_submission_failed')
+    console.error('Erreur lors de la création du contact:', error)
     
     // Gestion des erreurs de validation
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { 
           error: 'Données invalides',
-          details: error.issues.map(({ path, message }) => ({ path, message }))
+          details: error.errors 
         },
         { status: 400 }
       )
@@ -130,16 +105,16 @@ export async function POST(request) {
 
 export async function GET(request) {
   try {
-    const denied = await contactAccessDenied()
-    if (denied) return denied
+    // TODO: Vérifier l'authentification
+    // const session = await getServerSession(authOptions)
+    // if (!session || session.user.role !== 'ADMIN') {
+    //   return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    // }
 
     // Récupérer les paramètres de requête
     const { searchParams } = new URL(request.url)
-    const page = Number(searchParams.get('page') || '1')
-    const limit = Number(searchParams.get('limit') || '10')
-    if (!Number.isSafeInteger(page) || page < 1 || !Number.isSafeInteger(limit) || limit < 1 || limit > 100 || !Number.isSafeInteger((page - 1) * limit)) {
-      return NextResponse.json({ error: 'Pagination invalide' }, { status: 400 })
-    }
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '10')
     const read = searchParams.get('read')
     const starred = searchParams.get('starred')
 
@@ -167,7 +142,7 @@ export async function GET(request) {
         total,
         totalPages: Math.ceil(total / limit)
       }
-    }, { headers: { 'Cache-Control': 'private, no-store' } })
+    })
 
   } catch (error) {
     console.error('Erreur lors de la récupération des contacts:', error)
@@ -180,13 +155,13 @@ export async function GET(request) {
 
 export async function PATCH(request) {
   try {
-    const denied = await contactAccessDenied()
-    if (denied) return denied
-    if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') {
-      return NextResponse.json({ error: 'JSON requis' }, { status: 415 })
-    }
+    // TODO: Vérifier l'authentification
+    // const session = await getServerSession(authOptions)
+    // if (!session || session.user.role !== 'ADMIN') {
+    //   return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    // }
 
-    const body = contactPatchSchema.parse(await request.json())
+    const body = await request.json()
     const { id, read, starred, archived } = body
 
     if (!id) {
@@ -212,9 +187,6 @@ export async function PATCH(request) {
     })
 
   } catch (error) {
-    if (error instanceof z.ZodError || error instanceof SyntaxError) {
-      return NextResponse.json({ error: 'Données invalides' }, { status: 400 })
-    }
     console.error('Erreur lors de la mise à jour du contact:', error)
 
     if (error?.code === 'P2025') {

@@ -518,10 +518,3 @@ model Comment {
   @@index([productId])
   @@index([createdAt])
 }
-
-model SubmissionGuard {
- key String @id
- count Int
- expiresAt DateTime @db.Timestamptz(3)
- @@index([expiresAt])
-}
