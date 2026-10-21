@@ -7,45 +7,17 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { sendQuoteNotification, sendQuoteConfirmation, isEmailConfigured } from '@/lib/email'
 export const runtime = "nodejs";
 
-// Schéma de validation pour un item de devis
-const quoteItemSchema = z.object({
-  type: z.enum(['product', 'service', 'custom']),
-  id: z.string().optional(),
-  name: z.string().min(1),
-  description: z.string().optional(),
-  quantity: z.number().int().positive(),
-  unitPrice: z.number().positive(),
-  totalPrice: z.number().positive()
-})
+import { quoteRequestSchema } from '@/lib/submissionSchemas'
+import { readSubmission, verifySubmission, storeSubmission, rejection, sourceIP, limitAttempts } from '@/lib/antispam'
 
-// Schéma de validation pour la demande de devis
-const quoteRequestSchema = z.object({
-  // Informations client
-  name: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
-  email: z.string().email('Email invalide'),
-  phone: z.string().min(8, 'Numéro de téléphone invalide'),
-  company: z.string().optional(),
-  address: z.string().optional(),
-  city: z.string().optional(),
-  
-  // Détails de la demande
-  type: z.enum(['product', 'service', 'mixed']),
-  subject: z.string().optional(),
-  message: z.string().optional(),
-  budget: z.string().optional(),
-  deadline: z.string().optional(),
-  
-  // Items du devis
-  items: z.array(quoteItemSchema).min(1, 'Au moins un article est requis')
-})
-
-// POST - Créer une nouvelle demande de devis
 export async function POST(request) {
   try {
-    const body = await request.json()
+    await limitAttempts(prisma, request)
+    const body = await readSubmission(request)
     
     // Valider les données
     const validatedData = quoteRequestSchema.parse(body)
+    await verifySubmission(body, 'quotes')
     
     // Calculer le total
     const total = validatedData.items.reduce((sum, item) => sum + item.totalPrice, 0)
@@ -57,7 +29,7 @@ export async function POST(request) {
               'Projet'} - ${validatedData.items.length} article(s)`
     
     // Créer la demande de devis avec les items
-    const quoteRequest = await prisma.quoteRequest.create({
+    const quoteRequest = await storeSubmission(prisma, request, validatedData, 'quotes', tx => tx.quoteRequest.create({
       data: {
         // Informations client
         name: validatedData.name,
@@ -92,7 +64,7 @@ export async function POST(request) {
       include: {
         items: true
       }
-    })
+    }))
 
     // Attendre les envois ; conserver le devis en base même si SMTP échoue.
     try {
@@ -130,13 +102,15 @@ export async function POST(request) {
     )
     
   } catch (error) {
-    console.error('Erreur lors de la création du devis:', error)
+    const refused = rejection(error)
+    if (refused) return NextResponse.json(refused.body, { status: refused.status, headers: refused.headers })
+    console.error('quotes_submission_failed')
     
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { 
           error: 'Données invalides',
-          details: error.errors 
+          details: error.issues.map(({ path, message }) => ({ path, message }))
         },
         { status: 400 }
       )

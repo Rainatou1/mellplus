@@ -28,16 +28,16 @@ async function loadComponents(file, exports) {
     '@/components/admin/ImageUpload': { default: () => null },
     '@/lib/categoryMapping': { getCategoryDisplayName: name => name }
   }
-  const module = new SourceTextModule(code)
-  await module.link(specifier => {
+  const vmModule = new SourceTextModule(code)
+  await vmModule.link(specifier => {
     const values = dependencies[specifier]
     assert.ok(values, `Unexpected dependency: ${specifier}`)
     return new SyntheticModule(Object.keys(values), function () {
       for (const [key, value] of Object.entries(values)) this.setExport(key, value)
     })
   })
-  await module.evaluate()
-  return module.namespace
+  await vmModule.evaluate()
+  return vmModule.namespace
 }
 
 test('promotion cards show quote requests or plain prices without inventing reductions', async () => {

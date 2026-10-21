@@ -21,8 +21,8 @@ async function setup(env, failure = null) {
   const context = createContext({ process: { env }, console: {
     log(...args) { logs.log.push(args) }, error(...args) { logs.error.push(args) }
   } })
-  const module = new SourceTextModule(source, { context })
-  await module.link(() => new SyntheticModule(['default'], function () {
+  const vmModule = new SourceTextModule(source, { context })
+  await vmModule.link(() => new SyntheticModule(['default'], function () {
     this.setExport('default', { createTransport(config) {
       const call = { config }
       calls.push(call)
@@ -33,16 +33,16 @@ async function setup(env, failure = null) {
       } }
     } })
   }, { context }))
-  await module.evaluate()
-  return { module, calls, context, logs }
+  await vmModule.evaluate()
+  return { vmModule, calls, context, logs }
 }
 
 for (const NODE_ENV of ['development', 'production']) {
   test(NODE_ENV + ': all senders use OVH and the correct recipients', async () => {
-    const { module, calls } = await setup({ ...credentials, NODE_ENV, EMAIL_PROVIDER: 'gmail', ADMIN_EMAIL: credentials.EMAIL_USER, CONTACT_EMAIL: credentials.EMAIL_USER, MAIL_TO: credentials.EMAIL_USER })
-    assert.equal(module.namespace.isEmailConfigured(), true)
+    const { vmModule, calls } = await setup({ ...credentials, NODE_ENV, EMAIL_PROVIDER: 'gmail', ADMIN_EMAIL: credentials.EMAIL_USER, CONTACT_EMAIL: credentials.EMAIL_USER, MAIL_TO: credentials.EMAIL_USER })
+    assert.equal(vmModule.namespace.isEmailConfigured(), true)
     for (const name of ['sendContactNotification', 'sendContactConfirmation', 'sendQuoteNotification', 'sendQuoteConfirmation', 'sendLoginAlert']) {
-      assert.equal((await module.namespace[name](data)).success, true)
+      assert.equal((await vmModule.namespace[name](data)).success, true)
     }
     assert.equal(calls.length, 5)
     for (const { config, mail } of calls) {
@@ -67,9 +67,9 @@ for (const NODE_ENV of ['development', 'production']) {
 for (const key of ['OVH_USER', 'OVH_PASSWORD']) {
   test(key + ': missing OVH credentials never fall back to legacy credentials', async () => {
     for (const value of [undefined, '', '   ']) {
-      const { module, calls } = await setup({ ...credentials, [key]: value })
-      assert.equal(module.namespace.isEmailConfigured(), false)
-      const result = await module.namespace.sendContactNotification(data)
+      const { vmModule, calls } = await setup({ ...credentials, [key]: value })
+      assert.equal(vmModule.namespace.isEmailConfigured(), false)
+      const result = await vmModule.namespace.sendContactNotification(data)
       assert.equal(result.success, false)
       assert.match(result.error, /OVH_USER et OVH_PASSWORD/)
       assert.equal(calls.length, 0)
@@ -77,15 +77,15 @@ for (const key of ['OVH_USER', 'OVH_PASSWORD']) {
   })
 }
 test('SMTP failure never falls back', async () => {
-  const { module, calls } = await setup(credentials, new Error('SMTP unavailable'))
-  assert.equal((await module.namespace.sendQuoteNotification(data)).success, false)
+  const { vmModule, calls } = await setup(credentials, new Error('SMTP unavailable'))
+  assert.equal((await vmModule.namespace.sendQuoteNotification(data)).success, false)
   assert.equal(calls.length, 1)
 })
 
 test('OVH authentication rejection is reported without fallback', async () => {
   const failure = Object.assign(new Error('Invalid login: 535 Authentication failed'), { code: 'EAUTH' })
-  const { module, calls, logs } = await setup(credentials, failure)
-  const result = await module.namespace.sendContactNotification(data)
+  const { vmModule, calls, logs } = await setup(credentials, failure)
+  const result = await vmModule.namespace.sendContactNotification(data)
   assert.equal(result.success, false)
   assert.equal(result.error, failure.message)
   assert.equal(calls.length, 1)
@@ -98,23 +98,25 @@ test('email source has no legacy provider or recipient configuration', () => {
   assert.doesNotMatch(source, /gmail|EMAIL_PROVIDER|EMAIL_USER|EMAIL_PASSWORD|GMAIL_USER|GMAIL_APP_PASSWORD|ADMIN_EMAIL|CONTACT_EMAIL|MAIL_TO/i)
 })
 test('failed login alerts go to the official mailbox', async () => {
-  const { module, calls } = await setup(credentials)
-  await module.namespace.sendLoginAlert({ ...data, success: false, adminEmail: undefined, failedEmail: 'someone@gmail.com' })
+  const { vmModule, calls } = await setup(credentials)
+  await vmModule.namespace.sendLoginAlert({ ...data, success: false, adminEmail: undefined, failedEmail: 'someone@gmail.com' })
   assert.equal(calls[0].mail.to, credentials.OVH_USER)
 })
   for (const route of ['contact', 'quotes']) {
     test(`${route} route sends with only OVH credentials`, async () => {
       const env = { OVH_USER: credentials.OVH_USER, OVH_PASSWORD: credentials.OVH_PASSWORD }
-      const { module, calls, context } = await setup(env)
+      const { vmModule, calls, context } = await setup(env)
       const routeModule = new SourceTextModule(await readFile(new URL(`../src/app/api/${route}/route.js`, import.meta.url), 'utf8'), { context })
       const deps = {
         'next/server': { NextResponse: { json: (body, options) => ({ body, ...options }) } },
         '@/lib/prisma': { prisma: { contact: { create: async () => ({ ...data, id: 'test' }) }, quoteRequest: { create: async () => ({ ...data, id: 'test' }) } } },
+        '@/lib/submissionSchemas': await import('../src/lib/submissionSchemas.js'),
+        '@/lib/antispam': { readSubmission: request => request.json(), verifySubmission: async () => {}, limitAttempts: async () => {}, storeSubmission: (prisma, request, data, action, create) => create(prisma), rejection: () => null, sourceIP: () => '192.0.2.1' },
         zod: { z }, 'next-auth': { getServerSession: async () => null },
         '@/app/api/auth/[...nextauth]/route': { authOptions: {} }
       }
       await routeModule.link(specifier => {
-        if (specifier === '@/lib/email') return module
+        if (specifier === '@/lib/email') return vmModule
         return new SyntheticModule(Object.keys(deps[specifier]), function () {
           for (const [key, value] of Object.entries(deps[specifier])) this.setExport(key, value)
         }, { context })

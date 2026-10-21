@@ -1,4 +1,5 @@
 "use client";
+import SubmissionProtection from '@/components/SubmissionProtection'
 import React, { useState } from 'react';
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Award, Send, MessageSquare, Clock, Users, CheckCircle } from 'lucide-react';
 
@@ -7,6 +8,8 @@ const ContactDevisPage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('contact');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [protectionReset, setProtectionReset] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [formData, setFormData] = useState({
@@ -36,6 +39,7 @@ const ContactDevisPage = () => {
 
     // Préparer les données pour l'API
     const quoteData = {
+      ...{ turnstileToken, website: e.currentTarget.elements.namedItem('website')?.value || '' },
       name: `${formData.nom} ${formData.prenom}`,
       email: formData.email,
       phone: formData.telephone,
@@ -92,6 +96,8 @@ const ContactDevisPage = () => {
       setSubmitStatus('error');
       alert('❌ Une erreur est survenue. Veuillez réessayer.');
     } finally {
+      setTurnstileToken('');
+      setProtectionReset(value => value + 1);
       setIsSubmitting(false);
     }
   };
@@ -177,6 +183,7 @@ const ContactDevisPage = () => {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
+                <SubmissionProtection action="quotes" onToken={setTurnstileToken} reset={protectionReset} />
                   {/* Informations personnelles */}
                   <div>
                     <h3 className="text-lg font-semibold mb-4 text-gray-800">Informations personnelles</h3>
@@ -339,7 +346,7 @@ const ContactDevisPage = () => {
                   <div className="pt-4">
                     <button
                       type="submit"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || !turnstileToken}
                       className={`w-full md:w-auto px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2 ${
                         isSubmitting
                           ? 'bg-gray-400 cursor-not-allowed'
