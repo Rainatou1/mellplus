@@ -34,10 +34,13 @@ import {
   ChevronRight
 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { fetchAllContacts } from '@/lib/fetchAllContacts'
 
 export default function AdminContactsPage() {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 10
 
   const [selectedMessage, setSelectedMessage] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -51,11 +54,9 @@ export default function AdminContactsPage() {
   const fetchContacts = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/contact')
-      if (response.ok) {
-        const data = await response.json()
+      const contacts = await fetchAllContacts()
         // Transform API data to match component structure
-        const transformedMessages = data.contacts.map(contact => ({
+        const transformedMessages = contacts.map(contact => ({
           id: contact.id,
           name: contact.name,
           email: contact.email,
@@ -74,9 +75,6 @@ export default function AdminContactsPage() {
           archived: contact.archived || false
         }))
         setMessages(transformedMessages)
-      } else {
-        toast.error('Erreur lors du chargement des messages')
-      }
     } catch (error) {
       console.error('Erreur:', error)
       toast.error('Erreur de connexion')
@@ -135,6 +133,18 @@ export default function AdminContactsPage() {
     return matchSearch && matchStatus && matchCategory && !message.archived
   })
 
+  const totalPages = Math.max(1, Math.ceil(filteredMessages.length / pageSize))
+  const activePage = Math.min(currentPage, totalPages)
+  const visibleMessages = filteredMessages.slice((activePage - 1) * pageSize, activePage * pageSize)
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm, filterStatus, filterCategory])
+
+  useEffect(() => {
+    setCurrentPage(page => Math.min(page, totalPages))
+  }, [totalPages])
+
   const getCategoryConfig = (category) => {
     const configs = {
       information: { label: 'Information', color: 'bg-blue-100 text-blue-700', icon: '💡' },
@@ -158,6 +168,7 @@ export default function AdminContactsPage() {
   }
 
   const markAsRead = async (id) => {
+    if (messages.find(message => message.id === id)?.status === 'read') return
     try {
       const response = await fetch('/api/contact', {
         method: 'PATCH',
@@ -168,9 +179,11 @@ export default function AdminContactsPage() {
       })
 
       if (response.ok) {
-        setMessages(messages.map(m =>
+        setMessages(previous => previous.map(m =>
           m.id === id ? { ...m, status: 'read' } : m
         ))
+        setSelectedMessage(previous => previous?.id === id ? { ...previous, status: 'read' } : previous)
+        window.dispatchEvent(new Event('contacts-updated'))
       } else {
         toast.error('Erreur lors de la mise à jour du statut')
       }
@@ -403,7 +416,7 @@ export default function AdminContactsPage() {
                 <p className="text-gray-600">Aucun message trouvé</p>
               </div>
             ) : (
-              filteredMessages.map((message) => {
+              visibleMessages.map((message) => {
               const categoryConfig = getCategoryConfig(message.category)
               
               return (
@@ -483,13 +496,13 @@ export default function AdminContactsPage() {
           {/* Pagination */}
           <div className="p-3 border-t flex items-center justify-between">
             <span className="text-sm text-gray-600">
-              {filteredMessages.length} message(s)
+              {filteredMessages.length} message(s) · Page {activePage} / {totalPages}
             </span>
             <div className="flex gap-1">
-              <button className="p-1 hover:bg-gray-100 rounded">
+              <button aria-label="Page précédente" disabled={loading || activePage === 1} onClick={() => setCurrentPage(activePage - 1)} className="p-1 hover:bg-gray-100 rounded disabled:opacity-40 disabled:cursor-not-allowed">
                 <ChevronLeft className="w-5 h-5 text-gray-600" />
               </button>
-              <button className="p-1 hover:bg-gray-100 rounded">
+              <button aria-label="Page suivante" disabled={loading || activePage === totalPages} onClick={() => setCurrentPage(activePage + 1)} className="p-1 hover:bg-gray-100 rounded disabled:opacity-40 disabled:cursor-not-allowed">
                 <ChevronRight className="w-5 h-5 text-gray-600" />
               </button>
             </div>

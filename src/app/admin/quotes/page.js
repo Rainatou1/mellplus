@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { fetchAllQuotes } from '@/lib/fetchAllQuotes'
 import {
   FileText,
   Search,
@@ -25,6 +26,7 @@ import {
   MoreVertical,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Printer,
   Edit,
   Trash2,
@@ -40,6 +42,8 @@ import {
 export default function AdminQuotesPage() {
   const [quotes, setQuotes] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 10
 
   const [selectedQuote, setSelectedQuote] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -57,12 +61,9 @@ export default function AdminQuotesPage() {
   const fetchQuotes = async () => {
     try {
       setIsLoading(true)
-      const response = await fetch('/api/quotes')
-
-      if (response.ok) {
-        const data = await response.json()
+      const allQuotes = await fetchAllQuotes()
         // Transformer les données pour correspondre au format attendu
-        const transformedQuotes = data.quotes.map(quote => ({
+        const transformedQuotes = allQuotes.map(quote => ({
           id: quote.id,
           name: quote.name,
           email: quote.email,
@@ -91,9 +92,6 @@ export default function AdminQuotesPage() {
           subject: quote.subject
         }))
         setQuotes(transformedQuotes)
-      } else {
-        console.error('Erreur lors du chargement des devis')
-      }
     } catch (error) {
       console.error('Erreur:', error)
     } finally {
@@ -124,6 +122,18 @@ export default function AdminQuotesPage() {
     const matchPriority = filterPriority === 'all' || quote.priority === filterPriority
     return matchSearch && matchStatus && matchPriority
   })
+
+  const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / pageSize))
+  const activePage = Math.min(currentPage, totalPages)
+  const visibleQuotes = filteredQuotes.slice((activePage - 1) * pageSize, activePage * pageSize)
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm, filterStatus, filterPriority])
+
+  useEffect(() => {
+    setCurrentPage(page => Math.min(page, totalPages))
+  }, [totalPages])
 
   const getStatusConfig = (status) => {
     const configs = {
@@ -401,7 +411,7 @@ export default function AdminQuotesPage() {
                     : 'Les demandes de devis apparaîtront ici.'}
                 </p>
               </div>
-            ) : filteredQuotes.map((quote) => {
+            ) : visibleQuotes.map((quote) => {
               const statusConfig = getStatusConfig(quote.status)
               const priorityConfig = getPriorityConfig(quote.priority)
               
@@ -471,6 +481,19 @@ export default function AdminQuotesPage() {
                 </div>
               )
             })}
+          </div>
+          <div className="p-3 border-t flex flex-wrap gap-2 items-center justify-between">
+            <span className="text-sm text-gray-600">
+              {filteredQuotes.length} devis · Page {activePage} / {totalPages}
+            </span>
+            <div className="flex gap-1">
+              <button aria-label="Page précédente" disabled={isLoading || activePage === 1} onClick={() => setCurrentPage(activePage - 1)} className="p-1 hover:bg-gray-100 rounded disabled:opacity-40 disabled:cursor-not-allowed">
+                <ChevronLeft className="w-5 h-5 text-gray-600" />
+              </button>
+              <button aria-label="Page suivante" disabled={isLoading || activePage === totalPages} onClick={() => setCurrentPage(activePage + 1)} className="p-1 hover:bg-gray-100 rounded disabled:opacity-40 disabled:cursor-not-allowed">
+                <ChevronRight className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
           </div>
         </div>
 

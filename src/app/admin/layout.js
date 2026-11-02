@@ -164,10 +164,10 @@ export default function AdminLayout({ children }) {
   // Fetch unread messages count
   const fetchUnreadMessagesCount = async () => {
     try {
-      const response = await fetch('/api/contact?read=false')
+      const response = await fetch('/api/contact?read=false&limit=1', { cache: 'no-store' })
       if (response.ok) {
         const data = await response.json()
-        setUnreadMessagesCount(data.contacts.length)
+        setUnreadMessagesCount(data.pagination.total)
       }
     } catch (error) {
       console.error('Erreur lors de la récupération du nombre de messages non lus:', error)
@@ -177,7 +177,7 @@ export default function AdminLayout({ children }) {
   // Fetch unread quotes count (mapped to pending quotes)
   const fetchUnreadQuotesCount = async () => {
     try {
-      const response = await fetch('/api/quotes?status=pending&limit=1')
+      const response = await fetch('/api/quotes?status=pending&limit=1', { cache: 'no-store' })
       if (response.ok) {
         const data = await response.json()
         setUnreadQuotesCount(data?.pagination?.total || 0)
@@ -201,8 +201,10 @@ export default function AdminLayout({ children }) {
       fetchUnreadMessagesCount()
       fetchUnreadQuotesCount()
       const handleQuotesUpdated = () => fetchUnreadQuotesCount()
+      const handleContactsUpdated = () => fetchUnreadMessagesCount()
       if (typeof window !== 'undefined') {
         window.addEventListener('quotes-updated', handleQuotesUpdated)
+        window.addEventListener('contacts-updated', handleContactsUpdated)
       }
       // Refresh count every 30 seconds
       const interval = setInterval(() => {
@@ -213,6 +215,7 @@ export default function AdminLayout({ children }) {
         clearInterval(interval)
         if (typeof window !== 'undefined') {
           window.removeEventListener('quotes-updated', handleQuotesUpdated)
+          window.removeEventListener('contacts-updated', handleContactsUpdated)
         }
       }
     }
