@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, User, Building } from 'lucide-react'
 import toast from 'react-hot-toast'
 import LocationMap from '@/components/LocationMap'
+import AntiSpamFields from '@/components/AntiSpamFields'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const fields = new FormData(e.currentTarget)
     setIsSubmitting(true)
     setSubmitStatus(null)
 
@@ -36,7 +38,7 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, website: fields.get('website'), formStartedAt: fields.get('formStartedAt') })
       })
 
       const result = await response.json()
@@ -186,6 +188,7 @@ export default function ContactPage() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
+                <AntiSpamFields />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

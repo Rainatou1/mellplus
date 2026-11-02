@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import AntiSpamFields from '@/components/AntiSpamFields';
 import { ChevronDown, Phone, Mail, MapPin, Search, ShoppingCart, User, Menu, X, Award, Send, MessageSquare, Clock, Users, CheckCircle } from 'lucide-react';
 
 const ContactDevisPage = () => {
@@ -31,11 +32,14 @@ const ContactDevisPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const fields = new FormData(e.currentTarget);
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     // Préparer les données pour l'API
     const quoteData = {
+      website: fields.get('website'),
+      formStartedAt: fields.get('formStartedAt'),
       name: `${formData.nom} ${formData.prenom}`,
       email: formData.email,
       phone: formData.telephone,
@@ -177,6 +181,7 @@ const ContactDevisPage = () => {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  <AntiSpamFields />
                   {/* Informations personnelles */}
                   <div>
                     <h3 className="text-lg font-semibold mb-4 text-gray-800">Informations personnelles</h3>

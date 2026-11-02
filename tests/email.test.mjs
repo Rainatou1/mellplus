@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 import { createContext, SourceTextModule, SyntheticModule } from 'node:vm'
 import { z } from 'zod'
+import { isSpamSubmission } from '../src/lib/antiSpam.js'
 
 const source = await readFile(new URL('../src/lib/email.js', import.meta.url), 'utf8')
 const credentials = {
@@ -108,6 +109,7 @@ test('failed login alerts go to the official mailbox', async () => {
       const { module, calls, context } = await setup(env)
       const routeModule = new SourceTextModule(await readFile(new URL(`../src/app/api/${route}/route.js`, import.meta.url), 'utf8'), { context })
       const deps = {
+        '@/lib/antiSpam': { isSpamSubmission },
         'next/server': { NextResponse: { json: (body, options) => ({ body, ...options }) } },
         '@/lib/prisma': { prisma: { contact: { create: async () => ({ ...data, id: 'test' }) }, quoteRequest: { create: async () => ({ ...data, id: 'test' }) } } },
         zod: { z }, 'next-auth': { getServerSession: async () => null },
@@ -120,7 +122,7 @@ test('failed login alerts go to the official mailbox', async () => {
         }, { context })
       })
       await routeModule.evaluate()
-      const response = await routeModule.namespace.POST({ json: async () => data, headers: { get: () => null } })
+      const response = await routeModule.namespace.POST({ json: async () => ({ ...data, website: '', formStartedAt: Date.now() - 5000 }), headers: { get: () => null } })
       assert.equal(response.status, 201)
       assert.equal(calls.length, 2)
       assert.ok(calls.every(call => call.config.auth.user === env.OVH_USER))

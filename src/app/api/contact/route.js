@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { isSpamSubmission } from '@/lib/antiSpam'
 import { sendContactNotification, sendContactConfirmation, isEmailConfigured } from '@/lib/email'
 export const runtime = "nodejs";
 
@@ -20,6 +21,9 @@ export async function POST(request) {
   try {
     // Parser le body de la requête
     const body = await request.json()
+    if (isSpamSubmission(body)) {
+      return NextResponse.json({ success: true, message: 'Message envoyé avec succès' }, { status: 200 })
+    }
     
     // Valider les données
     const validatedData = contactSchema.parse(body)
