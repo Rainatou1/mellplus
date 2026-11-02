@@ -162,9 +162,9 @@ function ProductsContent() {
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
               <Package size={48} className="text-white opacity-90" />
-              <h1 className="text-4xl md:text-6xl font-bold">
+              <h1 className="min-w-0 break-words text-4xl md:text-6xl font-bold">
                 {filters.subcategory
                   ? filters.subcategory
                   : filters.category !== 'all'
@@ -177,7 +177,7 @@ function ProductsContent() {
             <p className="text-xl md:text-2xl mb-6 opacity-90">
               Découvrez notre large gamme de produits de qualité
             </p>
-            <div className="flex items-center justify-center gap-6 text-lg">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-lg">
               <div className="flex items-center gap-2">
                 <Zap className="text-white opacity-90" />
                 <span>Produits de qualité</span>
@@ -198,7 +198,7 @@ function ProductsContent() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-          <nav className="flex items-center space-x-2 text-sm text-gray-600">
+          <nav className="flex flex-wrap items-center gap-2 break-words text-sm text-gray-600">
             <Link href="/products" className="hover:text-blue-600">Tous les produits</Link>
             {filters.category !== 'all' && (
               <>
@@ -222,7 +222,7 @@ function ProductsContent() {
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Sidebar - Hidden on small screens */}
-          <div className="hidden lg:block lg:w-1/4 space-y-4">
+          <div className="hidden lg:block lg:w-1/4 lg:shrink-0 space-y-4">
             {/* Promotions Info Banner */}
             <div className="bg-gradient-to-br from-red-600 to-red-800 p-4 text-white text-center rounded-lg shadow-lg">
               <div className="text-3xl mb-2">🔥</div>
@@ -285,12 +285,12 @@ function ProductsContent() {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1">
+          <div className="min-w-0 flex-1">
             {/* Barre de recherche et filtres */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-              <div className="flex flex-col lg:flex-row gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_8rem_8rem_minmax(0,auto)_auto] gap-4">
                 {/* Recherche */}
-                <div className="flex-1 relative">
+                <div className="min-w-0 relative sm:col-span-2 xl:col-span-1">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                   <input
                     type="text"
@@ -307,7 +307,7 @@ function ProductsContent() {
                   placeholder="Prix min"
                   value={filters.minPrice}
                   onChange={(e) => setFilters({...filters, minPrice: e.target.value})}
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 w-32"
+                  className="min-w-0 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
 
                 {/* Prix maximum */}
@@ -316,14 +316,14 @@ function ProductsContent() {
                   placeholder="Prix max"
                   value={filters.maxPrice}
                   onChange={(e) => setFilters({...filters, maxPrice: e.target.value})}
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 w-32"
+                  className="min-w-0 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
 
                 {/* Tri */}
                 <select
                   value={filters.sortBy}
                   onChange={(e) => setFilters({...filters, sortBy: e.target.value})}
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="min-w-0 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="name">Nom A-Z</option>
                   <option value="price-asc">Prix croissant</option>
@@ -376,7 +376,7 @@ function ProductsContent() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex flex-wrap justify-center items-center gap-2">
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
@@ -451,7 +451,7 @@ function CategoryProductCard({ product }) {
   const savings = calculateSavings(product.price, product.discount)
 
   return (
-    <div className="bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border border-gray-300 relative flex flex-col">
+    <div className="min-w-0 bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 group border border-gray-300 relative flex flex-col">
       {/* Image du produit */}
       <div className="relative h-48 bg-gray-100 overflow-hidden">
         <Image
@@ -485,9 +485,9 @@ function CategoryProductCard({ product }) {
       </div>
 
       {/* Contenu */}
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="min-w-0 p-4 flex flex-col flex-grow">
         {/* Nom du produit */}
-        <h3 className="font-bold text-gray-900 mb-1 overflow-hidden group-hover:text-blue-600 transition-colors" style={{
+        <h3 className="break-words font-bold text-gray-900 mb-1 overflow-hidden group-hover:text-blue-600 transition-colors" style={{
           display: '-webkit-box',
           WebkitLineClamp: 2,
           WebkitBoxOrient: 'vertical'
@@ -510,7 +510,7 @@ function CategoryProductCard({ product }) {
         <div className="mb-4">
           {product.discount ? (
             <div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
                 <div className="text-base font-bold text-red-600">
                   {formatPrice(discountedPrice)}
                 </div>
@@ -533,7 +533,7 @@ function CategoryProductCard({ product }) {
         </div>
 
         {/* Boutons d'action */}
-        <div className="flex gap-2 mt-auto">
+        <div className="flex flex-wrap gap-2 mt-auto">
           <Link
             href={`/products/${product.slug || product.id}`}
             className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-center"
@@ -542,7 +542,7 @@ function CategoryProductCard({ product }) {
           </Link>
           {(product.quantity > 0 && product.inStock) ? (
             <Link
-              href={`/contact?product=${product.id}`}
+              href={`/devis?product=${product.id}`}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1"
             >
               <ShoppingCart size={14} />

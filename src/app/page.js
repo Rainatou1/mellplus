@@ -193,7 +193,7 @@ const MellPlusNiger = () => {
                         <span className="line-clamp-2 md:line-clamp-3">{slide.description}</span>
                       </p>
                       <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center lg:justify-start">
-                        {slide.ctaPrimary && slide.linkPrimary && <Link href={slide.linkPrimary} className="w-full sm:w-auto">
+                        {slide.ctaPrimary && slide.linkPrimary && <Link href={/devis/i.test(slide.ctaPrimary) ? '/devis' : slide.linkPrimary} className="w-full sm:w-auto">
                         <button className="w-full sm:w-auto bg-white text-gray-800 px-4 md:px-6 py-2 md:py-3 rounded-md md:rounded-lg text-sm md:text-base font-semibold hover:bg-gray-100 transition-colors shadow-lg whitespace-nowrap">
                           {slide.ctaPrimary}
                         </button>
@@ -342,7 +342,7 @@ const MellPlusNiger = () => {
                   <div>✓ Devis gratuit</div>
                   <div>✓ Garantie étendue</div>
                 </div>
-                <Link href="/contact" className="mt-3 bg-white text-blue-600 border-blue-500 border-1 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
+                <Link href="/devis" className="mt-3 bg-white text-blue-600 border-blue-500 border-1 px-3 py-1 rounded text-xs font-semibold hover:bg-gray-100 transition-colors inline-block">
                   Demander
                 </Link>
               </div>
@@ -470,7 +470,7 @@ const MellPlusNiger = () => {
                       </Link>
                       {(product.quantity > 0 && product.inStock) ? (
                         <Link
-                          href={`/contact?product=${product.id}`}
+                          href={`/devis?product=${product.id}`}
                           className="bg-gradient-to-r hover:from-red-600 hover:to-pink-600 hover:text-white text-blue-500 border-1 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1 shadow-md"
                         >
                           {/*<ShoppingCart className="w-4 h-4" />*/}

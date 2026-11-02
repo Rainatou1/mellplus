@@ -82,7 +82,7 @@ export const DEFAULT_SLIDES = [
     }
   ].map((slide, index) => ({
   ...slide, id: 'default-' + slide.id, order: index, active: true, featured: false,
-  textColor: 'text-white', linkPrimary: '/contact', linkSecondary: '/products'
+  textColor: 'text-white', linkPrimary: /devis/i.test(slide.ctaPrimary) ? '/devis' : '/contact', linkSecondary: '/products'
 }))
 
 export const DEFAULT_BLOCKS = {

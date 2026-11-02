@@ -551,7 +551,7 @@ function PromoProductCard({ product }) {
           </Link>
           {(product.quantity > 0 && product.inStock) ? (
             <Link
-              href={`/contact?product=${product.id}`}
+              href={`/${product.price ? 'contact' : 'devis'}?product=${product.id}`}
               className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-red-600 hover:to-pink-600 text-white px-3 py-2 rounded text-sm font-medium transition-all flex items-center gap-1"
             >
               <ShoppingCart size={14} />
